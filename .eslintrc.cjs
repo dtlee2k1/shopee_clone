@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const path = require('path');
+const path = require('path')
 
 module.exports = {
   extends: [
@@ -12,24 +12,26 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
 
     'eslint-config-prettier',
-    'prettier',
+    'prettier'
   ],
   plugins: ['prettier'],
   settings: {
     react: {
-      version: 'detect',
+      version: 'detect'
     },
     'import/resolver': {
       node: {
         paths: [path.resolve(__dirname, '')],
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
-      },
-    },
+        extensions: ['.js', '.jsx', '.ts', '.tsx']
+      }
+    }
   },
   env: {
-    node: true,
+    node: true
   },
   rules: {
+    '@typescript-eslint/no-unused-vars': 'off',
+    '@typescript-eslint/no-explicit-any': 'off',
     'react/react-in-jsx-scope': 'off',
     'react/jsx-no-target-blank': 'warn',
     'prettier/prettier': [
@@ -43,8 +45,8 @@ module.exports = {
         useTabs: false,
         singleQuote: true,
         printWidth: 120,
-        jsxSingleQuote: true,
-      },
-    ],
-  },
-};
+        jsxSingleQuote: true
+      }
+    ]
+  }
+}
