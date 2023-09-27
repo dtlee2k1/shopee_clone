@@ -12,7 +12,7 @@ interface InputProps {
   autoComplete?: 'on' | 'off'
 }
 
-export default function Input({ type, name, placeholder, register, className, errorMessage, rules }: InputProps) {
+export default function Input({ type, name, placeholder, register, className, errorMessage }: InputProps) {
   return (
     <div className={className}>
       <input
@@ -22,7 +22,7 @@ export default function Input({ type, name, placeholder, register, className, er
           'border-gray-300 focus:border-gray-500': !errorMessage
         })}
         placeholder={placeholder}
-        {...register(name, rules)}
+        {...register(name)}
       />
       <div className='mt-1 min-h-[1rem] text-xs text-red-600'>{errorMessage}</div>
     </div>

@@ -1,5 +1,5 @@
-import axios, { AxiosInstance } from 'axios'
-
+import axios, { AxiosError, AxiosInstance, HttpStatusCode } from 'axios'
+import { toast } from 'react-toastify'
 class Http {
   private instance: AxiosInstance
 
@@ -11,6 +11,21 @@ class Http {
         'Content-Type': 'application/json'
       }
     })
+
+    // Add a response interceptor
+    this.instance.interceptors.response.use(
+      function (response) {
+        return response
+      },
+      function (error: AxiosError) {
+        if (error.response?.status !== HttpStatusCode.UnprocessableEntity) {
+          const data: any | undefined = error.response?.data
+          const errorMessage = data.message || error.message
+          toast.error(errorMessage)
+        }
+        return Promise.reject(error)
+      }
+    )
   }
 
   getInstance() {

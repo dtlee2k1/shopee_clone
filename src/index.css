@@ -10,3 +10,9 @@ body {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: 400;
 }
+
+/* Custom CSS Toastify */
+.Toastify__toast-theme--colored.Toastify__toast--error {
+  color: #fafafa;
+  background: #ef4444;
+}

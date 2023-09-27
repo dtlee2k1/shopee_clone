@@ -1,24 +1,52 @@
 import { useForm } from 'react-hook-form'
 import { Link } from 'react-router-dom'
-import classNames from 'classnames'
-import { getRules } from 'src/utils/rules'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { useMutation } from '@tanstack/react-query'
+import { LoginSchema, loginSchema } from 'src/utils/rules'
+import Input from 'src/components/Input'
+import { loginAccount } from 'src/apis/auth.api'
+import { omit } from 'lodash'
+import { toast } from 'react-toastify'
+import { ResponseApi } from 'src/types/utils.type'
+import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 
-interface IFormLogin {
-  email: string
-  password: string
-}
+type FormData = LoginSchema
 
 export default function Login() {
   const {
     register,
     handleSubmit,
+    setError,
     formState: { errors }
-  } = useForm<IFormLogin>()
+  } = useForm<FormData>({
+    resolver: yupResolver(loginSchema)
+  })
 
-  const rules = getRules()
+  const loginAccountMutation = useMutation({
+    mutationFn: (body: FormData) => loginAccount(body)
+  })
 
-  const onSubmit = (data: IFormLogin) => {
-    console.log(data)
+  const onSubmit = (data: FormData) => {
+    const body = omit(data, 'confirm_password')
+    loginAccountMutation.mutate(body, {
+      onSuccess: (data) => {
+        toast.success(data.data.message)
+      },
+      onError: (error) => {
+        if (isAxiosUnprocessableEntityError<ResponseApi<FormData>>(error)) {
+          const formError = error.response?.data.data
+
+          if (formError) {
+            Object.keys(formError).forEach((key) => {
+              setError(key as keyof FormData, {
+                type: 'server',
+                message: formError[key as keyof FormData]
+              })
+            })
+          }
+        }
+      }
+    })
   }
 
   return (
@@ -32,31 +60,23 @@ export default function Login() {
             <div className='text-xl'>Đăng Nhập</div>
 
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
-              <div className='mt-8'>
-                <input
-                  type='email'
-                  className={classNames('w-full rounded border p-3 text-sm outline-none focus:shadow-sm', {
-                    'border-red-600 bg-red-50 focus:border-red-600': errors.email,
-                    'border-gray-300 focus:border-gray-500': !errors.email
-                  })}
-                  placeholder='Email'
-                  {...register('email', rules.email)}
-                />
-                <div className='mt-1 min-h-[1rem] text-xs text-red-600'>{errors.email?.message}</div>
-              </div>
-              <div className='mt-3'>
-                <input
-                  type='password'
-                  autoComplete='on'
-                  className={classNames('w-full rounded border p-3 text-sm outline-none focus:shadow-sm', {
-                    'border-red-600 bg-red-50 focus:border-red-600': errors.password,
-                    'border-gray-300 focus:border-gray-500': !errors.password
-                  })}
-                  placeholder='Password'
-                  {...register('password', rules.password)}
-                />
-                <div className='mt-1 min-h-[1rem] text-xs text-red-600'>{errors.password?.message}</div>
-              </div>
+              <Input
+                className='mt-8'
+                type='email'
+                name='email'
+                placeholder='Email'
+                register={register}
+                errorMessage={errors.email?.message}
+              />
+              <Input
+                className='mt-3'
+                type='password'
+                name='password'
+                placeholder='Password'
+                autoComplete='on'
+                register={register}
+                errorMessage={errors.password?.message}
+              />
               <div className='mt-3'>
                 <button className='w-full rounded  bg-primary px-2 py-4 text-center text-sm uppercase text-white hover:bg-primary/90'>
                   Đăng nhập
