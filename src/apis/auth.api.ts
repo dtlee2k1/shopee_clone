@@ -10,3 +10,8 @@ export async function loginAccount(body: { email: string; password: string }) {
   const response = await http.post<AuthResponse>('/login', body)
   return response
 }
+
+export async function logoutAccount() {
+  const response = await http.post('/logout')
+  return response
+}

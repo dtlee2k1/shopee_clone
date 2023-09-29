@@ -1,7 +1,23 @@
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
+import { useMutation } from '@tanstack/react-query'
+import { logoutAccount } from 'src/apis/auth.api'
+import { useApp } from 'src/contexts/app.context'
 
 export default function Header() {
+  const { isAuthenticated, setAuthenticated } = useApp()
+
+  const logoutMutation = useMutation({
+    mutationFn: logoutAccount,
+    onSuccess: () => {
+      setAuthenticated(false)
+    }
+  })
+
+  const handleLogout = () => {
+    logoutMutation.mutate()
+  }
+
   return (
     <header className=' bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-1.5 text-sm text-white'>
       <div className='container'>
@@ -49,43 +65,59 @@ export default function Header() {
               </Popover.Container>
             </Popover>
             {/* User Popover */}
-            <Popover>
-              <Popover.Container>
-                <Popover.Heading>
-                  <div className='flex cursor-pointer items-center px-2.5 py-1 hover:text-gray-300'>
-                    <div className='mr-2 h-5 w-5 flex-shrink-0'>
-                      <img
-                        src='./images/avatar-3.jpg'
-                        alt='avatar'
-                        className='h-full w-full rounded-full object-cover'
-                      />
+            {isAuthenticated && (
+              <Popover>
+                <Popover.Container>
+                  <Popover.Heading>
+                    <div className='flex cursor-pointer items-center px-2.5 py-1 hover:text-gray-300'>
+                      <div className='mr-2 h-5 w-5 flex-shrink-0'>
+                        <img
+                          src='./images/avatar-3.jpg'
+                          alt='avatar'
+                          className='h-full w-full rounded-full object-cover'
+                        />
+                      </div>
+                      <p className='max-w-[6rem] overflow-hidden truncate'>Mr.Thai</p>
                     </div>
-                    <p className='max-w-[6rem] overflow-hidden truncate'>Mr.Thai</p>
-                  </div>
-                </Popover.Heading>
-                <Popover.Content>
-                  <div className='cursor-pointer overflow-hidden rounded-sm border-none bg-white shadow-md'>
-                    <div className='flex flex-col'>
-                      <Link
-                        to='/'
-                        className='block bg-white px-4 py-2.5 text-sm hover:bg-neutral-50 hover:text-teal-500'
-                      >
-                        Tài khoản của tôi
-                      </Link>
-                      <Link
-                        to='/'
-                        className='block bg-white px-4 py-2.5 text-sm hover:bg-neutral-50 hover:text-teal-500'
-                      >
-                        Đơn mua
-                      </Link>
-                      <button className='block bg-white px-4 py-2 text-start text-sm hover:bg-neutral-50 hover:text-teal-500'>
-                        Đăng xuất
-                      </button>
+                  </Popover.Heading>
+                  <Popover.Content>
+                    <div className='cursor-pointer overflow-hidden rounded-sm border-none bg-white shadow-md'>
+                      <div className='flex flex-col'>
+                        <Link
+                          to='/profile'
+                          className='block bg-white px-4 py-2.5 text-sm hover:bg-neutral-50 hover:text-teal-500'
+                        >
+                          Tài khoản của tôi
+                        </Link>
+                        <Link
+                          to='/'
+                          className='block bg-white px-4 py-2.5 text-sm hover:bg-neutral-50 hover:text-teal-500'
+                        >
+                          Đơn mua
+                        </Link>
+                        <button
+                          className='block bg-white px-4 py-2 text-start text-sm hover:bg-neutral-50 hover:text-teal-500'
+                          onClick={handleLogout}
+                        >
+                          Đăng xuất
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </Popover.Content>
-              </Popover.Container>
-            </Popover>
+                  </Popover.Content>
+                </Popover.Container>
+              </Popover>
+            )}
+            {!isAuthenticated && (
+              <div className='flex items-center'>
+                <Link to='/register' className='px-3 font-medium capitalize hover:text-white/70'>
+                  Đăng ký
+                </Link>
+                <div className='h-4 border-r-[1px] border-r-white/40'></div>
+                <Link to='/login' className='px-3 font-medium capitalize hover:text-white/70'>
+                  Đăng nhập
+                </Link>
+              </div>
+            )}
           </div>
         </nav>
         <div className='mt-4 flex items-end gap-10'>
