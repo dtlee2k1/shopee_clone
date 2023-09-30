@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosInstance, HttpStatusCode } from 'axios'
 import { toast } from 'react-toastify'
 import { AuthResponse } from 'src/types/auth.type'
-import { clearAccessTokenFromLS, getAccessTokenFromLS, saveAccessTokenToLS } from './auth'
+import { clearLS, getAccessTokenFromLS, setAccessTokenToLS, setProfileToLS } from './auth'
 class Http {
   private instance: AxiosInstance
   // Why have to set an accessToken variable instead of get right away from local storage?
@@ -36,11 +36,14 @@ class Http {
       (response) => {
         const { url } = response.config
         if (url === '/login' || url === '/register') {
-          this.accessToken = (response.data as AuthResponse).data.access_token
-          saveAccessTokenToLS(this.accessToken)
+          const data = (response.data as AuthResponse).data
+          this.accessToken = data.access_token
+
+          setAccessTokenToLS(this.accessToken)
+          setProfileToLS(data.user)
         } else if (url === '/logout') {
           this.accessToken === ''
-          clearAccessTokenFromLS()
+          clearLS()
         }
         return response
       },

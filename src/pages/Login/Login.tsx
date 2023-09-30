@@ -4,17 +4,18 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { useMutation } from '@tanstack/react-query'
 import { LoginSchema, loginSchema } from 'src/utils/rules'
 import Input from 'src/components/Input'
-import { loginAccount } from 'src/apis/auth.api'
+import { login } from 'src/apis/auth.api'
 import { omit } from 'lodash'
 import { toast } from 'react-toastify'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import { useApp } from 'src/contexts/app.context'
+import Button from 'src/components/Button'
 
 type FormData = LoginSchema
 
 export default function Login() {
-  const { setAuthenticated } = useApp()
+  const { setAuthenticated, setProfile } = useApp()
   const navigate = useNavigate()
 
   const {
@@ -26,15 +27,17 @@ export default function Login() {
     resolver: yupResolver(loginSchema)
   })
 
-  const loginAccountMutation = useMutation({
-    mutationFn: (body: FormData) => loginAccount(body)
+  const loginMutation = useMutation({
+    mutationFn: (body: FormData) => login(body)
   })
 
   const onSubmit = (data: FormData) => {
     const body = omit(data, 'confirm_password')
-    loginAccountMutation.mutate(body, {
+    loginMutation.mutate(body, {
       onSuccess: (data) => {
         setAuthenticated(true)
+        setProfile(data.data.data.user)
+
         navigate('/')
         toast.success(data.data.message)
       },
@@ -84,9 +87,13 @@ export default function Login() {
                 errorMessage={errors.password?.message}
               />
               <div className='mt-3'>
-                <button className='w-full rounded  bg-primary px-2 py-4 text-center text-sm uppercase text-white hover:bg-primary/90'>
+                <Button
+                  isLoading={loginMutation.isLoading}
+                  disabled={loginMutation.isLoading}
+                  className='w-full rounded bg-primary px-2 py-4 text-center text-sm uppercase text-white hover:bg-primary/90'
+                >
                   Đăng nhập
-                </button>
+                </Button>
               </div>
             </form>
             <div className='mt-7 flex items-center justify-center gap-1 text-sm md:whitespace-nowrap'>

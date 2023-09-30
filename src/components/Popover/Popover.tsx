@@ -80,7 +80,7 @@ function Container({ children }: ContainerProps) {
   const { refs, showPopover, hidePopover } = useContext(PopoverContext) as PopoverContextType
   return (
     <div
-      className='flex cursor-pointer items-center px-2.5 py-1 hover:text-gray-300'
+      className='flex cursor-pointer items-center px-2.5 py-1 hover:text-white/70'
       ref={refs.setReference}
       onMouseEnter={showPopover}
       onMouseLeave={hidePopover}

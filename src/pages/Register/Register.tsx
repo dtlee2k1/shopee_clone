@@ -6,15 +6,16 @@ import { useMutation } from '@tanstack/react-query'
 import { omit } from 'lodash'
 import { toast } from 'react-toastify'
 import Input from 'src/components/Input'
-import { registerAccount } from 'src/apis/auth.api'
+import { register as registerAccount } from 'src/apis/auth.api'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import { useApp } from 'src/contexts/app.context'
+import Button from 'src/components/Button'
 
 type FormData = Schema
 
 export default function Register() {
-  const { setAuthenticated } = useApp()
+  const { setAuthenticated, setProfile } = useApp()
   const navigate = useNavigate()
 
   const {
@@ -26,15 +27,17 @@ export default function Register() {
     resolver: yupResolver(schema)
   })
 
-  const registerAccountMutation = useMutation({
+  const registerMutation = useMutation({
     mutationFn: (body: Omit<FormData, 'confirm_password'>) => registerAccount(body)
   })
 
   const onSubmit = (data: FormData) => {
     const body = omit(data, 'confirm_password')
-    registerAccountMutation.mutate(body, {
+    registerMutation.mutate(body, {
       onSuccess: (data) => {
         setAuthenticated(true)
+        setProfile(data.data.data.user)
+
         navigate('/')
         toast.success(data.data.message)
       },
@@ -92,9 +95,13 @@ export default function Register() {
                 errorMessage={errors.confirm_password?.message}
               />
               <div className='mt-3'>
-                <button className='w-full rounded bg-primary px-2 py-4 text-center text-sm uppercase text-white hover:bg-primary/90'>
+                <Button
+                  isLoading={registerMutation.isLoading}
+                  disabled={registerMutation.isLoading}
+                  className='w-full rounded bg-primary px-2 py-4 text-center text-sm uppercase text-white hover:bg-primary/90'
+                >
                   Đăng ký
-                </button>
+                </Button>
               </div>
             </form>
 

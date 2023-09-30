@@ -1,14 +1,14 @@
 import { Link } from 'react-router-dom'
 import Popover from '../Popover'
 import { useMutation } from '@tanstack/react-query'
-import { logoutAccount } from 'src/apis/auth.api'
+import { logout } from 'src/apis/auth.api'
 import { useApp } from 'src/contexts/app.context'
 
 export default function Header() {
-  const { isAuthenticated, setAuthenticated } = useApp()
+  const { isAuthenticated, setAuthenticated, profile } = useApp()
 
   const logoutMutation = useMutation({
-    mutationFn: logoutAccount,
+    mutationFn: logout,
     onSuccess: () => {
       setAuthenticated(false)
     }
@@ -77,7 +77,7 @@ export default function Header() {
                           className='h-full w-full rounded-full object-cover'
                         />
                       </div>
-                      <p className='max-w-[6rem] overflow-hidden truncate'>Mr.Thai</p>
+                      <p className='max-w-[6rem] truncate'>{profile?.name || profile?.email}</p>
                     </div>
                   </Popover.Heading>
                   <Popover.Content>
@@ -180,7 +180,7 @@ export default function Header() {
                   <div className='max-w-[400px] cursor-pointer overflow-hidden rounded-sm border-none bg-white shadow-md'>
                     <div className='flex flex-col'>
                       <h3 className='select-none p-2.5 text-sm capitalize text-black/30'>Sản phẩm mới thêm</h3>
-                      <div className='flex items-start p-2.5'>
+                      <div className='flex items-start p-2.5 hover:bg-stone-100'>
                         <img
                           className='h-10 w-10 flex-shrink-0 border border-black/10 object-cover'
                           src='https://down-vn.img.susercontent.com/file/3006ec64110eb85663f99fb87024c53d'
@@ -197,7 +197,7 @@ export default function Header() {
                           </div>
                         </div>
                       </div>
-                      <div className='flex items-start p-2.5'>
+                      <div className='flex items-start p-2.5 hover:bg-stone-100'>
                         <img
                           className='h-10 w-10 flex-shrink-0 border border-black/10 object-cover'
                           src='https://down-vn.img.susercontent.com/file/3006ec64110eb85663f99fb87024c53d'
@@ -214,7 +214,7 @@ export default function Header() {
                           </div>
                         </div>
                       </div>
-                      <div className='flex items-start p-2.5'>
+                      <div className='flex items-start p-2.5 hover:bg-stone-100'>
                         <img
                           className='h-10 w-10 flex-shrink-0 border border-black/10 object-cover'
                           src='https://down-vn.img.susercontent.com/file/3006ec64110eb85663f99fb87024c53d'
@@ -238,7 +238,7 @@ export default function Header() {
                         </div>
                         <Link
                           to=''
-                          className='min-w-max flex-shrink-0 rounded-sm bg-primary px-4 py-2 text-sm capitalize text-white'
+                          className='min-w-max flex-shrink-0 rounded-sm bg-primary px-4 py-2 text-sm capitalize text-white hover:bg-primary/90'
                         >
                           Xem giỏ hàng
                         </Link>
