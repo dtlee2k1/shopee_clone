@@ -67,7 +67,7 @@ export default function AsideFilter() {
               name='from'
               placeholder='₫ TỪ'
               className='grow'
-              classNameInput='w-full rounded border border-black/25 p-1 text-xs outline-none focus:shadow-sm h-full'
+              classNameInput='w-full rounded border shadow-sm border-black/25 focus:border-black/25  p-1 text-xs outline-none focus:shadow-sm h-full'
             />
             <div className='mx-2.5 mt-1 shrink-0 text-gray-300'>&ndash;</div>
             <Input
@@ -75,7 +75,7 @@ export default function AsideFilter() {
               name='to'
               placeholder='₫ ĐẾN'
               className='grow'
-              classNameInput='w-full rounded border border-black/25 p-1 outline-none focus:shadow-sm text-xs h-full'
+              classNameInput='w-full rounded border shadow-sm border-black/25 focus:border-black/25  p-1 text-xs outline-none focus:shadow-sm h-full'
             />
           </div>
           <Button className='mt-5 h-[30px] w-full rounded-sm bg-primary px-1 text-center text-sm font-normal uppercase text-white outline-none hover:bg-primary/90'>
