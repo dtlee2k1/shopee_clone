@@ -1,30 +1,39 @@
 import classNames from 'classnames'
+import { InputHTMLAttributes } from 'react'
 import { RegisterOptions, UseFormRegister } from 'react-hook-form'
 
-interface InputProps {
-  type: React.HTMLInputTypeAttribute
+interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
+  classNameInput?: string
+  classNameError?: string
   errorMessage?: string
-  placeholder?: string
-  className?: string
-  name: string
-  register: UseFormRegister<any>
+  register?: UseFormRegister<any>
   rules?: RegisterOptions
-  autoComplete?: 'on' | 'off'
 }
 
-export default function Input({ type, name, placeholder, register, className, errorMessage }: InputProps) {
+export default function Input({
+  type,
+  name,
+  placeholder,
+  register,
+  classNameInput = 'w-full rounded border p-3 text-sm outline-none focus:shadow-sm',
+  classNameError = 'mt-1 min-h-[1rem] text-xs text-red-600',
+  className,
+  errorMessage
+}: InputProps) {
+  const registerResult = register && name ? register(name) : {}
+
   return (
     <div className={className}>
       <input
         type={type}
-        className={classNames('w-full rounded border p-3 text-sm outline-none focus:shadow-sm', {
+        className={classNames(classNameInput, {
           'border-red-600 bg-red-50 focus:border-red-600': errorMessage,
           'border-gray-300 focus:border-gray-500': !errorMessage
         })}
         placeholder={placeholder}
-        {...register(name)}
+        {...registerResult}
       />
-      <div className='mt-1 min-h-[1rem] text-xs text-red-600'>{errorMessage}</div>
+      <div className={classNameError}>{errorMessage}</div>
     </div>
   )
 }

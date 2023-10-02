@@ -2,7 +2,7 @@ import { ButtonHTMLAttributes } from 'react'
 import Spinner from '../Spinner'
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-  isLoading: boolean
+  isLoading?: boolean
 }
 export default function Button(props: ButtonProps) {
   const { isLoading, type, disabled, className, children, onClick, ...rest } = props

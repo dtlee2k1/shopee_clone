@@ -62,10 +62,10 @@ export default function Login() {
     <div className='bg-primary'>
       <div className='container'>
         <div className='grid grid-cols-1 py-12 md:grid-cols-5 md:pr-10'>
-          <div className='hidden md:col-span-3 md:col-start-1 md:block '>
+          <div className='hidden md:col-span-3 md:block '>
             <img src='./images/shopee-bg.webp' alt='Shopee Background' className='w-full bg-cover' />
           </div>
-          <div className='mx-auto max-w-md rounded bg-white p-8 shadow-sm md:col-span-2 md:col-start-4 lg:w-96'>
+          <div className='col-span-full mx-auto max-w-md rounded bg-white p-8 shadow-sm md:col-span-2 lg:w-96'>
             <div className='text-xl'>Đăng Nhập</div>
 
             <form onSubmit={handleSubmit(onSubmit)} noValidate>

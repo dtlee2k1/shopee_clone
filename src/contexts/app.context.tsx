@@ -17,7 +17,7 @@ interface AppProviderProps {
 
 function AppProvider({ children }: AppProviderProps) {
   const [isAuthenticated, setAuthenticated] = useState<boolean>(Boolean(getAccessTokenFromLS()))
-  const [profile, setProfile] = useState<User | null>(null)
+  const [profile, setProfile] = useState<User | null>(getProfileFromLS())
 
   return (
     <AppContext.Provider value={{ isAuthenticated, setAuthenticated, profile, setProfile }}>
