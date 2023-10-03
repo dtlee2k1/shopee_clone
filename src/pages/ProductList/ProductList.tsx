@@ -4,6 +4,8 @@ import Product from './Product'
 import SortProductList from './SortProductList'
 import useQueryParams from 'src/hooks/useQueryParams'
 import { getProducts } from 'src/apis/product.api'
+import Pagination from 'src/components/Pagination'
+import { useState } from 'react'
 
 export default function ProductList() {
   const queryParams = useQueryParams()
@@ -11,6 +13,8 @@ export default function ProductList() {
     queryKey: ['products', queryParams],
     queryFn: () => getProducts(queryParams)
   })
+
+  const [page, setPage] = useState(1)
 
   return (
     <div className='bg-neutral-100 py-6'>
@@ -29,6 +33,7 @@ export default function ProductList() {
                   </div>
                 ))}
             </div>
+            <Pagination currPage={page} setPage={setPage} pageSize={1} />
           </div>
         </div>
       </div>
