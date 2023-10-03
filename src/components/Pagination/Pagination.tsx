@@ -1,14 +1,33 @@
 import classNames from 'classnames'
+import { useSearchParams } from 'react-router-dom'
 
 interface PaginationProps {
-  currPage: number
-  setPage: React.Dispatch<React.SetStateAction<number>>
   pageSize: number
 }
 
 const RANGE = 2
 
-export default function Pagination({ currPage, pageSize, setPage }: PaginationProps) {
+export default function Pagination({ pageSize }: PaginationProps) {
+  const [searchParams, setSearchParams] = useSearchParams()
+  const currPage = !searchParams.get('page') ? 1 : Number(searchParams.get('page'))
+
+  const targetPage = (pageNum: number) => {
+    searchParams.set('page', String(pageNum))
+    setSearchParams(searchParams)
+  }
+
+  const prevPage = () => {
+    const prev = currPage === 1 ? currPage : currPage - 1
+    searchParams.set('page', String(prev))
+    setSearchParams(searchParams)
+  }
+
+  const nextPage = () => {
+    const next = currPage === pageSize ? currPage : currPage + 1
+    searchParams.set('page', String(next))
+    setSearchParams(searchParams)
+  }
+
   const renderPagination = () => {
     let dotsAfter = false
     let dotsBefore = false
@@ -68,7 +87,7 @@ export default function Pagination({ currPage, pageSize, setPage }: PaginationPr
               'bg-primary text-white': isActive,
               'text-black/40 hover:text-primary': !isActive
             })}
-            onClick={() => setPage(pageNum)}
+            onClick={() => targetPage(pageNum)}
           >
             {pageNum}
           </button>
@@ -76,17 +95,15 @@ export default function Pagination({ currPage, pageSize, setPage }: PaginationPr
       })
   }
 
-  const prevPage = () => {
-    currPage > 1 && setPage(currPage - 1)
-  }
-
-  const nextPage = () => {
-    currPage < pageSize && setPage(currPage + 1)
-  }
-
   return (
-    <div className='m-10 flex flex-wrap justify-center gap-[30px]'>
-      <button className='text-black/40' onClick={prevPage} disabled={currPage === 1}>
+    <div className='m-10 flex flex-wrap justify-center gap-[30px] '>
+      <button
+        className={classNames('text-black/40', {
+          'cursor-not-allowed': currPage === 1
+        })}
+        onClick={prevPage}
+        disabled={currPage === 1}
+      >
         <svg enableBackground='new 0 0 11 11' viewBox='0 0 11 11' x={0} y={0} className='h-3.5 w-3.5 fill-current'>
           <g>
             <path d='m8.5 11c-.1 0-.2 0-.3-.1l-6-5c-.1-.1-.2-.3-.2-.4s.1-.3.2-.4l6-5c .2-.2.5-.1.7.1s.1.5-.1.7l-5.5 4.6 5.5 4.6c.2.2.2.5.1.7-.1.1-.3.2-.4.2z' />
@@ -94,7 +111,13 @@ export default function Pagination({ currPage, pageSize, setPage }: PaginationPr
         </svg>
       </button>
       {renderPagination()}
-      <button className='text-black/40' onClick={nextPage} disabled={currPage === pageSize}>
+      <button
+        className={classNames('text-black/40', {
+          'cursor-not-allowed': currPage === pageSize
+        })}
+        onClick={nextPage}
+        disabled={currPage === pageSize}
+      >
         <svg enableBackground='new 0 0 11 11' viewBox='0 0 11 11' x={0} y={0} className='h-3.5 w-3.5 fill-current'>
           <path d='m2.5 11c .1 0 .2 0 .3-.1l6-5c .1-.1.2-.3.2-.4s-.1-.3-.2-.4l-6-5c-.2-.2-.5-.1-.7.1s-.1.5.1.7l5.5 4.6-5.5 4.6c-.2.2-.2.5-.1.7.1.1.3.2.4.2z' />
         </svg>
