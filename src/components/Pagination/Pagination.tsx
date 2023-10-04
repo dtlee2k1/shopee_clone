@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { useSearchParams } from 'react-router-dom'
+import { usePagination } from 'src/pages/ProductList/usePagination'
 
 interface PaginationProps {
   pageSize: number
@@ -8,23 +8,10 @@ interface PaginationProps {
 const RANGE = 2
 
 export default function Pagination({ pageSize }: PaginationProps) {
-  const [searchParams, setSearchParams] = useSearchParams()
-  const currPage = !searchParams.get('page') ? 1 : Number(searchParams.get('page'))
+  const { currPage, nextPage, prevPage, searchParams, setSearchParams } = usePagination(pageSize)
 
   const targetPage = (pageNum: number) => {
     searchParams.set('page', String(pageNum))
-    setSearchParams(searchParams)
-  }
-
-  const prevPage = () => {
-    const prev = currPage === 1 ? currPage : currPage - 1
-    searchParams.set('page', String(prev))
-    setSearchParams(searchParams)
-  }
-
-  const nextPage = () => {
-    const next = currPage === pageSize ? currPage : currPage + 1
-    searchParams.set('page', String(next))
     setSearchParams(searchParams)
   }
 

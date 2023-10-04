@@ -15,7 +15,7 @@ export function useProductList() {
     {
       page: queryParams.page || '1',
       limit: queryParams.limit || '10',
-      order: queryParams.order || 'desc',
+      order: queryParams.order,
       sort_by: queryParams.sort_by || 'createdAt',
       category: queryParams.category,
       exclude: queryParams.exclude,

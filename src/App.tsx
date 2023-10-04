@@ -2,7 +2,7 @@ import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { useRouteElements } from './hooks/useRouteElements'
 
-export function App() {
+function App() {
   // All route of this application
   const routeElements = useRouteElements()
 

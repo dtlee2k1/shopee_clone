@@ -6,7 +6,7 @@ import Pagination from 'src/components/Pagination'
 import { useProductList } from './useProductList'
 
 export default function ProductList() {
-  const { data } = useProductList()
+  const { data, queryConfig } = useProductList()
 
   return (
     <div className='bg-neutral-100 py-6'>
@@ -17,7 +17,7 @@ export default function ProductList() {
           </div>
           {data && (
             <div className='col-span-10'>
-              <SortProductList />
+              <SortProductList queryConfig={queryConfig} pageSize={data.data.data.pagination.page_size} />
               <div className='mt-2.5 grid grid-cols-2 gap-2.5 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5'>
                 {data.data.data.products.map((product) => (
                   <div key={product._id} className='col-span-1'>
