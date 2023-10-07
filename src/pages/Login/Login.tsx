@@ -5,7 +5,6 @@ import { useMutation } from '@tanstack/react-query'
 import { LoginSchema, loginSchema } from 'src/utils/rules'
 import Input from 'src/components/Input'
 import { login } from 'src/apis/auth.api'
-import { omit } from 'lodash'
 import { toast } from 'react-toastify'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
@@ -32,8 +31,7 @@ export default function Login() {
   })
 
   const onSubmit = (data: FormData) => {
-    const body = omit(data, 'confirm_password')
-    loginMutation.mutate(body, {
+    loginMutation.mutate(data, {
       onSuccess: (data) => {
         setAuthenticated(true)
         setProfile(data.data.data.user)

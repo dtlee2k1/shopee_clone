@@ -1,5 +1,5 @@
 import { sortBy } from 'src/constants/product'
-import { QueryConfig } from '../useProductList'
+import { QueryConfig } from '../useProducts'
 import classNames from 'classnames'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import { omit } from 'lodash'

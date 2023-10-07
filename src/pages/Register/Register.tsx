@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { Schema, schema } from 'src/utils/rules'
+import { RegisterSchema, registerSchema } from 'src/utils/rules'
 import { useMutation } from '@tanstack/react-query'
 import { omit } from 'lodash'
 import { toast } from 'react-toastify'
@@ -12,7 +12,7 @@ import { ErrorResponse } from 'src/types/utils.type'
 import { useApp } from 'src/contexts/app.context'
 import Button from 'src/components/Button'
 
-type FormData = Schema
+type FormData = RegisterSchema
 
 export default function Register() {
   const { setAuthenticated, setProfile } = useApp()
@@ -24,7 +24,7 @@ export default function Register() {
     setError,
     formState: { errors }
   } = useForm<FormData>({
-    resolver: yupResolver(schema)
+    resolver: yupResolver(registerSchema)
   })
 
   const registerMutation = useMutation({

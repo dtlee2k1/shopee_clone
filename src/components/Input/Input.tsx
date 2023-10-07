@@ -20,7 +20,7 @@ export default function Input({
   className,
   errorMessage
 }: InputProps) {
-  const registerResult = register && name ? register(name) : {}
+  const registerResult = register && name ? register(name) : null
 
   return (
     <div className={className}>

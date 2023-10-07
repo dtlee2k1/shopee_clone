@@ -7,3 +7,8 @@ export interface SuccessResponse<Data> {
   message: string
   data: Data
 }
+
+// syntax '-?' to eliminate `undefined` of key optional
+export type NoUndefinedField<T> = {
+  [P in keyof T]-?: NoUndefinedField<NonNullable<T[P]>>
+}

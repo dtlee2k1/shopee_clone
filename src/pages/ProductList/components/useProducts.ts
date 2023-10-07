@@ -8,7 +8,7 @@ export type QueryConfig = {
   [key in keyof ProductListConfig]: string
 }
 
-export function useProductList() {
+export function useProducts() {
   const queryParams = useQueryParams()
 
   const queryConfig: QueryConfig = omitBy(
@@ -28,11 +28,11 @@ export function useProductList() {
   )
 
   //QUERY
-  const { data } = useQuery({
+  const { data: productsData } = useQuery({
     queryKey: ['products', queryConfig],
     queryFn: () => getProducts(queryConfig as ProductListConfig),
     keepPreviousData: true
   })
 
-  return { data, queryConfig }
+  return { productsData, queryConfig }
 }

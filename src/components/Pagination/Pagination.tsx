@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { usePagination } from 'src/pages/ProductList/usePagination'
+import { usePagination } from 'src/pages/ProductList/components/usePagination'
 
 interface PaginationProps {
   pageSize: number
