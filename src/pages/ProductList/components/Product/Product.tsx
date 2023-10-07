@@ -8,11 +8,10 @@ interface ProductProps {
 }
 
 export default function Product({ product }: ProductProps) {
-  const { image, name, price_before_discount, price, sold, rating } = product
-
+  const { _id, image, name, price_before_discount, price, sold, rating } = product
   return (
     <div className='z-[1] h-full overflow-visible rounded-sm bg-white text-black/[.87] shadow transition-transform duration-150 hover:translate-y-[-.0625rem] hover:shadow-md'>
-      <Link to='/'>
+      <Link to={`/${_id}`}>
         <div>
           <div className='relative w-full pt-[100%]'>
             <img

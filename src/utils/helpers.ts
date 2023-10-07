@@ -5,3 +5,8 @@ export const formatNumberToSocialStyle = (value: number) =>
     .format(value)
     .replace('.', ',')
     .toLowerCase()
+
+export const rateSale = (originalPrice: number, price: number) => {
+  const percent = Math.round(((originalPrice - price) / originalPrice) * 100) + '%'
+  return percent
+}
