@@ -1,10 +1,19 @@
-import { Link } from 'react-router-dom'
-import Popover from '../Popover'
+import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
-import { logout } from 'src/apis/auth.api'
+import { useForm } from 'react-hook-form'
+import { yupResolver } from '@hookform/resolvers/yup'
+import { omit } from 'lodash'
+
+import { SearchSchema, searchSchema } from 'src/utils/rules'
 import { useApp } from 'src/contexts/app.context'
+import { logout } from 'src/apis/auth.api'
+import Popover from '../Popover'
+import useQueryConfig from 'src/hooks/useQueryConfig'
+
+type FormData = SearchSchema
 
 export default function Header() {
+  const navigate = useNavigate()
   const { isAuthenticated, setAuthenticated, profile } = useApp()
 
   const logoutMutation = useMutation({
@@ -14,9 +23,34 @@ export default function Header() {
     }
   })
 
+  const queryConfig = useQueryConfig()
+  const { register, handleSubmit } = useForm<FormData>({
+    resolver: yupResolver(searchSchema)
+  })
+
   const handleLogout = () => {
     logoutMutation.mutate()
   }
+
+  const onSearchSubmit = handleSubmit((data) => {
+    const config = queryConfig.order
+      ? omit(
+          {
+            ...queryConfig,
+            name: data.search
+          },
+          ['order', 'sort_by']
+        )
+      : {
+          ...queryConfig,
+          name: data.search
+        }
+
+    navigate({
+      pathname: '/',
+      search: createSearchParams(config).toString()
+    })
+  })
 
   return (
     <header className=' bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-1.5 text-sm text-white'>
@@ -128,13 +162,13 @@ export default function Header() {
               </g>
             </svg>
           </Link>
-          <form className='h-10 flex-grow rounded-sm' autoComplete='off'>
+          <form className='h-10 flex-grow rounded-sm' autoComplete='off' onSubmit={onSearchSubmit}>
             <div className='flex h-full rounded-sm bg-white p-1'>
               <input
                 type='text'
-                name='search'
-                placeholder='ĐÃ SALE 50% CÒN FREESHIP'
-                className='h-full flex-grow border-none bg-transparent px-2.5  text-black outline-none '
+                placeholder='Tìm kiếm sản phẩm'
+                className='h-full flex-grow border-none bg-transparent px-2.5  text-black outline-none'
+                {...register('search')}
               />
               <button className='flex-shrink-0 rounded-sm bg-primary px-5 py-2 hover:opacity-90'>
                 <svg

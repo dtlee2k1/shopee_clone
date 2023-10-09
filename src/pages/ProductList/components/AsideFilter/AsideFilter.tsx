@@ -1,14 +1,15 @@
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
-import classNames from 'classnames'
-import Button from 'src/components/Button'
-import { Category } from 'src/types/category.type'
-import { QueryConfig } from '../useProducts'
-import InputNumber from 'src/components/InputNumber/InputNumber'
 import { Controller, useForm } from 'react-hook-form'
-import { PriceSchema, priceSchema } from 'src/utils/rules'
 import { yupResolver } from '@hookform/resolvers/yup'
-import RatingStars from '../RatingStars'
 import { omit } from 'lodash'
+import classNames from 'classnames'
+
+import { Category } from 'src/types/category.type'
+import { PriceSchema, priceSchema } from 'src/utils/rules'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
+import InputNumber from 'src/components/InputNumber/InputNumber'
+import Button from 'src/components/Button'
+import RatingStars from '../RatingStars'
 
 interface AsideFilterProps {
   queryConfig: QueryConfig

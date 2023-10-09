@@ -1,12 +1,17 @@
 import { useMemo, useRef, useState } from 'react'
-import InputNumber from 'src/components/InputNumber/InputNumber'
-import { useProduct } from './useProduct'
-import ProductRating from 'src/components/ProductRating'
-import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/helpers'
+import { useQuery } from '@tanstack/react-query'
 import DOMPurify from 'dompurify'
 
+import { useProduct } from './useProduct'
+import { getProducts } from 'src/apis/product.api'
+import { ProductListConfig } from 'src/types/product.type'
+import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/helpers'
+import ProductRating from 'src/components/ProductRating'
+import InputNumber from 'src/components/InputNumber/InputNumber'
+import Product from '../ProductList/components/Product'
+
 export default function ProductDetail() {
-  const { product, isLoading } = useProduct()
+  const { product, isLoading: isLoading1 } = useProduct()
 
   const [currentIndexImages, setCurrentIndexImages] = useState<number[]>([0, 5])
   const [activeImage, setActiveImage] = useState<number>(0)
@@ -18,7 +23,15 @@ export default function ProductDetail() {
     [currentIndexImages, product]
   )
 
-  if (isLoading) return null
+  // Get relevant products by category equivalents
+  const queryConfig: ProductListConfig = { limit: 20, page: 1, category: product?.category._id }
+  const { data: productsData, isLoading: isLoading2 } = useQuery({
+    queryKey: ['products', queryConfig],
+    queryFn: () => getProducts(queryConfig),
+    enabled: Boolean(product) // only fetch when `product` exists
+  })
+
+  if (isLoading1 && isLoading2) return null
 
   const { name, description, images, rating, sold, price, price_before_discount, quantity } = product
 
@@ -223,6 +236,20 @@ export default function ProductDetail() {
             </div>
           </section>
         </div>
+        {productsData && (
+          <div className='mt-8'>
+            <section>
+              <h2 className='text-base font-medium uppercase text-black/[.54]'>Có thể bạn cũng thích</h2>
+              <div className='mt-5 grid grid-cols-2 gap-2.5 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
+                {productsData.data.data.products.map((product) => (
+                  <div key={product._id} className='col-span-1'>
+                    <Product product={product} />
+                  </div>
+                ))}
+              </div>
+            </section>
+          </div>
+        )}
       </div>
     </div>
   )

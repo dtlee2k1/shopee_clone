@@ -1,8 +1,8 @@
-import { sortBy } from 'src/constants/product'
-import { QueryConfig } from '../useProducts'
-import classNames from 'classnames'
 import { createSearchParams, useNavigate } from 'react-router-dom'
 import { omit } from 'lodash'
+import classNames from 'classnames'
+import { sortBy } from 'src/constants/product'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
 import { usePagination } from '../usePagination'
 
 interface SortProductListProps {

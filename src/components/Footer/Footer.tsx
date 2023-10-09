@@ -27,8 +27,8 @@ export default function Footer() {
       <div className='m-auto max-w-7xl px-4 py-9 text-xs text-black/50'>
         <div className='mb-10 flex justify-center uppercase'>
           <div className='border-r border-r-black/10 px-6'>Chính sách bảo mật</div>
-          <div className='border-r border-r-black/10 px-6 px-6'>Quy chế hoạt động</div>
-          <div className='border-r border-r-black/10 px-6 px-6'>Chính sách vận chuyển</div>
+          <div className='border-r border-r-black/10 px-6'>Quy chế hoạt động</div>
+          <div className='border-r border-r-black/10 px-6'>Chính sách vận chuyển</div>
           <div className='px-6'>Chính sách trả hàng và hoàn tiền</div>
         </div>
         <div className='m-auto mb-2 flex justify-center gap-10'>

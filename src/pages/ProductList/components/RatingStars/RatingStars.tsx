@@ -1,6 +1,6 @@
 import { createSearchParams, useNavigate } from 'react-router-dom'
-import { QueryConfig } from '../useProducts'
 import classNames from 'classnames'
+import { QueryConfig } from 'src/hooks/useQueryConfig'
 
 interface RatingStarsProps {
   queryConfig: QueryConfig

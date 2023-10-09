@@ -82,15 +82,18 @@ export const schema = yup.object({
     name: 'price-not-allowed',
     message: 'Vui lòng điền khoảng giá phù hợp',
     test: testMinMax
-  })
+  }),
+  search: yup.string().trim().required('Vui lòng nhập tên sản phẩm')
 })
 
 // export const registerSchema = schema.omit(['price_min', 'price_max'])
 export const loginSchema = schema.pick(['email', 'password'])
 export const registerSchema = schema.pick(['email', 'password', 'confirm_password'])
 export const priceSchema = schema.pick(['price_min', 'price_max'])
+export const searchSchema = schema.pick(['search'])
 
 export type Schema = yup.InferType<typeof schema>
 export type LoginSchema = yup.InferType<typeof loginSchema>
 export type RegisterSchema = yup.InferType<typeof registerSchema>
 export type PriceSchema = yup.InferType<typeof priceSchema>
+export type SearchSchema = yup.InferType<typeof searchSchema>
