@@ -1,3 +1,4 @@
+import { useMemo, useRef, useState } from 'react'
 import InputNumber from 'src/components/InputNumber/InputNumber'
 import { useProduct } from './useProduct'
 import ProductRating from 'src/components/ProductRating'
@@ -7,9 +8,52 @@ import DOMPurify from 'dompurify'
 export default function ProductDetail() {
   const { product, isLoading } = useProduct()
 
+  const [currentIndexImages, setCurrentIndexImages] = useState<number[]>([0, 5])
+  const [activeImage, setActiveImage] = useState<number>(0)
+
+  const imageRef = useRef<HTMLImageElement>(null)
+
+  const currentImages = useMemo(
+    () => (product ? product.images.slice(...currentIndexImages) : []),
+    [currentIndexImages, product]
+  )
+
   if (isLoading) return null
 
-  const { name, description, image, images, rating, sold, price, price_before_discount, quantity } = product
+  const { name, description, images, rating, sold, price, price_before_discount, quantity } = product
+
+  const handleActiveImage = (index: number) => {
+    setActiveImage(index)
+  }
+
+  const handleNextImages = () => {
+    if (currentIndexImages[1] < images.length) setCurrentIndexImages((prev) => [prev[0] + 1, prev[1] + 1])
+  }
+
+  const handlePrevImages = () => {
+    if (currentIndexImages[0] > 0) setCurrentIndexImages((prev) => [prev[0] - 1, prev[1] - 1])
+  }
+
+  const handleZoomIn = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    const rect = e.currentTarget.getBoundingClientRect()
+
+    const image = imageRef.current as HTMLImageElement
+    const { naturalHeight, naturalWidth } = image
+    const { offsetY, offsetX } = e.nativeEvent
+
+    const top = offsetY * (1 - naturalHeight / rect.height)
+    const left = offsetX * (1 - naturalWidth / rect.width)
+
+    image.style.height = naturalHeight + 'px'
+    image.style.width = naturalWidth + 'px'
+    image.style.maxWidth = 'unset'
+    image.style.top = top + 'px'
+    image.style.left = left + 'px'
+  }
+
+  const handleRemoveZoom = () => {
+    imageRef.current?.removeAttribute('style')
+  }
 
   return (
     <div className='bg-neutral-100 py-6'>
@@ -17,28 +61,40 @@ export default function ProductDetail() {
         <div className='mt-5 bg-white p-4 shadow-sm'>
           <section className='grid grid-cols-12 gap-9'>
             <div className='col-span-5'>
-              <div className='relative w-full pt-[100%] shadow-sm'>
+              <div
+                className='relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow-sm'
+                onMouseMove={handleZoomIn}
+                onMouseLeave={handleRemoveZoom}
+              >
                 <img
-                  className='absolute left-0 top-0 h-full w-full rounded-tl-sm rounded-tr-sm object-cover align-bottom'
-                  src={image}
+                  className='pointer-events-none absolute left-0 top-0 h-full w-full rounded-tl-sm rounded-tr-sm object-cover align-bottom'
+                  src={images[activeImage]}
                   alt={name}
+                  ref={imageRef}
                 />
               </div>
-              <div className='relative mt-4 grid grid-cols-5 gap-1'>
-                {images.slice(0, 5).map((image, index) => {
-                  const isActive = index === 0
+              <div className='relative mt-4 grid cursor-pointer grid-cols-5 gap-1'>
+                {currentImages.slice(0, 5).map((image, index) => {
+                  const isActive = index === activeImage
                   return (
-                    <div key={image} className='relative w-full pt-[100%] shadow-sm'>
+                    <div
+                      key={image}
+                      className='relative w-full pt-[100%] shadow-sm'
+                      onMouseEnter={() => handleActiveImage(index)}
+                    >
                       <img
                         className='absolute left-0 top-0 h-full w-full cursor-pointer rounded-tl-sm rounded-tr-sm object-cover align-bottom'
                         src={image}
                         alt={name}
                       />
-                      {isActive && <div className='absolute inset-0 border border-primary'></div>}
+                      {isActive && <div className='absolute inset-0 border-2 border-primary'></div>}
                     </div>
                   )
                 })}
-                <button className='absolute left-5 top-1/2 z-10 h-10 w-5 -translate-y-1/2 bg-black/20 text-white'>
+                <button
+                  className='absolute left-0 top-1/2 z-10 h-10 w-5 -translate-y-1/2 bg-black/20 text-white'
+                  onClick={handlePrevImages}
+                >
                   <svg
                     enableBackground='new 0 0 13 20'
                     viewBox='0 0 13 20'
@@ -49,7 +105,10 @@ export default function ProductDetail() {
                     <polygon points='4.2 10 12.1 2.1 10 -.1 1 8.9 -.1 10 1 11 10 20 12.1 17.9' />
                   </svg>
                 </button>
-                <button className='absolute right-5 top-1/2 z-10 h-10 w-5 -translate-y-1/2 bg-black/20 text-white'>
+                <button
+                  className='absolute right-0 top-1/2 z-10 h-10 w-5 -translate-y-1/2 bg-black/20 text-white'
+                  onClick={handleNextImages}
+                >
                   <svg
                     enableBackground='new 0 0 13 21'
                     viewBox='0 0 13 21'
@@ -64,7 +123,7 @@ export default function ProductDetail() {
             </div>
             <div className='col-span-7 py-1 pr-5'>
               <h1 className='break-words text-xl font-medium'>{name}</h1>
-              <div className='mt-2.5 flex items-center'>
+              <div className='mt-3 flex items-center'>
                 <div className='flex items-center'>
                   <span className='mr-1.5 border-b border-b-primary text-base text-primary'>{rating}</span>
                   <div className='mb-0.5 flex items-center'>
@@ -81,7 +140,7 @@ export default function ProductDetail() {
                   <span className=' text-sm capitalize text-gray-500'>Đã bán</span>
                 </div>
               </div>
-              <div className='mt-2.5 flex items-center bg-neutral-50 px-4 py-5'>
+              <div className='mt-3 flex items-center bg-neutral-50 px-4 py-5'>
                 <div className='mr-2.5 text-base text-black/50 line-through'>
                   <span>₫</span>
                   <span>{formatCurrency(price_before_discount)}</span>

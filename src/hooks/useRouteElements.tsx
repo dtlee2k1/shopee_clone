@@ -52,7 +52,7 @@ export function useRouteElements() {
           element: <ProductList />
         },
         {
-          path: ':id',
+          path: ':nameId',
           element: (
             <ProtectedRoute>
               <ProductDetail />
