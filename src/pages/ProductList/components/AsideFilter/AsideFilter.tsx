@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import { Category } from 'src/types/category.type'
 import { PriceSchema, priceSchema } from 'src/utils/rules'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
-import InputNumber from 'src/components/InputNumber/InputNumber'
+import InputNumber from 'src/components/InputNumber'
 import Button from 'src/components/Button'
 import RatingStars from '../RatingStars'
 

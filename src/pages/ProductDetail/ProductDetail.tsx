@@ -7,8 +7,8 @@ import { getProducts } from 'src/apis/product.api'
 import { ProductListConfig } from 'src/types/product.type'
 import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/helpers'
 import ProductRating from 'src/components/ProductRating'
-import InputNumber from 'src/components/InputNumber/InputNumber'
 import Product from '../ProductList/components/Product'
+import QuantityController from 'src/components/QuantityController'
 
 export default function ProductDetail() {
   const { product, isLoading: isLoading1 } = useProduct()
@@ -30,6 +30,13 @@ export default function ProductDetail() {
     queryFn: () => getProducts(queryConfig),
     enabled: Boolean(product) // only fetch when `product` exists
   })
+
+  // Quantity of Product Controller
+  const [buyCount, setBuyCount] = useState<number>(1)
+
+  const handleBuyCount = (value: number) => {
+    setBuyCount(value)
+  }
 
   if (isLoading1 && isLoading2) return null
 
@@ -159,7 +166,7 @@ export default function ProductDetail() {
                   <span>{formatCurrency(price_before_discount)}</span>
                 </div>
                 <div className='flex items-center text-3xl text-primary'>
-                  <span>₫ </span>
+                  <span>₫</span>
                   <span>{formatCurrency(price)}</span>
                   <span className='ml-4 whitespace-nowrap rounded-sm bg-primary px-1 py-0.5 text-xs font-semibold uppercase text-white'>
                     {rateSale(price_before_discount, price)} giảm
@@ -169,22 +176,13 @@ export default function ProductDetail() {
               <div className='mt-8 flex place-items-center'>
                 <h3 className='mr-10 text-sm font-normal capitalize text-gray-500'>Số lượng</h3>
                 <div className='flex items-baseline'>
-                  <div className='mr-4 flex'>
-                    <button className='h-8 w-8 rounded-l-sm border border-black/10 bg-transparent text-black/80 outline-none'>
-                      &minus;
-                    </button>
-
-                    <InputNumber
-                      type='text'
-                      value={1}
-                      classNameInput='h-8 w-14 border border-x-0 border-black/10 bg-transparent text-center'
-                      classNameError='hidden'
-                    />
-
-                    <button className='h-8 w-8 rounded-r-sm border border-black/10 bg-transparent text-black/80 outline-none'>
-                      &#43;
-                    </button>
-                  </div>
+                  <QuantityController
+                    max={quantity}
+                    value={buyCount}
+                    onDecrease={handleBuyCount}
+                    onIncrease={handleBuyCount}
+                    onVary={handleBuyCount}
+                  />
                   <div className='text-sm text-gray-500'>{quantity} sản phẩm có sẵn</div>
                 </div>
               </div>
