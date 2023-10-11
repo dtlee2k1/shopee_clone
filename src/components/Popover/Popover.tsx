@@ -36,6 +36,7 @@ interface ContainerProps {
 
 interface HeadingProps {
   children: React.ReactNode
+  className?: string
 }
 
 interface ContentProps {
@@ -79,19 +80,17 @@ export function Popover({ children, placement = 'bottom-end', initialOpen = fals
 function Container({ children }: ContainerProps) {
   const { refs, showPopover, hidePopover } = useContext(PopoverContext) as PopoverContextType
   return (
-    <div
-      className='flex cursor-pointer items-center px-2.5 py-1 hover:text-white/70'
-      ref={refs.setReference}
-      onMouseEnter={showPopover}
-      onMouseLeave={hidePopover}
-    >
+    <div ref={refs.setReference} onMouseEnter={showPopover} onMouseLeave={hidePopover}>
       {children}
     </div>
   )
 }
 
-function Heading({ children }: HeadingProps) {
-  return children
+function Heading({
+  children,
+  className = 'flex cursor-pointer items-center px-2.5 py-1 hover:text-white/70'
+}: HeadingProps) {
+  return <div className={className}>{children}</div>
 }
 
 function Content({ children }: ContentProps) {

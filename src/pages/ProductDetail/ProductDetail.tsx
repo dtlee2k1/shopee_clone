@@ -9,12 +9,17 @@ import { formatCurrency, formatNumberToSocialStyle, rateSale } from 'src/utils/h
 import ProductRating from 'src/components/ProductRating'
 import Product from '../ProductList/components/Product'
 import QuantityController from 'src/components/QuantityController'
+import { useAddToCart } from './useAddToCart'
 
 export default function ProductDetail() {
   const { product, isLoading: isLoading1 } = useProduct()
+  const addToCartMutation = useAddToCart()
 
   const [currentIndexImages, setCurrentIndexImages] = useState<number[]>([0, 5])
   const [activeImage, setActiveImage] = useState<number>(0)
+
+  // Quantity of Product Controller
+  const [buyCount, setBuyCount] = useState<number>(1)
 
   const imageRef = useRef<HTMLImageElement>(null)
 
@@ -31,16 +36,9 @@ export default function ProductDetail() {
     enabled: Boolean(product) // only fetch when `product` exists
   })
 
-  // Quantity of Product Controller
-  const [buyCount, setBuyCount] = useState<number>(1)
-
-  const handleBuyCount = (value: number) => {
-    setBuyCount(value)
-  }
-
   if (isLoading1 && isLoading2) return null
 
-  const { name, description, images, rating, sold, price, price_before_discount, quantity } = product
+  const { _id, name, description, images, rating, sold, price, price_before_discount, quantity } = product
 
   const handleActiveImage = (index: number) => {
     setActiveImage(index)
@@ -73,6 +71,14 @@ export default function ProductDetail() {
 
   const handleRemoveZoom = () => {
     imageRef.current?.removeAttribute('style')
+  }
+
+  const handleBuyCount = (value: number) => {
+    setBuyCount(value)
+  }
+
+  const handleAddToCart = () => {
+    addToCartMutation.mutate({ product_id: _id, buy_count: buyCount })
   }
 
   return (
@@ -187,7 +193,10 @@ export default function ProductDetail() {
                 </div>
               </div>
               <div className='mt-8 flex items-center'>
-                <button className='flex h-12 max-w-[250px] items-center rounded-sm border border-primary bg-[#ff57221a] px-5 capitalize text-primary shadow-sm outline-none hover:bg-[#ffc5b22e]'>
+                <button
+                  className='flex h-12 max-w-[250px] items-center rounded-sm border border-primary bg-[#ff57221a] px-5 capitalize text-primary shadow-sm outline-none hover:bg-[#ffc5b22e]'
+                  onClick={handleAddToCart}
+                >
                   <svg
                     enableBackground='new 0 0 15 15'
                     viewBox='0 0 15 15'

@@ -1,5 +1,5 @@
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { omit } from 'lodash'
@@ -9,24 +9,40 @@ import { useApp } from 'src/contexts/app.context'
 import { logout } from 'src/apis/auth.api'
 import Popover from '../Popover'
 import useQueryConfig from 'src/hooks/useQueryConfig'
+import { purchasesStatus } from 'src/constants/purchase'
+import { getPurchases } from 'src/apis/purchase.api'
+import { formatCurrency, generateNameId } from 'src/utils/helpers'
+import emptyCart from 'src/assets/images/empty-cart.png'
 
 type FormData = SearchSchema
+const MAX_PURCHASES_IN_CART = 5
 
 export default function Header() {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
+
   const { isAuthenticated, setAuthenticated, profile } = useApp()
 
   const logoutMutation = useMutation({
     mutationFn: logout,
     onSuccess: () => {
       setAuthenticated(false)
+      queryClient.removeQueries()
     }
   })
-
+  // Search Products
   const queryConfig = useQueryConfig()
   const { register, handleSubmit } = useForm<FormData>({
     resolver: yupResolver(searchSchema)
   })
+
+  // Get Purchases In Cart List
+  const { data: purchasesInCartData } = useQuery({
+    queryKey: ['purchases', { status: purchasesStatus.inCart }],
+    queryFn: () => getPurchases({ status: purchasesStatus.inCart }),
+    enabled: isAuthenticated
+  })
+  const purchasesInCart = purchasesInCartData?.data.data
 
   const handleLogout = () => {
     logoutMutation.mutate()
@@ -61,32 +77,34 @@ export default function Header() {
             <Popover>
               <Popover.Container>
                 <Popover.Heading>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    strokeWidth='1.5'
-                    stroke='currentColor'
-                    className='h-5 w-5'
-                  >
-                    <path
-                      strokeLinecap='round'
-                      strokeLinejoin='round'
-                      d='M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418'
-                    />
-                  </svg>
-                  <span className='mx-1'>Tiếng Việt</span>
-                  <svg
-                    xmlns='http://www.w3.org/2000/svg'
-                    fill='none'
-                    viewBox='0 0 24 24'
-                    strokeWidth={1.5}
-                    stroke='currentColor'
-                    className='h-4 w-4'
-                    color='currentColor'
-                  >
-                    <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />
-                  </svg>
+                  <div className='flex items-center px-2.5 py-1'>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth='1.5'
+                      stroke='currentColor'
+                      className='h-5 w-5'
+                    >
+                      <path
+                        strokeLinecap='round'
+                        strokeLinejoin='round'
+                        d='M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418'
+                      />
+                    </svg>
+                    <span className='mx-1'>Tiếng Việt</span>
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth={1.5}
+                      stroke='currentColor'
+                      className='h-4 w-4'
+                      color='currentColor'
+                    >
+                      <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />
+                    </svg>
+                  </div>
                 </Popover.Heading>
                 <Popover.Content>
                   <div className='min-w-[9rem] rounded-sm border-none bg-white shadow-md'>
@@ -103,7 +121,7 @@ export default function Header() {
               <Popover>
                 <Popover.Container>
                   <Popover.Heading>
-                    <div className='flex cursor-pointer items-center px-2.5 py-1 hover:text-gray-300'>
+                    <div className='flex items-center px-2.5 py-1'>
                       <div className='mr-2 h-5 w-5 flex-shrink-0'>
                         <img
                           src='./images/avatar-3.jpg'
@@ -192,8 +210,8 @@ export default function Header() {
           <div className='md:mr-16'>
             <Popover>
               <Popover.Container>
-                <Popover.Heading>
-                  <Link to='/' className='px-8'>
+                <Popover.Heading className='flex cursor-pointer items-center px-2.5 py-1'>
+                  <Link to='/' className='relative px-6'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       fill='none'
@@ -208,76 +226,63 @@ export default function Header() {
                         d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
                       />
                     </svg>
+                    {purchasesInCart && (
+                      <div className='absolute -top-2.5 right-3 h-5 min-w-[24px] rounded-[2.75rem] border-2 border-primary bg-white px-1.5 text-center leading-5 text-primary'>
+                        {purchasesInCart?.length}
+                      </div>
+                    )}
                   </Link>
                 </Popover.Heading>
                 <Popover.Content>
-                  <div className='max-w-[400px] cursor-pointer overflow-hidden rounded-sm border-none bg-white shadow-md'>
-                    <div className='flex flex-col'>
-                      <h3 className='select-none p-2.5 text-sm capitalize text-black/30'>Sản phẩm mới thêm</h3>
-                      <div className='flex items-start p-2.5 hover:bg-stone-100'>
-                        <img
-                          className='h-10 w-10 flex-shrink-0 border border-black/10 object-cover'
-                          src='https://down-vn.img.susercontent.com/file/3006ec64110eb85663f99fb87024c53d'
-                          alt=''
-                        />
-                        <div className='ml-2.5 flex-1 overflow-hidden'>
-                          <div className='flex items-center text-sm'>
-                            <div className='truncate font-medium'>
-                              Bộ Nút Đệm Tai Nghe Bằng Silicon Mềm Mại Cho Tai Nghe Airpods Pro
-                            </div>
-                            <div className='ml-10 flex flex-shrink-0 items-center'>
-                              <div className='text-primary'>₫36.999</div>
-                            </div>
+                  <div className='max-w-[400px] overflow-hidden rounded-sm border-none bg-white shadow-md'>
+                    {!purchasesInCart && (
+                      <div className='flex w-[400px] flex-col items-center py-14'>
+                        <img src={emptyCart} alt='empty-cart' className='h-28 w-28 ' />
+                        <h3 className='text-sm capitalize'>Chưa có sản phẩm</h3>
+                      </div>
+                    )}
+                    {purchasesInCart && (
+                      <div className='flex flex-col'>
+                        <h3 className='select-none p-2.5 text-sm capitalize text-black/30'>Sản phẩm mới thêm</h3>
+                        {purchasesInCart.slice(0, MAX_PURCHASES_IN_CART).map((purchase) => (
+                          <div key={purchase._id}>
+                            <Link
+                              to={`/${generateNameId(purchase.product.name, purchase.product._id)}`}
+                              className='flex items-start p-2.5 hover:bg-stone-100'
+                            >
+                              <img
+                                className='h-10 w-10 flex-shrink-0 border border-black/10 object-cover'
+                                src={purchase.product.image}
+                                alt={purchase.product.name}
+                              />
+                              <div className='ml-2.5 flex-1 overflow-hidden'>
+                                <div className='flex items-center text-sm'>
+                                  <div className='truncate font-medium'>{purchase.product.name}</div>
+                                  <div className='ml-10 flex flex-shrink-0 items-center'>
+                                    <div className='text-primary'>₫{formatCurrency(purchase.price)}</div>
+                                  </div>
+                                </div>
+                              </div>
+                            </Link>
                           </div>
+                        ))}
+
+                        <div className='flex items-center justify-between p-2.5 '>
+                          {purchasesInCart.length > MAX_PURCHASES_IN_CART && (
+                            <div className='text-xs capitalize'>
+                              <span>{purchasesInCart.length - MAX_PURCHASES_IN_CART}</span>
+                              <span>&nbsp;Thêm hàng vào giỏ</span>
+                            </div>
+                          )}
+                          <Link
+                            to=''
+                            className='ml-auto min-w-max flex-shrink-0 rounded-sm bg-primary px-4 py-2 text-sm capitalize text-white hover:bg-primary/90'
+                          >
+                            Xem giỏ hàng
+                          </Link>
                         </div>
                       </div>
-                      <div className='flex items-start p-2.5 hover:bg-stone-100'>
-                        <img
-                          className='h-10 w-10 flex-shrink-0 border border-black/10 object-cover'
-                          src='https://down-vn.img.susercontent.com/file/3006ec64110eb85663f99fb87024c53d'
-                          alt=''
-                        />
-                        <div className='ml-2.5 flex-1 overflow-hidden'>
-                          <div className='flex items-center text-sm'>
-                            <div className='truncate font-medium'>
-                              Bộ Nút Đệm Tai Nghe Bằng Silicon Mềm Mại Cho Tai Nghe Airpods Pro
-                            </div>
-                            <div className='ml-10 flex flex-shrink-0 items-center'>
-                              <div className='text-primary'>₫36.999</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className='flex items-start p-2.5 hover:bg-stone-100'>
-                        <img
-                          className='h-10 w-10 flex-shrink-0 border border-black/10 object-cover'
-                          src='https://down-vn.img.susercontent.com/file/3006ec64110eb85663f99fb87024c53d'
-                          alt=''
-                        />
-                        <div className='ml-2.5 flex-1 overflow-hidden'>
-                          <div className='flex items-center text-sm'>
-                            <div className='truncate font-medium'>
-                              Bộ Nút Đệm Tai Nghe Bằng Silicon Mềm Mại Cho Tai Nghe Airpods Pro
-                            </div>
-                            <div className='ml-10 flex flex-shrink-0 items-center'>
-                              <div className='text-primary'>₫36.999</div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <div className='flex items-center justify-between p-2.5 '>
-                        <div className='text-xs'>
-                          <span>1</span>
-                          <span>&nbsp;Thêm hàng vào giỏ</span>
-                        </div>
-                        <Link
-                          to=''
-                          className='min-w-max flex-shrink-0 rounded-sm bg-primary px-4 py-2 text-sm capitalize text-white hover:bg-primary/90'
-                        >
-                          Xem giỏ hàng
-                        </Link>
-                      </div>
-                    </div>
+                    )}
                   </div>
                 </Popover.Content>
               </Popover.Container>

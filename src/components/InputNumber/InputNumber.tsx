@@ -1,4 +1,4 @@
-import { forwardRef, InputHTMLAttributes } from 'react'
+import { forwardRef, InputHTMLAttributes, useState } from 'react'
 import { RegisterOptions, UseFormRegister } from 'react-hook-form'
 import classNames from 'classnames'
 
@@ -19,28 +19,34 @@ const InputNumber = forwardRef<HTMLInputElement, InputNumberProps>(function Inpu
     className,
     errorMessage,
     onChange,
+    value = '',
     ...rest
   },
   ref
 ) {
+  const [localValue, setLocalValue] = useState<string>(value as string)
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target
 
-    if (onChange && (/^\d+$/.test(value) || value === '')) onChange(e)
+    if (/^\d+$/.test(value) || value === '') {
+      onChange && onChange(e)
+      setLocalValue(value)
+    }
   }
-
   return (
     <div className={className}>
       <input
         type={type}
+        value={value || localValue}
         className={classNames(classNameInput, {
           'border-red-600 bg-red-50 focus:border-red-600': errorMessage,
           'border-gray-300 focus:border-gray-500': !errorMessage
         })}
         placeholder={placeholder}
         onChange={handleChange}
-        {...rest}
         ref={ref}
+        {...rest}
       />
       <div className={classNameError}>{errorMessage}</div>
     </div>
