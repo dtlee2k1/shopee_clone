@@ -2,6 +2,7 @@ import { Navigate, useRoutes } from 'react-router-dom'
 import { useApp } from 'src/contexts/app.context'
 import MainLayout from 'src/layouts/MainLayout'
 import RegisterLayout from 'src/layouts/RegisterLayout'
+import Cart from 'src/pages/Cart'
 import Login from 'src/pages/Login'
 import ProductDetail from 'src/pages/ProductDetail'
 import ProductList from 'src/pages/ProductList'
@@ -56,6 +57,14 @@ export function useRouteElements() {
           element: (
             <ProtectedRoute>
               <ProductDetail />
+            </ProtectedRoute>
+          )
+        },
+        {
+          path: 'cart',
+          element: (
+            <ProtectedRoute>
+              <Cart />
             </ProtectedRoute>
           )
         },

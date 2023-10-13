@@ -5,9 +5,9 @@ interface QuantityControllerProps extends InputNumberProps {
   max?: number
   value?: number
   classNameWrapper?: string
-  onIncrease: (value: number) => void
-  onDecrease: (value: number) => void
-  onVary: (value: number) => void
+  onIncrease?: (value: number) => void
+  onDecrease?: (value: number) => void
+  onVary?: (value: number) => void
 }
 
 export default function QuantityController({
@@ -16,6 +16,7 @@ export default function QuantityController({
   onDecrease,
   onVary,
   value = 1,
+  classNameWrapper = 'flex items-center mr-4',
   ...rest
 }: QuantityControllerProps) {
   const [localValue, setLocalValue] = useState<number>(value)
@@ -45,7 +46,7 @@ export default function QuantityController({
   }
 
   return (
-    <div className='mr-4 flex'>
+    <div className={classNameWrapper}>
       <button
         className='h-8 w-8 rounded-l-sm border border-black/10 bg-transparent text-black/80 outline-none'
         onClick={decrease}

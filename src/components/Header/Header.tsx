@@ -211,7 +211,7 @@ export default function Header() {
             <Popover>
               <Popover.Container>
                 <Popover.Heading className='flex cursor-pointer items-center px-2.5 py-1'>
-                  <Link to='/' className='relative px-6'>
+                  <Link to='/cart' className='relative px-6'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       fill='none'
@@ -275,7 +275,7 @@ export default function Header() {
                             </div>
                           )}
                           <Link
-                            to=''
+                            to='/cart'
                             className='ml-auto min-w-max flex-shrink-0 rounded-sm bg-primary px-4 py-2 text-sm capitalize text-white hover:bg-primary/90'
                           >
                             Xem giỏ hàng
