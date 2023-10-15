@@ -226,7 +226,7 @@ export default function Header() {
                         d='M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z'
                       />
                     </svg>
-                    {purchasesInCart && (
+                    {purchasesInCart && purchasesInCart.length > 0 && (
                       <div className='absolute -top-2.5 right-3 h-5 min-w-[24px] rounded-[2.75rem] border-2 border-primary bg-white px-1.5 text-center leading-5 text-primary'>
                         {purchasesInCart?.length}
                       </div>
@@ -235,13 +235,13 @@ export default function Header() {
                 </Popover.Heading>
                 <Popover.Content>
                   <div className='max-w-[400px] overflow-hidden rounded-sm border-none bg-white shadow-md'>
-                    {!purchasesInCart && (
+                    {purchasesInCart?.length === 0 && (
                       <div className='flex w-[400px] flex-col items-center py-14'>
                         <img src={emptyCart} alt='empty-cart' className='h-28 w-28 ' />
                         <h3 className='text-sm capitalize'>Chưa có sản phẩm</h3>
                       </div>
                     )}
-                    {purchasesInCart && (
+                    {purchasesInCart && purchasesInCart.length > 0 && (
                       <div className='flex flex-col'>
                         <h3 className='select-none p-2.5 text-sm capitalize text-black/30'>Sản phẩm mới thêm</h3>
                         {purchasesInCart.slice(0, MAX_PURCHASES_IN_CART).map((purchase) => (

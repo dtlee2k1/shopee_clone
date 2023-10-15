@@ -13,15 +13,16 @@ export async function getPurchases(params: { status: PurchaseListStatus }) {
 }
 
 export async function buyPurchases(body: { product_id: string; buy_count: number }[]) {
-  const response = await http.put<SuccessResponse<Purchase[]>>('/purchases/buy-products', body)
+  const response = await http.post<SuccessResponse<Purchase[]>>('/purchases/buy-products', body)
   return response
 }
 
-export async function updatePurchase(body: { _id: string; buy_count: number }) {
-  const response = await http.post<SuccessResponse<Purchase>>('/purchases/update-purchase', body)
+export async function updatePurchase(body: { product_id: string; buy_count: number }) {
+  const response = await http.put<SuccessResponse<Purchase>>('/purchases/update-purchase', body)
   return response
 }
 
 export async function deletePurchases(purchaseIds: string[]) {
   const response = await http.delete<SuccessResponse<{ deleted_count: number }>>('/purchases', { data: purchaseIds })
+  return response
 }

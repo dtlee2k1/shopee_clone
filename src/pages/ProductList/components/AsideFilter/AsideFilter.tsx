@@ -148,7 +148,7 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
                   placeholder='₫ TỪ'
                   className='grow'
                   classNameError='hidden'
-                  classNameInput='w-full rounded border shadow-sm border-black/25 focus:border-black/25  p-1 text-xs outline-none focus:shadow-sm h-full'
+                  classNameInput='w-full rounded border shadow-sm border-black/25 focus:border-black/25 p-1 text-xs outline-none focus:shadow-sm h-full'
                   onChange={(e) => {
                     onChange(e)
                     trigger('price_max')
