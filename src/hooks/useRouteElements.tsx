@@ -1,5 +1,6 @@
 import { Navigate, useRoutes } from 'react-router-dom'
 import { useApp } from 'src/contexts/app.context'
+import CartLayout from 'src/layouts/CartLayout'
 import MainLayout from 'src/layouts/MainLayout'
 import RegisterLayout from 'src/layouts/RegisterLayout'
 import Cart from 'src/pages/Cart'
@@ -61,18 +62,23 @@ export function useRouteElements() {
           )
         },
         {
-          path: 'cart',
-          element: (
-            <ProtectedRoute>
-              <Cart />
-            </ProtectedRoute>
-          )
-        },
-        {
           path: 'profile',
           element: (
             <ProtectedRoute>
               <Profile />
+            </ProtectedRoute>
+          )
+        }
+      ]
+    },
+    {
+      element: <CartLayout />,
+      children: [
+        {
+          path: 'cart',
+          element: (
+            <ProtectedRoute>
+              <Cart />
             </ProtectedRoute>
           )
         }
