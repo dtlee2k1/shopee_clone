@@ -53,6 +53,9 @@ class Http {
           const errorMessage = data.message || error.message
           toast.error(errorMessage)
         }
+        if (error.response?.status === HttpStatusCode.Unauthorized) {
+          clearLS()
+        }
         return Promise.reject(error)
       }
     )
