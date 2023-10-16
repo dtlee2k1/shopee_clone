@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { toast } from 'react-toastify'
 import { addToCart } from 'src/apis/purchase.api'
 
 export function useAddToCart() {
@@ -7,9 +6,8 @@ export function useAddToCart() {
 
   const addToCartMutation = useMutation({
     mutationFn: addToCart,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['purchases'] })
-      toast.success(data.data.message)
     }
   })
   return addToCartMutation

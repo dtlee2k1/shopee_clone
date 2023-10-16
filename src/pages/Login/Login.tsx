@@ -66,7 +66,7 @@ export default function Login() {
           <div className='col-span-full mx-auto max-w-md rounded bg-white p-8 shadow-sm md:col-span-2 lg:w-96'>
             <div className='text-xl'>Đăng Nhập</div>
 
-            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+            <form onSubmit={handleSubmit(onSubmit)} noValidate autoComplete='off'>
               <Input
                 className='mt-8'
                 type='email'

@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 
@@ -11,24 +11,27 @@ import QuantityController from 'src/components/QuantityController'
 import EmptyCart from './components/EmptyCart'
 import Modal from 'src/components/Modal'
 import ConfirmDelete from 'src/components/ConfirmDelete'
-
-interface ExtendedPurchases extends Purchase {
-  checked: boolean
-  disabled: boolean
-}
+import { useApp } from 'src/contexts/app.context'
 
 export default function Cart() {
   const queryClient = useQueryClient()
-  const [extendedPurchases, setExtendedPurchases] = useState<ExtendedPurchases[]>([])
-  const isAllChecked = extendedPurchases.every((purchase) => purchase.checked)
-  const checkedPurchases = extendedPurchases.filter((purchase) => purchase.checked)
+
+  const { extendedPurchases, setExtendedPurchases } = useApp()
+
+  const isAllChecked = useMemo(() => extendedPurchases.every((purchase) => purchase.checked), [extendedPurchases])
+  const checkedPurchases = useMemo(() => extendedPurchases.filter((purchase) => purchase.checked), [extendedPurchases])
   const checkedCount = checkedPurchases.length
-
-  const totalPaid = checkedPurchases.reduce((total, purchase) => total + purchase.price * purchase.buy_count, 0)
-
-  const totalSavings = checkedPurchases.reduce(
-    (total, purchase) => total + (purchase.price_before_discount - purchase.price) * purchase.buy_count,
-    0
+  const totalPaid = useMemo(
+    () => checkedPurchases.reduce((total, purchase) => total + purchase.price * purchase.buy_count, 0),
+    [checkedPurchases]
+  )
+  const totalSavings = useMemo(
+    () =>
+      checkedPurchases.reduce(
+        (total, purchase) => total + (purchase.price_before_discount - purchase.price) * purchase.buy_count,
+        0
+      ),
+    [checkedPurchases]
   )
 
   // Get Purchases In Cart List Query
@@ -64,20 +67,34 @@ export default function Cart() {
     }
   })
 
+  // `checked` state for `BUY NOW` feature
+  const location = useLocation()
+  const chosenPurchaseFromLocation = (location.state as { purchaseId: string | null })?.purchaseId
+
   // side effects to generate new objects of purchases with 2 keys `checked` & `disabled`
   useEffect(() => {
     setExtendedPurchases((extendedPurchases) => {
       return (
-        purchasesInCart?.map((purchase) => ({
-          ...purchase,
-          checked: Boolean(
-            extendedPurchases.find((extendedPurchase) => extendedPurchase._id === purchase._id)?.checked
-          ),
-          disabled: false
-        })) || []
+        purchasesInCart?.map((purchase) => {
+          const isChosenPurchaseFromLocation = purchase._id === chosenPurchaseFromLocation
+          return {
+            ...purchase,
+            checked:
+              isChosenPurchaseFromLocation ||
+              Boolean(extendedPurchases.find((extendedPurchase) => extendedPurchase._id === purchase._id)?.checked),
+            disabled: false
+          }
+        }) || []
       )
     })
-  }, [purchasesInCart])
+  }, [purchasesInCart, chosenPurchaseFromLocation, setExtendedPurchases])
+
+  // clear `checked` state after reload page
+  useEffect(() => {
+    return () => {
+      history.replaceState(null, '')
+    }
+  }, [])
 
   const handleToggleChecked = (purchaseIndex: number) => {
     setExtendedPurchases((purchases) =>

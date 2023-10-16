@@ -1,6 +1,7 @@
 import { useMemo, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import DOMPurify from 'dompurify'
+import { toast } from 'react-toastify'
 
 import { useProduct } from './useProduct'
 import { getProducts } from 'src/apis/product.api'
@@ -10,16 +11,19 @@ import ProductRating from 'src/components/ProductRating'
 import Product from '../ProductList/components/Product'
 import QuantityController from 'src/components/QuantityController'
 import { useAddToCart } from './useAddToCart'
+import { useNavigate } from 'react-router-dom'
 
 export default function ProductDetail() {
+  const navigate = useNavigate()
+
+  // get product details
   const { product, isLoading: isLoading1 } = useProduct()
+
   const addToCartMutation = useAddToCart()
 
+  // state for handle images slider
   const [currentIndexImages, setCurrentIndexImages] = useState<number[]>([0, 5])
   const [activeImage, setActiveImage] = useState<number>(0)
-
-  // Quantity of Product Controller
-  const [buyCount, setBuyCount] = useState<number>(1)
 
   const imageRef = useRef<HTMLImageElement>(null)
 
@@ -27,6 +31,9 @@ export default function ProductDetail() {
     () => (product ? product.images.slice(...currentIndexImages) : []),
     [currentIndexImages, product]
   )
+
+  // Quantity of Product Controller
+  const [buyCount, setBuyCount] = useState<number>(1)
 
   // Get relevant products by category equivalents
   const queryConfig: ProductListConfig = { limit: 20, page: 1, category: product?.category._id }
@@ -38,6 +45,7 @@ export default function ProductDetail() {
 
   if (isLoading1 && isLoading2) return null
 
+  // Destructuring product data
   const { _id, name, description, images, rating, sold, price, price_before_discount, quantity } = product
 
   const handleActiveImage = (index: number) => {
@@ -78,7 +86,27 @@ export default function ProductDetail() {
   }
 
   const handleAddToCart = () => {
-    addToCartMutation.mutate({ product_id: _id, buy_count: buyCount })
+    addToCartMutation.mutate(
+      { product_id: _id, buy_count: buyCount },
+      {
+        onSuccess: (data) => {
+          toast.success(data.data.message)
+        }
+      }
+    )
+  }
+
+  const handleBuyNow = () => {
+    addToCartMutation.mutate(
+      { product_id: _id, buy_count: buyCount },
+      {
+        onSuccess: (data) => {
+          navigate('/cart', {
+            state: { purchaseId: data.data.data._id }
+          })
+        }
+      }
+    )
   }
 
   return (
@@ -222,8 +250,11 @@ export default function ProductDetail() {
                   </svg>
                   <span className='text-sm'>Thêm vào giỏ hàng</span>
                 </button>
-                <button className='ml-4 h-12 w-44 max-w-[250px] rounded-sm border-none bg-primary px-5 capitalize text-white shadow-sm outline-none hover:opacity-90'>
-                  <span className='text-sm'>Mua ngay</span>
+                <button
+                  className='ml-4 h-12 w-44 max-w-[250px] rounded-sm border-none bg-primary px-5 text-sm capitalize text-white shadow-sm outline-none hover:opacity-90'
+                  onClick={handleBuyNow}
+                >
+                  Mua ngay
                 </button>
               </div>
               <div className='mt-8 border-t border-t-black/5'></div>

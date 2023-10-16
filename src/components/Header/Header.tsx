@@ -1,4 +1,4 @@
-import { Link, useSearchParams } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 
 import { useApp } from 'src/contexts/app.context'
@@ -9,7 +9,6 @@ import { formatCurrency, generateNameId } from 'src/utils/helpers'
 import emptyCart from 'src/assets/images/empty-cart.png'
 import NavHeader from '../NavHeader'
 import { useSearchProducts } from 'src/hooks/useSearchProducts'
-import { useEffect } from 'react'
 
 const MAX_PURCHASES_IN_CART = 5
 
@@ -25,7 +24,7 @@ export default function Header() {
     queryFn: () => getPurchases({ status: purchasesStatus.inCart }),
     enabled: isAuthenticated
   })
-  const purchasesInCart = purchasesInCartData?.data.data
+  const purchasesInCart = purchasesInCartData?.data.data || []
 
   return (
     <header className='bg-[linear-gradient(-180deg,#f53d2d,#f63)] pb-5 pt-1.5 text-sm text-white'>
@@ -66,7 +65,7 @@ export default function Header() {
             </div>
           </form>
           {/* Cart Popover */}
-          <div className='md:mr-16'>
+          <div className='lg:mr-16'>
             <Popover>
               <Popover.Container>
                 <Popover.Heading className='flex cursor-pointer items-center px-2.5 py-1'>
