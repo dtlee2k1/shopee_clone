@@ -1,6 +1,7 @@
 import { useState, createContext, useContext, cloneElement, useRef, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { toast } from 'react-toastify'
+import { motion, AnimatePresence } from 'framer-motion'
 
 interface ModalProps {
   children: React.ReactNode
@@ -47,6 +48,8 @@ function Open({ opens: opensWindowName, enable, children }: OpenProps) {
 
 function Window({ children, name }: WindowProps) {
   const { openName, close } = useContext(ModalContext) as ModalContextType
+  const isOpen = Boolean(name === openName)
+
   const ref = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
@@ -62,17 +65,25 @@ function Window({ children, name }: WindowProps) {
     }
   }, [close])
 
-  if (name !== openName) return
-
   return createPortal(
-    <div className='fixed inset-0 z-50 bg-black/40 backdrop-blur-sm transition-all duration-500'>
-      <div
-        className='fixed left-1/2 top-1/2 w-[440px] max-w-[calc(100%-16px)] -translate-x-1/2 -translate-y-1/2 rounded-sm bg-white px-10 pb-6 pt-11 text-base shadow-md'
-        ref={ref}
-      >
-        {cloneElement(children, { onCloseModal: close })}
-      </div>
-    </div>,
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.15 }}
+          className='fixed inset-0 z-50 bg-black/40 backdrop-blur-sm transition-all duration-500'
+        >
+          <div
+            className='fixed left-1/2 top-1/2 w-[440px] max-w-[calc(100%-16px)] -translate-x-1/2 -translate-y-1/2 rounded-sm bg-white px-10 pb-6 pt-11 text-base shadow-md'
+            ref={ref}
+          >
+            {cloneElement(children, { onCloseModal: close })}
+          </div>
+        </motion.div>
+      )}
+    </AnimatePresence>,
     document.body
   )
 }

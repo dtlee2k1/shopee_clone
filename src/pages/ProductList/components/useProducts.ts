@@ -7,11 +7,11 @@ export function useProducts() {
   const queryConfig = useQueryConfigs()
 
   //QUERY
-  const { data: productsData } = useQuery({
+  const { data: productsData, isLoading } = useQuery({
     queryKey: ['products', queryConfig],
     queryFn: () => getProducts(queryConfig as ProductListConfig),
     keepPreviousData: true
   })
 
-  return { productsData, queryConfig }
+  return { productsData, queryConfig, isLoading }
 }
