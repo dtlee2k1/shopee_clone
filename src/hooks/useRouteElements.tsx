@@ -7,8 +7,11 @@ import Cart from 'src/pages/Cart'
 import Login from 'src/pages/Login'
 import ProductDetail from 'src/pages/ProductDetail'
 import ProductList from 'src/pages/ProductList'
-import Profile from 'src/pages/Profile'
 import Register from 'src/pages/Register'
+import UserLayout from 'src/pages/User/layouts/UserLayout'
+import ChangePassword from 'src/pages/User/pages/ChangePassword'
+import HistoryPurchase from 'src/pages/User/pages/HistoryPurchase'
+import Profile from 'src/pages/User/pages/Profile'
 
 interface ProtectedRouteProps {
   children: React.ReactNode
@@ -62,12 +65,39 @@ export function useRouteElements() {
           )
         },
         {
-          path: 'profile',
+          path: 'user',
           element: (
             <ProtectedRoute>
-              <Profile />
+              <UserLayout />
             </ProtectedRoute>
-          )
+          ),
+          children: [
+            {
+              index: true,
+              element: <Navigate to='account' />
+            },
+            {
+              path: 'account',
+              children: [
+                {
+                  index: true,
+                  element: <Navigate to='profile' />
+                },
+                {
+                  path: 'profile',
+                  element: <Profile />
+                },
+                {
+                  path: 'password',
+                  element: <ChangePassword />
+                }
+              ]
+            },
+            {
+              path: 'purchase',
+              element: <HistoryPurchase />
+            }
+          ]
         }
       ]
     },

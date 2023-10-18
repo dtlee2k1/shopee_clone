@@ -3,6 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import Popover from '../Popover'
 import { useApp } from 'src/contexts/app.context'
 import { logout } from 'src/apis/auth.api'
+import avatarDefault from 'src/assets/images/avatar-default.jpg'
 
 export default function NavHeader() {
   const queryClient = useQueryClient()
@@ -73,7 +74,7 @@ export default function NavHeader() {
               <Popover.Heading>
                 <div className='flex items-center px-2.5 py-1'>
                   <div className='mr-2 h-5 w-5 flex-shrink-0'>
-                    <img src='./images/avatar-3.jpg' alt='avatar' className='h-full w-full rounded-full object-cover' />
+                    <img src={avatarDefault} alt='avatar' className='h-full w-full rounded-full object-cover' />
                   </div>
                   <p className='max-w-[6rem] truncate'>{profile?.name || profile?.email}</p>
                 </div>
@@ -82,12 +83,15 @@ export default function NavHeader() {
                 <div className='cursor-pointer overflow-hidden rounded-sm border-none bg-white shadow-md'>
                   <div className='flex flex-col'>
                     <Link
-                      to='/profile'
+                      to='user/account'
                       className='block bg-white px-4 py-2.5 text-sm hover:bg-neutral-50 hover:text-teal-500'
                     >
                       Tài khoản của tôi
                     </Link>
-                    <Link to='/' className='block bg-white px-4 py-2.5 text-sm hover:bg-neutral-50 hover:text-teal-500'>
+                    <Link
+                      to='user/purchase'
+                      className='block bg-white px-4 py-2.5 text-sm hover:bg-neutral-50 hover:text-teal-500'
+                    >
                       Đơn mua
                     </Link>
                     <button

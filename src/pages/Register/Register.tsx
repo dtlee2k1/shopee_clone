@@ -1,15 +1,16 @@
 import { Link, useNavigate } from 'react-router-dom'
+import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { RegisterSchema, registerSchema } from 'src/utils/rules'
-import { useMutation } from '@tanstack/react-query'
 import { omit } from 'lodash'
 import { toast } from 'react-toastify'
-import Input from 'src/components/Input'
+
+import { useApp } from 'src/contexts/app.context'
 import { register as registerAccount } from 'src/apis/auth.api'
+import { RegisterSchema, registerSchema } from 'src/utils/rules'
 import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
-import { useApp } from 'src/contexts/app.context'
+import Input from 'src/components/Input'
 import Button from 'src/components/Button'
 
 type FormData = RegisterSchema

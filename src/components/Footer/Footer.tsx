@@ -32,9 +32,9 @@ export default function Footer() {
           <div className='px-6'>Chính sách trả hàng và hoàn tiền</div>
         </div>
         <div className='m-auto mb-2 flex justify-center gap-10'>
-          <div className="h-11 w-28 bg-[url('./images/footer-registered.png')] bg-[length:551.6666666666666%_477.77777777777777%] bg-[14.391143911439114%_99.41176470588235%]"></div>
-          <div className="h-11 w-28 bg-[url('./images/footer-registered.png')] bg-[length:551.6666666666666%_477.77777777777777%] bg-[14.391143911439114%_99.41176470588235%]"></div>
-          <div className="h-12 w-12 bg-[url('./images/footer-registered.png')] bg-[length:1379.1666666666667%_447.9166666666667%] bg-[1.6286644951140066%_92.21556886227545%]"></div>
+          <div className="h-11 w-28 bg-[url('./assets/images/footer-registered.png')] bg-[length:551.6666666666666%_477.77777777777777%] bg-[14.391143911439114%_99.41176470588235%]"></div>
+          <div className="h-11 w-28 bg-[url('./assets/images/footer-registered.png')] bg-[length:551.6666666666666%_477.77777777777777%] bg-[14.391143911439114%_99.41176470588235%]"></div>
+          <div className="h-12 w-12 bg-[url('./assets/images/footer-registered.png')] bg-[length:1379.1666666666667%_447.9166666666667%] bg-[1.6286644951140066%_92.21556886227545%]"></div>
         </div>
         <div className='text-center text-xs text-black/60 '>
           <div className='mb-6'>Công ty TNHH Shopee</div>
