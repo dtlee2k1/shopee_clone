@@ -2,6 +2,7 @@ import axios, { AxiosError, AxiosInstance, HttpStatusCode } from 'axios'
 import { toast } from 'react-toastify'
 import { AuthResponse } from 'src/types/auth.type'
 import { clearLS, getAccessTokenFromLS, setAccessTokenToLS, setProfileToLS } from './auth'
+import config from 'src/constants/config'
 class Http {
   private instance: AxiosInstance
   // Why have to set an accessToken variable instead of get right away from local storage?
@@ -13,7 +14,7 @@ class Http {
     this.accessToken = getAccessTokenFromLS()
 
     this.instance = axios.create({
-      baseURL: 'https://api-ecom.duthanhduoc.com/',
+      baseURL: config.baseURL,
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json'
@@ -50,7 +51,7 @@ class Http {
       (error: AxiosError) => {
         if (error.response?.status !== HttpStatusCode.UnprocessableEntity) {
           const data: any | undefined = error.response?.data
-          const errorMessage = data.message || error.message
+          const errorMessage = data?.message || error.message
           toast.error(errorMessage)
         }
         if (error.response?.status === HttpStatusCode.Unauthorized) {

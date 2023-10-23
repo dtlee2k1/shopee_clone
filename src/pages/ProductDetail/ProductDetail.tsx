@@ -12,6 +12,7 @@ import Product from '../ProductList/components/Product'
 import QuantityController from 'src/components/QuantityController'
 import { useAddToCart } from './useAddToCart'
 import { useNavigate } from 'react-router-dom'
+import Loader from 'src/components/Loader'
 
 export default function ProductDetail() {
   const navigate = useNavigate()
@@ -43,7 +44,7 @@ export default function ProductDetail() {
     enabled: Boolean(product) // only fetch when `product` exists
   })
 
-  if (isLoading1 && isLoading2) return null
+  if (isLoading1 && isLoading2) return <Loader />
 
   // Destructuring product data
   const { _id, name, description, images, rating, sold, price, price_before_discount, quantity } = product

@@ -11,6 +11,7 @@ import { isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import Input from 'src/components/Input'
 import Button from 'src/components/Button'
+import logoBackground from 'src/assets/images/shopee-bg.webp'
 
 type FormData = LoginSchema
 
@@ -62,7 +63,7 @@ export default function Login() {
       <div className='container'>
         <div className='grid grid-cols-1 py-12 md:grid-cols-5 md:pr-10'>
           <div className='hidden md:col-span-3 md:block '>
-            <img src='./images/shopee-bg.webp' alt='Shopee Background' className='w-full bg-cover' />
+            <img src={logoBackground} alt='Shopee Background' className='w-full bg-cover' />
           </div>
           <div className='col-span-full mx-auto max-w-md rounded bg-white p-8 shadow-sm md:col-span-2 lg:w-96'>
             <div className='text-xl'>Đăng Nhập</div>

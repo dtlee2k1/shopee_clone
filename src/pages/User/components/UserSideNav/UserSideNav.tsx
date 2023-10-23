@@ -3,24 +3,28 @@ import userProfile from 'src/assets/images/user-profile.png'
 import purchaseIcon from 'src/assets/images/purchase-icon.png'
 import avatarDefault from 'src/assets/images/avatar-default.jpg'
 import { AnimatePresence, motion } from 'framer-motion'
-import UseAccountRoute from '../UseAccountRoute'
+import useAccountRoute from '../../hooks/useAccountRoute'
+import { useApp } from 'src/contexts/app.context'
+import { getAvatarUrl } from 'src/utils/helpers'
 
 export default function UserSideNav() {
-  const isAccountRoute = UseAccountRoute()
+  const isAccountRoute = useAccountRoute()
+  const { profile } = useApp()
+
   return (
     <div className='flex-shrink-0'>
       <div className='flex items-center border-b border-b-[#efefef] py-4'>
         <div className='h-12 w-12 flex-shrink-0 overflow-hidden'>
           <Link to='account/profile' className='h-full w-full'>
             <img
-              src={avatarDefault}
+              src={getAvatarUrl(profile?.avatar) || avatarDefault}
               alt='avatar'
               className='h-full w-full rounded-full border border-black/10 bg-cover'
             />
           </Link>
         </div>
         <div className='flex flex-1 flex-col justify-center overflow-hidden pl-4'>
-          <div className='truncate text-sm font-semibold text-[#333]'>ldthang20002001@gmail.com</div>
+          <div className='truncate text-sm font-semibold text-[#333]'>{profile?.name || profile?.email}</div>
           <Link to='account/profile' className='mt-1.5 flex items-center text-sm capitalize text-[#888]'>
             <svg
               width={12}

@@ -4,6 +4,7 @@ import Popover from '../Popover'
 import { useApp } from 'src/contexts/app.context'
 import { logout } from 'src/apis/auth.api'
 import avatarDefault from 'src/assets/images/avatar-default.jpg'
+import { getAvatarUrl } from 'src/utils/helpers'
 
 export default function NavHeader() {
   const queryClient = useQueryClient()
@@ -74,7 +75,11 @@ export default function NavHeader() {
               <Popover.Heading>
                 <div className='flex items-center px-2.5 py-1'>
                   <div className='mr-2 h-5 w-5 flex-shrink-0'>
-                    <img src={avatarDefault} alt='avatar' className='h-full w-full rounded-full object-cover' />
+                    <img
+                      src={getAvatarUrl(profile?.avatar) || avatarDefault}
+                      alt='avatar'
+                      className='h-full w-full rounded-full object-cover'
+                    />
                   </div>
                   <p className='max-w-[6rem] truncate'>{profile?.name || profile?.email}</p>
                 </div>

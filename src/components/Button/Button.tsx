@@ -10,7 +10,7 @@ export default function Button(props: ButtonProps) {
   const newClassName = isLoading ? className + ' cursor-not-allowed bg-primary/90' : className
 
   return (
-    <button type={type} className={newClassName} disabled={disabled} onClick={onClick}>
+    <button type={type} className={newClassName} disabled={disabled} onClick={onClick} {...rest}>
       {isLoading && <Spinner />}
       {children}
     </button>

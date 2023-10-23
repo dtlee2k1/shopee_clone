@@ -33,6 +33,7 @@ function App() {
         pauseOnHover
         theme='colored'
         limit={3}
+        bodyClassName={() => 'text-sm flex p-2 items-center'}
       />
     </>
   )

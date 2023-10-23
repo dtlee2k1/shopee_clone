@@ -1,3 +1,6 @@
+import config from 'src/constants/config'
+import avatarDefault from 'src/assets/images/avatar-default.jpg'
+
 export const formatCurrency = (value: number) => new Intl.NumberFormat('vi-VN', { style: 'decimal' }).format(value)
 
 export const formatNumberToSocialStyle = (value: number) =>
@@ -22,4 +25,8 @@ export const generateNameId = (name: string, id: string) => {
 export const getIdFromNameId = (nameId: string) => {
   const arr = nameId.split('-i-')
   return arr[arr.length - 1]
+}
+
+export const getAvatarUrl = (avatarName?: string) => {
+  return avatarName ? `${config.baseURL}images/${avatarName}` : avatarDefault
 }
