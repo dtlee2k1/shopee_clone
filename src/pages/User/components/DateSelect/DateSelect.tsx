@@ -16,7 +16,7 @@ export default function DateSelect({
 }: DateSelectProps) {
   const [date, setDate] = useState({
     day: value?.getDate() || 1,
-    month: value?.getMonth() || 1,
+    month: value?.getMonth() || 0,
     year: value?.getFullYear() || 1990
   })
 
@@ -58,9 +58,9 @@ export default function DateSelect({
           onChange={handleChangeDate}
           className='h-10 w-[32%] cursor-pointer rounded-sm border border-black/10 px-4 text-sm  outline-none hover:border-primary focus:border-primary '
         >
-          {range(1, 13).map((month) => (
+          {range(0, 12).map((month) => (
             <option value={month} key={month}>
-              {month}
+              {month + 1}
             </option>
           ))}
         </select>

@@ -43,7 +43,9 @@ export default function Register() {
         navigate('/')
         toast.success(data.data.message)
       },
+
       onError: (error) => {
+        // Handle error from server (ex: check email address exists)
         if (isAxiosUnprocessableEntityError<ErrorResponse<Omit<FormData, 'confirm_password'>>>(error)) {
           const formError = error.response?.data.data
 

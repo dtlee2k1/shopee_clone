@@ -104,9 +104,25 @@ export const userSchema = yup.object({
   address: yup.string().ensure().max(160, 'Độ dài tối đa là 160 ký tự'),
   date_of_birth: yup.date().max(new Date(), 'Ngày không hợp lệ, vui lòng chỉnh ngày chính xác'),
   avatar: yup.string().ensure().max(1000, 'Độ dài tối đa là 1000 ký tự'),
-  password: schema.fields['password'],
-  new_password: schema.fields['password'],
-  confirm_password: schema.fields['confirm_password']
+  password: schema.fields['password'] as yup.StringSchema<string, yup.AnyObject, undefined, ''>,
+  new_password: yup
+    .string()
+    .required('Vui lòng điền vào mục này')
+    .min(6, 'Độ dài từ 6 - 160 ký tự')
+    .max(160, 'Độ dài từ 6 - 160 ký tự')
+    .test({
+      name: 'same-passwords-not-allowed',
+      message: 'Password mới không được trùng password cũ',
+      test: function (value) {
+        return value === this.parent.password ? false : true
+      }
+    }),
+  confirm_password: yup
+    .string()
+    .required('Vui lòng điền vào mục này')
+    .min(6, 'Độ dài từ 6 - 160 ký tự')
+    .max(160, 'Độ dài từ 6 - 160 ký tự')
+    .oneOf([yup.ref('new_password')], 'Passwords không khớp. Vui lòng điền lại mục này')
 })
 
 export type UserSchema = yup.InferType<typeof userSchema>

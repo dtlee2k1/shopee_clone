@@ -23,15 +23,21 @@ export default function UserSideNav() {
             />
           </Link>
         </div>
-        <div className='flex flex-1 flex-col justify-center overflow-hidden pl-4'>
-          <div className='truncate text-sm font-semibold text-[#333]'>{profile?.name || profile?.email}</div>
-          <Link to='account/profile' className='mt-1.5 flex items-center text-sm capitalize text-[#888]'>
+        <div className='flex flex-1 flex-col justify-center pl-4'>
+          <div className='max-w-[300px] truncate text-sm font-semibold text-[#333] md:max-w-[100px]'>
+            {profile?.name || profile?.email}
+          </div>
+          <Link
+            to='account/profile'
+            className='mt-1.5 flex items-center whitespace-nowrap text-sm capitalize text-[#888]'
+          >
             <svg
               width={12}
               height={12}
               viewBox='0 0 12 12'
               xmlns='http://www.w3.org/2000/svg'
               style={{ marginRight: 4 }}
+              className='shrink-0'
             >
               <path
                 d='M8.54 0L6.987 1.56l3.46 3.48L12 3.48M0 8.52l.073 3.428L3.46 12l6.21-6.18-3.46-3.48'
@@ -45,7 +51,10 @@ export default function UserSideNav() {
       </div>
       <div className='mt-7 flex flex-col'>
         <div className='mb-2.5'>
-          <Link to='account/profile' className='flex items-center text-sm capitalize text-black/90 hover:text-primary'>
+          <Link
+            to='account/profile'
+            className='flex items-center whitespace-nowrap text-sm capitalize text-black/90 hover:text-primary'
+          >
             <div className='mr-2.5 h-5 w-5 rounded-full'>
               <img src={userProfile} alt='profile' />
             </div>

@@ -56,7 +56,7 @@ export default function Profile() {
       name: '',
       phone: '',
       address: '',
-      date_of_birth: new Date('1990,1,1'),
+      date_of_birth: new Date('1990,0,1'),
       avatar: ''
     }
   })
@@ -112,7 +112,7 @@ export default function Profile() {
     }
   })
 
-  if (isLoading) return
+  if (isLoading) return null
 
   return (
     <div className='rounded-sm bg-white px-4 pb-2.5 shadow md:px-7'>
@@ -134,6 +134,7 @@ export default function Profile() {
               <Input
                 type='text'
                 name='name'
+                placeholder='Name'
                 register={register}
                 errorMessage={errors.name?.message}
                 classNameInput='w-full rounded border py-2 px-3 text-sm outline-none focus:shadow-sm'
@@ -151,6 +152,7 @@ export default function Profile() {
                 render={({ field: { onChange, value } }) => (
                   <InputNumber
                     type='text'
+                    placeholder='Phone Number'
                     errorMessage={errors.phone?.message}
                     classNameInput='w-full rounded border py-2 px-3 text-sm outline-none focus:shadow-sm'
                     onChange={onChange}
@@ -166,6 +168,7 @@ export default function Profile() {
               <Input
                 type='text'
                 name='address'
+                placeholder='Address'
                 register={register}
                 errorMessage={errors.name?.message}
                 classNameInput='w-full rounded border py-2 px-3 text-sm outline-none focus:shadow-sm'
@@ -184,7 +187,7 @@ export default function Profile() {
               )}
             />
           </div>
-          <div className='my-8 flex flex-wrap'>
+          <div className='mb-8 mt-4 flex flex-wrap'>
             <div className='hidden sm:block sm:w-[20%]'></div>
             <div className='mx-auto sm:mx-0 sm:w-[80%] sm:pl-5'>
               <Button
