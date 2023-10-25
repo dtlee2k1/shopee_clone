@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { range } from 'lodash'
+import range from 'lodash/range'
 
 interface DateSelectProps {
   classNameError?: string

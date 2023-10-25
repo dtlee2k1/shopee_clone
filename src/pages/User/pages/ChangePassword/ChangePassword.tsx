@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { toast } from 'react-toastify'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 
 import { updateProfile } from 'src/apis/user.api'
 import { UserSchema, userSchema } from 'src/utils/rules'

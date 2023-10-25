@@ -1,7 +1,7 @@
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import { omit } from 'lodash'
+import  omit  from 'lodash/omit'
 import classNames from 'classnames'
 
 import { Category } from 'src/types/category.type'

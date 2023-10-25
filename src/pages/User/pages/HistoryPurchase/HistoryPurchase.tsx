@@ -77,7 +77,7 @@ export default function HistoryPurchase() {
         </div>
       </div>
 
-      <div className='relative min-h-[500px]'>
+      <div className='relative max-h-[800px] min-h-[500px] overflow-y-auto'>
         {isLoading ? (
           <Loader />
         ) : (

@@ -1,5 +1,5 @@
 import { createSearchParams, useNavigate } from 'react-router-dom'
-import { omit } from 'lodash'
+import omit from 'lodash/omit'
 import classNames from 'classnames'
 import { sortBy } from 'src/constants/product'
 import { QueryConfig } from 'src/hooks/useQueryConfig'
