@@ -112,6 +112,7 @@ function Content({ children }: ContentProps) {
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.5 }}
             transition={{ duration: 0.15 }}
+            className='z-50'
           >
             <span
               ref={arrowRef}
