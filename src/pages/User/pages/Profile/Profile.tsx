@@ -205,7 +205,7 @@ export default function Profile() {
               <img
                 src={previewImage || getAvatarUrl(avatar)}
                 alt='avatar'
-                className='h-full w-full cursor-pointer rounded-full border border-black/10 bg-cover'
+                className='aspect-square h-full w-full cursor-pointer rounded-full border border-black/10 object-cover'
               />
             </div>
 

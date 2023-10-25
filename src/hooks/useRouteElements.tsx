@@ -1,18 +1,21 @@
+import { lazy, Suspense } from 'react'
 import { Navigate, useRoutes } from 'react-router-dom'
 import { useApp } from 'src/contexts/app.context'
 import CartLayout from 'src/layouts/CartLayout'
 import MainLayout from 'src/layouts/MainLayout'
 import RegisterLayout from 'src/layouts/RegisterLayout'
-import Cart from 'src/pages/Cart'
-import Login from 'src/pages/Login'
-import PageNotFound from 'src/pages/PageNotFound'
-import ProductDetail from 'src/pages/ProductDetail'
-import ProductList from 'src/pages/ProductList'
-import Register from 'src/pages/Register'
 import UserLayout from 'src/pages/User/layouts/UserLayout'
-import ChangePassword from 'src/pages/User/pages/ChangePassword'
-import HistoryPurchase from 'src/pages/User/pages/HistoryPurchase'
-import Profile from 'src/pages/User/pages/Profile'
+
+// Using `lazy load` to optimize and improve page load speed + performance
+const Login = lazy(() => import('src/pages/Login'))
+const Register = lazy(() => import('src/pages/Register'))
+const ProductList = lazy(() => import('src/pages/ProductList'))
+const ProductDetail = lazy(() => import('src/pages/ProductDetail'))
+const Cart = lazy(() => import('src/pages/Cart'))
+const Profile = lazy(() => import('src/pages/User/pages/Profile'))
+const ChangePassword = lazy(() => import('src/pages/User/pages/ChangePassword'))
+const HistoryPurchase = lazy(() => import('src/pages/User/pages/HistoryPurchase'))
+const PageNotFound = lazy(() => import('src/pages/PageNotFound'))
 
 interface ProtectedRouteProps {
   children: React.ReactNode
@@ -30,6 +33,9 @@ const RejectedRoute = ({ children }: RejectedRouteProps) => {
 
   return !isAuthenticated ? children : <Navigate replace to='/' />
 }
+
+// `Suspense` to wrap the Components that you want to load slowly. These Components will be displayed while slow loading data is still being fetched
+
 export function useRouteElements() {
   const routeElements = useRoutes([
     {
@@ -41,11 +47,19 @@ export function useRouteElements() {
       children: [
         {
           path: 'login',
-          element: <Login />
+          element: (
+            <Suspense>
+              <Login />
+            </Suspense>
+          )
         },
         {
           path: 'register',
-          element: <Register />
+          element: (
+            <Suspense>
+              <Register />
+            </Suspense>
+          )
         }
       ]
     },
@@ -55,13 +69,19 @@ export function useRouteElements() {
       children: [
         {
           index: true,
-          element: <ProductList />
+          element: (
+            <Suspense>
+              <ProductList />
+            </Suspense>
+          )
         },
         {
           path: ':nameId',
           element: (
             <ProtectedRoute>
-              <ProductDetail />
+              <Suspense>
+                <ProductDetail />
+              </Suspense>
             </ProtectedRoute>
           )
         },
@@ -86,17 +106,29 @@ export function useRouteElements() {
                 },
                 {
                   path: 'profile',
-                  element: <Profile />
+                  element: (
+                    <Suspense>
+                      <Profile />
+                    </Suspense>
+                  )
                 },
                 {
                   path: 'password',
-                  element: <ChangePassword />
+                  element: (
+                    <Suspense>
+                      <ChangePassword />
+                    </Suspense>
+                  )
                 }
               ]
             },
             {
               path: 'purchase',
-              element: <HistoryPurchase />
+              element: (
+                <Suspense>
+                  <HistoryPurchase />
+                </Suspense>
+              )
             }
           ]
         }
@@ -109,7 +141,9 @@ export function useRouteElements() {
           path: 'cart',
           element: (
             <ProtectedRoute>
-              <Cart />
+              <Suspense>
+                <Cart />
+              </Suspense>
             </ProtectedRoute>
           )
         }
@@ -117,7 +151,11 @@ export function useRouteElements() {
     },
     {
       path: '*',
-      element: <PageNotFound />
+      element: (
+        <Suspense>
+          <PageNotFound />
+        </Suspense>
+      )
     }
   ])
   return routeElements

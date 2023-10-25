@@ -19,7 +19,7 @@ export default function UserSideNav() {
             <img
               src={getAvatarUrl(profile?.avatar) || avatarDefault}
               alt='avatar'
-              className='h-full w-full rounded-full border border-black/10 bg-cover'
+              className='h-full w-full rounded-full border border-black/10 object-cover'
             />
           </Link>
         </div>

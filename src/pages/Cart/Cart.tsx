@@ -195,7 +195,7 @@ export default function Cart() {
                               <img
                                 src={purchase.product.image}
                                 alt={purchase.product.name}
-                                className='h-full w-full bg-cover'
+                                className='h-full w-full object-cover'
                               />
                             </Link>
                             <div className='flex flex-grow px-2.5 pt-1.5'>

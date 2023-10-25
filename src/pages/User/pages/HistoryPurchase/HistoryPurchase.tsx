@@ -84,7 +84,7 @@ export default function HistoryPurchase() {
           <>
             {purchasesInCart && purchasesInCart.length === 0 && (
               <div className='flex h-full min-h-[500px] w-full flex-col items-center justify-center overflow-hidden rounded-sm bg-white shadow-sm'>
-                <img src={emptyPurchase} alt='empty purchase' className='h-[100px] w-[100px] bg-cover' />
+                <img src={emptyPurchase} alt='empty purchase' className='h-[100px] w-[100px] object-cover' />
                 <h2 className='mt-5 text-lg font-normal text-black/80'>Chưa có đơn hàng</h2>
               </div>
             )}
@@ -102,7 +102,7 @@ export default function HistoryPurchase() {
                           <img
                             src={purchase.product.image}
                             alt={purchase.product.name}
-                            className='h-20 w-20 border border-[#e1e1e1] bg-[#e1e1e1] bg-cover'
+                            className='h-20 w-20 border border-[#e1e1e1] bg-[#e1e1e1] object-cover'
                           />
                         </div>
                         <div className='flex flex-1 flex-col break-words pl-3'>
