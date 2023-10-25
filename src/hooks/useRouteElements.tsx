@@ -5,6 +5,7 @@ import MainLayout from 'src/layouts/MainLayout'
 import RegisterLayout from 'src/layouts/RegisterLayout'
 import Cart from 'src/pages/Cart'
 import Login from 'src/pages/Login'
+import PageNotFound from 'src/pages/PageNotFound'
 import ProductDetail from 'src/pages/ProductDetail'
 import ProductList from 'src/pages/ProductList'
 import Register from 'src/pages/Register'
@@ -113,6 +114,10 @@ export function useRouteElements() {
           )
         }
       ]
+    },
+    {
+      path: '*',
+      element: <PageNotFound />
     }
   ])
   return routeElements

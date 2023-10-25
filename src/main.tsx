@@ -6,6 +6,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './index.css'
 import { AppProvider } from './contexts/app.context.tsx'
+import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.tsx'
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,7 +23,9 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={queryClient}>
       <BrowserRouter>
         <AppProvider>
-          <App />
+          <ErrorBoundary>
+            <App />
+          </ErrorBoundary>
         </AppProvider>
       </BrowserRouter>
       <ReactQueryDevtools initialIsOpen={false} />
