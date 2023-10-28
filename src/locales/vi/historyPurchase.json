@@ -1,0 +1,10 @@
+{
+  "all": "Tất cả",
+  "to_pay": "Chờ thanh toán",
+  "to_ship": "Vận chuyển",
+  "to_receive": "Đang giao",
+  "completed": "Hoàn thành",
+  "canceled": "Đã hủy",
+  "order_total": "Thành tiền",
+  "buy_again": "Mua lại"
+}

@@ -1,8 +1,9 @@
 import { Link, createSearchParams, useNavigate } from 'react-router-dom'
 import { Controller, useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import  omit  from 'lodash/omit'
+import omit from 'lodash/omit'
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
 
 import { Category } from 'src/types/category.type'
 import { PriceSchema, priceSchema } from 'src/utils/rules'
@@ -25,6 +26,7 @@ type FormData = PriceSchema
 
 export default function AsideFilter({ queryConfig, categories }: AsideFilterProps) {
   const navigate = useNavigate()
+  const { t } = useTranslation('home')
 
   const { category } = queryConfig
 
@@ -77,7 +79,7 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
             </g>
           </g>
         </svg>
-        Tất cả danh mục
+        {t('aside_filter.all_categories')}
       </Link>
 
       <div className='my-2.5 h-[1px] bg-black/5'></div>
@@ -130,13 +132,13 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
             />
           </g>
         </svg>
-        Bộ lọc tìm kiếm
+        {t('aside_filter.search_filter')}
       </div>
 
       <div className='my-2.5 h-[1px] bg-black/5'></div>
 
       <div className='py-2.5'>
-        <div className='text-sm font-medium capitalize'>Khoảng giá</div>
+        <div className='text-sm font-medium capitalize'>{t('aside_filter.price_range')}</div>
         <form className='mt-5' onSubmit={onSubmit}>
           <div className='flex h-[30px]'>
             <Controller
@@ -145,7 +147,7 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
               render={({ field: { onChange, value, ref } }) => (
                 <InputNumber
                   type='text'
-                  placeholder='₫ TỪ'
+                  placeholder={`₫ ${t('aside_filter.min')}`}
                   className='grow'
                   classNameError='hidden'
                   classNameInput='w-full rounded border shadow-sm border-black/25 focus:border-black/25 p-1 text-xs outline-none focus:shadow-sm h-full'
@@ -165,7 +167,7 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
               render={({ field: { onChange, value, ref } }) => (
                 <InputNumber
                   type='text'
-                  placeholder='₫ ĐẾN'
+                  placeholder={`₫ ${t('aside_filter.max')}`}
                   className='grow'
                   classNameError='hidden'
                   classNameInput='w-full rounded border shadow-sm border-black/25 focus:border-black/25  p-1 text-xs outline-none focus:shadow-sm h-full'
@@ -185,7 +187,7 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
             </div>
           )}
           <Button className='mt-5 h-[30px] w-full rounded-sm bg-primary px-1 text-center text-sm font-normal uppercase text-white outline-none hover:bg-primary/90'>
-            Áp dụng
+            {t('aside_filter.apply')}
           </Button>
         </form>
       </div>
@@ -193,7 +195,7 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
       <div className='my-3 h-[1px] bg-black/5'></div>
 
       <div className='py-2.5'>
-        <div className='text-sm font-medium capitalize'>Đánh giá</div>
+        <div className='text-sm font-medium capitalize'>{t('aside_filter.rating')}</div>
         <RatingStars queryConfig={queryConfig} />
       </div>
       <div className='my-3 h-[1px] bg-black/5'></div>
@@ -201,7 +203,7 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
         className='mt-2 h-[30px] w-full rounded-sm bg-primary px-1 text-center text-sm font-normal uppercase text-white outline-none hover:bg-primary/90'
         onClick={handleResetFilter}
       >
-        Xóa tất cả
+        {t('aside_filter.clear_all')}
       </Button>
     </div>
   )

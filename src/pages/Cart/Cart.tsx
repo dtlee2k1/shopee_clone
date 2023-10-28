@@ -1,6 +1,7 @@
 import { useEffect, useMemo } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
 
 import { buyPurchases, deletePurchases, getPurchases, updatePurchase } from 'src/apis/purchase.api'
@@ -15,6 +16,7 @@ import { useApp } from 'src/contexts/app.context'
 
 export default function Cart() {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('cart')
 
   const { extendedPurchases, setExtendedPurchases } = useApp()
 
@@ -162,14 +164,14 @@ export default function Cart() {
                       checked={isAllChecked}
                       onChange={handleToggleCheckedAll}
                     />
-                    <div className='flex-grow capitalize text-black/80'>Sản phẩm</div>
+                    <div className='flex-grow capitalize text-black/80'>{t('purchases_in_cart.product')}</div>
                   </div>
                   <div className='col-span-6'>
                     <div className='grid grid-cols-5 text-center'>
-                      <div className='col-span-2 capitalize'>Đơn Giá</div>
-                      <div className='col-span-1 capitalize'>Số Lượng</div>
-                      <div className='col-span-1 capitalize'>Số Tiền</div>
-                      <div className='col-span-1 capitalize'>Thao Tác</div>
+                      <div className='col-span-2 capitalize'>{t('purchases_in_cart.unit_price')}</div>
+                      <div className='col-span-1 capitalize'>{t('purchases_in_cart.quantity')}</div>
+                      <div className='col-span-1 capitalize'>{t('purchases_in_cart.total_price')}</div>
+                      <div className='col-span-1 capitalize'>{t('purchases_in_cart.actions')}</div>
                     </div>
                   </div>
                 </div>
@@ -240,10 +242,10 @@ export default function Cart() {
                           </div>
                           <div className='col-span-1'>
                             <button
-                              className='border-none bg-none transition-colors hover:text-primary'
+                              className='border-none bg-none capitalize transition-colors hover:text-primary'
                               onClick={() => handleDeleteAPurchase(purchase._id)}
                             >
-                              Xóa
+                              {t('purchases_in_cart.delete')}
                             </button>
                           </div>
                         </div>
@@ -264,11 +266,11 @@ export default function Cart() {
                   />
                 </div>
                 <button className='border-none bg-none capitalize' onClick={handleToggleCheckedAll}>
-                  Chọn tất cả ({extendedPurchases.length})
+                  {t('purchases_in_cart.select_all')} ({extendedPurchases.length})
                 </button>
                 <Modal>
                   <Modal.Open opens='delete' enable={checkedCount > 0}>
-                    <button className='border-none bg-none capitalize'>Xóa</button>
+                    <button className='border-none bg-none capitalize'>{t('purchases_in_cart.delete')}</button>
                   </Modal.Open>
                   <Modal.Window name='delete'>
                     <ConfirmDelete onConfirm={handleDeletePurchases} quantity={checkedCount} />
@@ -278,14 +280,16 @@ export default function Cart() {
               <div className='mt-4 flex flex-col sm:ml-auto sm:mt-0 sm:items-center lg:flex-row'>
                 <div className='flex flex-col'>
                   <div className='flex flex-col sm:flex-row sm:items-center sm:justify-end'>
-                    <div className='whitespace-nowrap'>Tổng thanh toán ({checkedCount} sản phẩm):</div>
+                    <div className='whitespace-nowrap'>
+                      {t('purchases_in_cart.total-payment')} ({checkedCount} {t('purchases_in_cart.item')}):
+                    </div>
                     <div className='mt-2 self-center text-2xl text-primary sm:ml-1.5 sm:mt-0'>
                       ₫{formatCurrency(totalPaid)}
                     </div>
                   </div>
                   {totalSavings > 0 && (
-                    <div className='mt-[1px] flex items-center justify-center text-sm sm:justify-end '>
-                      Tiết kiệm
+                    <div className='mt-[1px] flex items-center justify-center text-sm capitalize sm:justify-end'>
+                      {t('purchases_in_cart.saved')}
                       <span className='pl-3 text-primary sm:pl-6'>₫{formatCurrency(totalSavings)}</span>
                     </div>
                   )}
@@ -295,7 +299,7 @@ export default function Cart() {
                   onClick={handleBuyProducts}
                   disabled={isBuying}
                 >
-                  Mua hàng
+                  {t('purchases_in_cart.check-out')}
                 </button>
               </div>
             </div>

@@ -1,0 +1,13 @@
+{
+  "my_profile": "My profile",
+  "desc": "Manage and protect your account",
+  "email": "Email",
+  "name": "Name",
+  "phone_number": "Phone number",
+  "address": "Address",
+  "date_of_birth": "Date of birth",
+  "select_image": "Select image",
+  "file_size_required": "File size: maximum 1 MB",
+  "file_extension_required": "File extension: .JPEG, .PNG",
+  "save": "Save"
+}

@@ -1,0 +1,26 @@
+{
+  "aside_filter": {
+    "all_categories": "Tất cả danh mục",
+    "search_filter": "Bộ lọc tìm kiếm",
+    "price_range": "Khoảng giá",
+    "min": "TỪ",
+    "max": "ĐẾN",
+    "apply": "Áp dụng",
+    "rating": "Đánh giá",
+    "up": "trở lên",
+    "clear_all": "Xóa tất cả"
+  },
+  "sort_products": {
+    "sort_by": "Sắp xếp theo",
+    "relevance": "Phổ biến",
+    "latest": "Mới nhất",
+    "top_sales": "Bán chạy",
+    "price": "Giá",
+    "price-asc": "Giá: Thấp đến Cao",
+    "price-desc": "Giá: Cao đến Thấp"
+  },
+  "empty_product": {
+    "no_results_found": "Không tìm thấy kết quả nào",
+    "general_keywords": "Hãy thử sử dụng các từ khóa chung chung hơn"
+  }
+}

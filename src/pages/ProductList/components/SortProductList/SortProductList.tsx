@@ -1,4 +1,5 @@
 import { createSearchParams, useNavigate } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
 import omit from 'lodash/omit'
 import classNames from 'classnames'
 import { sortBy } from 'src/constants/product'
@@ -12,6 +13,8 @@ interface SortProductListProps {
 
 export default function SortProductList({ queryConfig, pageSize }: SortProductListProps) {
   const navigate = useNavigate()
+  const { t } = useTranslation('home')
+
   const { currPage, nextPage, prevPage } = usePagination(pageSize)
 
   const { sort_by, order } = queryConfig
@@ -50,7 +53,7 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
     <div className='bg-black/[0.03] px-5 py-4'>
       <div className='flex flex-wrap items-center justify-between gap-2 text-sm'>
         <div className='flex flex-wrap items-center gap-2'>
-          <div>Sắp xếp theo</div>
+          <div>{t('sort_products.sort_by')}</div>
           <button
             className={classNames('h-[34px] rounded-sm px-4 capitalize leading-[34px]', {
               'bg-white text-black transition-all hover:bg-primary hover:text-white': !isActiveSortBy(sortBy.view),
@@ -58,7 +61,7 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
             })}
             onClick={() => handleSort(sortBy.view)}
           >
-            Phổ biến
+            {t('sort_products.relevance')}
           </button>
           <button
             className={classNames('h-[34px] rounded-sm px-4 capitalize leading-[34px]  ', {
@@ -67,7 +70,7 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
             })}
             onClick={() => handleSort(sortBy.createdAt)}
           >
-            Mới nhất
+            {t('sort_products.latest')}
           </button>
           <button
             className={classNames('h-[34px] rounded-sm px-4 capitalize leading-[34px]', {
@@ -76,13 +79,13 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
             })}
             onClick={() => handleSort(sortBy.sold)}
           >
-            Bán chạy
+            {t('sort_products.top_sales')}
           </button>
           <div className='min-w-[12.5rem]'>
             <select
               value={order || ''}
               className={classNames(
-                'h-[34px] w-full rounded-sm border-none bg-white px-4 capitalize leading-[34px] outline-none',
+                'h-[34px] w-full rounded-sm border-none bg-white px-4 leading-[34px] outline-none',
                 {
                   'text-primary': order,
                   'text-black': !order
@@ -91,7 +94,7 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
               onChange={(e) => handlePriceOrder(e.target.value)}
             >
               <optgroup className='hidden'>
-                <option value=''>Giá</option>
+                <option value=''>{t('sort_products.price')}</option>
               </optgroup>
               <option
                 value='asc'
@@ -100,7 +103,7 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
                   'text-black': !(order === 'asc')
                 })}
               >
-                Giá: Thấp đến cao
+                {t('sort_products.price-asc')}
               </option>
               <option
                 value='desc'
@@ -109,7 +112,7 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
                   'text-black': !(order === 'desc')
                 })}
               >
-                Giá: Cao đến thấp
+                {t('sort_products.price-desc')}
               </option>
             </select>
           </div>

@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 
 import { useApp } from 'src/contexts/app.context'
 import Popover from '../Popover'
@@ -13,6 +14,8 @@ import { useSearchProducts } from 'src/hooks/useSearchProducts'
 const MAX_PURCHASES_IN_CART = 5
 
 export default function Header() {
+  const { t } = useTranslation('header')
+
   const { isAuthenticated } = useApp()
 
   // Search Products
@@ -96,12 +99,14 @@ export default function Header() {
                     {purchasesInCart?.length === 0 && (
                       <div className='flex w-[400px] flex-col items-center py-14'>
                         <img src={emptyCart} alt='empty-cart' className='h-28 w-28 ' />
-                        <h3 className='text-sm capitalize'>Chưa có sản phẩm</h3>
+                        <h3 className='text-sm capitalize'>{t('cart_header.no_product')}</h3>
                       </div>
                     )}
                     {purchasesInCart && purchasesInCart.length > 0 && (
                       <div className='flex flex-col'>
-                        <h3 className='select-none p-2.5 text-sm capitalize text-black/30'>Sản phẩm mới thêm</h3>
+                        <h3 className='select-none p-2.5 text-sm capitalize text-black/30'>
+                          {t('cart_header.recently-added-products')}
+                        </h3>
                         {purchasesInCart.slice(0, MAX_PURCHASES_IN_CART).map((purchase) => (
                           <div key={purchase._id}>
                             <Link
@@ -129,14 +134,14 @@ export default function Header() {
                           {purchasesInCart.length > MAX_PURCHASES_IN_CART && (
                             <div className='text-xs capitalize'>
                               <span>{purchasesInCart.length - MAX_PURCHASES_IN_CART}</span>
-                              <span>&nbsp;Thêm hàng vào giỏ</span>
+                              <span>&nbsp;{t('cart_header.products_in_cart')}</span>
                             </div>
                           )}
                           <Link
                             to='/cart'
                             className='ml-auto min-w-max flex-shrink-0 rounded-sm bg-primary px-4 py-2 text-sm capitalize text-white hover:bg-primary/90'
                           >
-                            Xem giỏ hàng
+                            {t('cart_header.view_cart')}
                           </Link>
                         </div>
                       </div>

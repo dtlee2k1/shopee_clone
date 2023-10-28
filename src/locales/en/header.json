@@ -1,0 +1,15 @@
+{
+  "nav_header": {
+    "register": "register",
+    "login": "login",
+    "profile": "My account",
+    "history_purchase": "My purchase",
+    "logout": "Logout"
+  },
+  "cart_header": {
+    "recently-added-products": "Recently added products",
+    "view_cart": "View my shopping cart",
+    "products_in_cart": "More products in cart",
+    "no_product": "No Products Yet"
+  }
+}

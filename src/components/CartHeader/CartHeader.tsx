@@ -1,8 +1,12 @@
 import { Link } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
 import NavHeader from '../NavHeader'
 import { useSearchProducts } from 'src/hooks/useSearchProducts'
 
 export default function CartHeader() {
+  const { t } = useTranslation('cart')
+
   const { register, onSearchSubmit } = useSearchProducts()
 
   return (
@@ -21,7 +25,7 @@ export default function CartHeader() {
                   </g>
                 </svg>
                 <div className='ml-4 border-l border-l-primary pl-4 text-base capitalize text-primary sm:text-xl'>
-                  Giỏ hàng
+                  {t('cart_header.sub-title')}
                 </div>
               </Link>
             </div>

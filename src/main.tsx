@@ -7,6 +7,7 @@ import App from './App.tsx'
 import './index.css'
 import { AppProvider } from './contexts/app.context.tsx'
 import ErrorBoundary from './components/ErrorBoundary/ErrorBoundary.tsx'
+import './i18n/i18n.ts'
 
 const queryClient = new QueryClient({
   defaultOptions: {

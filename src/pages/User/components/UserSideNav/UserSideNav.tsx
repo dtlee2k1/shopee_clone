@@ -1,4 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+
 import userProfile from 'src/assets/images/user-profile.png'
 import purchaseIcon from 'src/assets/images/purchase-icon.png'
 import avatarDefault from 'src/assets/images/avatar-default.jpg'
@@ -8,6 +10,8 @@ import { useApp } from 'src/contexts/app.context'
 import { getAvatarUrl } from 'src/utils/helpers'
 
 export default function UserSideNav() {
+  const { t } = useTranslation('user_nav')
+
   const isAccountRoute = useAccountRoute()
   const { profile } = useApp()
 
@@ -45,7 +49,7 @@ export default function UserSideNav() {
                 fillRule='evenodd'
               />
             </svg>
-            Sửa Hồ Sơ
+            {t('edit_profile')}
           </Link>
         </div>
       </div>
@@ -58,7 +62,7 @@ export default function UserSideNav() {
             <div className='mr-2.5 h-5 w-5 rounded-full'>
               <img src={userProfile} alt='profile' />
             </div>
-            Tài khoản của tôi
+            {t('my_account')}
           </Link>
         </div>
         <AnimatePresence>
@@ -77,7 +81,7 @@ export default function UserSideNav() {
                   return `${active} hover:text-primary`
                 }}
               >
-                Hồ sơ
+                {t('profile')}
               </NavLink>
               <NavLink
                 to='account/password'
@@ -86,7 +90,7 @@ export default function UserSideNav() {
                   return `${active} hover:text-primary`
                 }}
               >
-                Đổi mật khẩu
+                {t('change_password')}
               </NavLink>
             </motion.div>
           )}
@@ -103,7 +107,7 @@ export default function UserSideNav() {
           <div className='h5 mr-2.5 w-5 rounded-full'>
             <img src={purchaseIcon} alt='purchase-icon' />
           </div>
-          Đơn mua
+          {t('my_purchase')}
         </NavLink>
       </div>
     </div>

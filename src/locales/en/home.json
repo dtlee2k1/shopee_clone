@@ -1,0 +1,26 @@
+{
+  "aside_filter": {
+    "all_categories": "All categories",
+    "search_filter": "Search filter",
+    "price_range": "Price range",
+    "min": "MIN",
+    "max": "MAX",
+    "apply": "Apply",
+    "rating": "Rating",
+    "up": "& Up",
+    "clear_all": "Clear all"
+  },
+  "sort_products": {
+    "sort_by": "Sort by",
+    "relevance": "relevance",
+    "latest": "latest",
+    "top_sales": "top sales",
+    "price": "Price",
+    "price-asc": "Price: Low to High",
+    "price-desc": "Price: High to Low"
+  },
+  "empty_product": {
+    "no_results_found": "No results found",
+    "general_keywords": "Try different or more general keywords"
+  }
+}

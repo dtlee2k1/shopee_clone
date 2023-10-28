@@ -1,0 +1,15 @@
+{
+  "nav_header": {
+    "register": "Đăng ký",
+    "login": "Đăng nhập",
+    "profile": "Tài khoản của tôi",
+    "history_purchase": "Đơn mua",
+    "logout": "Đăng xuất"
+  },
+  "cart_header": {
+    "recently-added-products": "Sản phẩm mới thêm",
+    "view_cart": "Xem giỏ hàng",
+    "products_in_cart": "Thêm hàng vào giỏ",
+    "no_product": "Chưa có sản phẩm"
+  }
+}

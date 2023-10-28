@@ -1,5 +1,6 @@
 import { useMemo, useRef, useState } from 'react'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
 import DOMPurify from 'dompurify'
 import { toast } from 'react-toastify'
 
@@ -16,6 +17,7 @@ import Loader from 'src/components/Loader'
 
 export default function ProductDetail() {
   const navigate = useNavigate()
+  const { t } = useTranslation('product')
 
   // get product details
   const { product, isLoading: isLoading1 } = useProduct()
@@ -192,7 +194,7 @@ export default function ProductDetail() {
                 <div className='mx-4 h-6 w-[1px] bg-black/[.14]'></div>
                 <div className='flex items-baseline'>
                   <span className='mr-1.5  text-base text-black'>{formatNumberToSocialStyle(sold)}</span>
-                  <span className=' text-sm capitalize text-gray-500'>Đã bán</span>
+                  <span className='text-sm capitalize text-gray-500'>{t('sold')}</span>
                 </div>
               </div>
               <div className='mt-3 flex items-center bg-neutral-50 px-4 py-5'>
@@ -204,12 +206,12 @@ export default function ProductDetail() {
                   <span>₫</span>
                   <span>{formatCurrency(price)}</span>
                   <span className='ml-4 whitespace-nowrap rounded-sm bg-primary px-1 py-0.5 text-xs font-semibold uppercase text-white'>
-                    {rateSale(price_before_discount, price)} giảm
+                    {rateSale(price_before_discount, price)} {t('sale-off')}
                   </span>
                 </div>
               </div>
               <div className='mt-8 flex place-items-center'>
-                <h3 className='mr-10 text-sm font-normal capitalize text-gray-500'>Số lượng</h3>
+                <h3 className='mr-10 text-sm font-normal capitalize text-gray-500'>{t('quantity')}</h3>
                 <div className='flex items-baseline'>
                   <QuantityController
                     max={quantity}
@@ -218,7 +220,9 @@ export default function ProductDetail() {
                     onIncrease={handleBuyCount}
                     onVary={handleBuyCount}
                   />
-                  <div className='text-sm text-gray-500'>{quantity} sản phẩm có sẵn</div>
+                  <div className='text-sm text-gray-500'>
+                    {quantity} {t('pieces_available')}
+                  </div>
                 </div>
               </div>
               <div className='mt-8 flex items-center'>
@@ -249,13 +253,13 @@ export default function ProductDetail() {
                       <line fill='none' strokeLinecap='round' strokeMiterlimit={10} x1={9} x2={9} y1='8.5' y2='5.5' />
                     </g>
                   </svg>
-                  <span className='text-sm'>Thêm vào giỏ hàng</span>
+                  <span className='text-sm'>{t('add_to_cart')}</span>
                 </button>
                 <button
                   className='ml-4 h-12 w-44 max-w-[250px] rounded-sm border-none bg-primary px-5 text-sm capitalize text-white shadow-sm outline-none hover:opacity-90'
                   onClick={handleBuyNow}
                 >
-                  Mua ngay
+                  {t('buy_now')}
                 </button>
               </div>
               <div className='mt-8 border-t border-t-black/5'></div>
@@ -264,7 +268,7 @@ export default function ProductDetail() {
         </div>
         <div className='mt-4 rounded-sm bg-white p-2.5 shadow-sm'>
           <section className='p-3.5'>
-            <h2 className='bg-black/[.02] p-3.5 text-lg uppercase'>Mô tả sản phẩm</h2>
+            <h2 className='bg-black/[.02] p-3.5 text-lg uppercase'>{t('product_description')}</h2>
             <div className='mx-4 mb-4 mt-8 text-sm leading-loose'>
               <div
                 dangerouslySetInnerHTML={{
@@ -278,7 +282,7 @@ export default function ProductDetail() {
         {productsData && (
           <div className='mt-8'>
             <section>
-              <h2 className='text-base font-medium uppercase text-black/[.54]'>Có thể bạn cũng thích</h2>
+              <h2 className='text-base font-medium uppercase text-black/[.54]'>{t('relevant-items')}</h2>
               <div className='mt-5 grid grid-cols-2 gap-2.5 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
                 {productsData.data.data.products.map((product) => (
                   <div key={product._id} className='col-span-1'>

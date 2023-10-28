@@ -2,6 +2,8 @@ import { useState, useEffect, useMemo } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useForm, Controller } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useTranslation } from 'react-i18next'
+
 import { toast } from 'react-toastify'
 
 import { updateProfile, uploadAvatar } from 'src/apis/user.api'
@@ -26,6 +28,8 @@ const profileSchema = userSchema.pick(['name', 'phone', 'address', 'date_of_birt
 
 export default function Profile() {
   const queryClient = useQueryClient()
+  const { t } = useTranslation('profile')
+
   const { setProfile } = useApp()
   const { profile, isLoading } = useProfile()
 
@@ -117,19 +121,23 @@ export default function Profile() {
   return (
     <div className='rounded-sm bg-white px-4 pb-2.5 shadow md:px-7'>
       <div className='border-b border-b-[#efefef] py-4'>
-        <h1 className='text-lg font-medium capitalize text-[#333]'>Hồ sơ của tôi</h1>
-        <div className='mt-1 text-sm text-[#555]'>Quản lý thông tin hồ sơ để bảo mật tài khoản</div>
+        <h1 className='text-lg font-medium capitalize text-[#333]'>{t('my_profile')}</h1>
+        <div className='mt-1 text-sm text-[#555]'>{t('desc')}</div>
       </div>
       <form onSubmit={onSubmit} className='flex flex-col-reverse gap-x-8 pt-8 lg:flex-row lg:items-start'>
         <div className='mt-8 flex-grow md:pr-12 lg:mt-0'>
           <div className='flex flex-col flex-wrap sm:flex-row'>
-            <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[20%] sm:pt-2 md:text-right'>Email</div>
+            <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[20%] sm:pt-2 md:text-right'>
+              {t('email')}
+            </div>
             <div className='sm:w-[80%] sm:pl-5'>
               <div className='pt-2 text-sm text-[#333]'>{profile?.email}</div>
             </div>
           </div>
           <div className='mt-4 flex flex-col flex-wrap sm:flex-row'>
-            <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[20%] sm:pt-2 md:text-right'>Tên</div>
+            <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[20%] sm:pt-2 md:text-right'>
+              {t('name')}
+            </div>
             <div className='mt-2 sm:mt-0 sm:w-[80%] sm:pl-5'>
               <Input
                 type='text'
@@ -143,7 +151,7 @@ export default function Profile() {
           </div>
           <div className='flex flex-col flex-wrap sm:flex-row'>
             <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[20%] sm:pt-2 md:text-right'>
-              Số điện thoại
+              {t('phone_number')}
             </div>
             <div className='mt-2 sm:mt-0 sm:w-[80%] sm:pl-5'>
               <Controller
@@ -163,21 +171,23 @@ export default function Profile() {
             </div>
           </div>
           <div className='flex flex-col flex-wrap sm:flex-row'>
-            <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[20%] sm:pt-2 md:text-right'>Địa chỉ</div>
+            <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[20%] sm:pt-2 md:text-right'>
+              {t('address')}
+            </div>
             <div className='mt-2 sm:mt-0 sm:w-[80%] sm:pl-5'>
               <Input
                 type='text'
                 name='address'
                 placeholder='Address'
                 register={register}
-                errorMessage={errors.name?.message}
+                errorMessage={errors.address?.message}
                 classNameInput='w-full rounded border py-2 px-3 text-sm outline-none focus:shadow-sm'
               />
             </div>
           </div>
           <div className='flex flex-col flex-wrap sm:flex-row'>
             <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[20%] sm:pt-2 md:text-right'>
-              Ngày sinh
+              {t('date_of_birth')}
             </div>
             <Controller
               control={control}
@@ -194,7 +204,7 @@ export default function Profile() {
                 type='submit'
                 className='h-10 min-w-[70px] rounded-sm bg-primary px-5 text-sm text-white hover:opacity-90'
               >
-                Lưu
+                {t('save')}
               </Button>
             </div>
           </div>

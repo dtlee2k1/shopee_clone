@@ -1,0 +1,22 @@
+{
+  "cart_header": {
+    "sub-title": "Shopping cart"
+  },
+  "empty_cart": {
+    "empty_shopping_cart": "Your shopping cart is empty",
+    "shopping_now": "Go shopping now"
+  },
+  "purchases_in_cart": {
+    "product": "product",
+    "unit_price": "unit price",
+    "quantity": "quantity",
+    "total_price": "total price",
+    "actions": "actions",
+    "select_all": "select all",
+    "delete": "delete",
+    "total-payment": "total",
+    "item": "item",
+    "saved": "saved",
+    "check-out": "check out"
+  }
+}

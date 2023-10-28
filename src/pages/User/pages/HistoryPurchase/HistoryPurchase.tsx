@@ -1,5 +1,8 @@
+import { useMemo } from 'react'
 import { Link, createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
+import { useTranslation } from 'react-i18next'
+
 import classNames from 'classnames'
 
 import { getPurchases } from 'src/apis/purchase.api'
@@ -12,18 +15,22 @@ import Loader from 'src/components/Loader'
 
 export default function HistoryPurchase() {
   const navigate = useNavigate()
+  const { t } = useTranslation('history_purchase')
 
   const [searchParams] = useSearchParams()
   const status = searchParams.get('status') ? Number(searchParams.get('status')) : purchasesStatus.all
 
-  const purchaseTabs = [
-    { status: purchasesStatus.all, name: 'Tất cả' },
-    { status: purchasesStatus.waitForConfirmation, name: 'Chờ thanh toán' },
-    { status: purchasesStatus.waitForGetting, name: 'Vận chuyển' },
-    { status: purchasesStatus.inProgress, name: 'Đang giao' },
-    { status: purchasesStatus.delivered, name: 'Hoàn thành' },
-    { status: purchasesStatus.canceled, name: 'Đã hủy' }
-  ]
+  const purchaseTabs = useMemo(
+    () => [
+      { status: purchasesStatus.all, name: t('all') },
+      { status: purchasesStatus.waitForConfirmation, name: t('to_pay') },
+      { status: purchasesStatus.waitForGetting, name: t('to_ship') },
+      { status: purchasesStatus.inProgress, name: t('to_receive') },
+      { status: purchasesStatus.delivered, name: t('completed') },
+      { status: purchasesStatus.canceled, name: t('canceled') }
+    ],
+    [t]
+  )
 
   const addToCartMutation = useAddToCart()
 
@@ -153,7 +160,7 @@ export default function HistoryPurchase() {
                           />
                         </svg>
                       </span>
-                      <span className='mr-2.5 text-sm text-black/80'>Thành tiền:</span>
+                      <span className='mr-2.5 text-sm text-black/80'>{t('order_total')}:</span>
                       <span className='text-2xl text-primary'>
                         {formatCurrency(purchase.price * purchase.buy_count)}
                       </span>
@@ -163,7 +170,7 @@ export default function HistoryPurchase() {
                         onClick={() => handleBuyAgain(purchase.product._id, purchase.buy_count)}
                         className='min-w-[150px] rounded-[4px] border border-[#cd3011] bg-primary px-2.5 py-2 text-sm font-normal text-white'
                       >
-                        Mua lại
+                        {t('buy_again')}
                       </button>
                     </div>
                   </div>

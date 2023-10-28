@@ -1,0 +1,22 @@
+{
+  "cart_header": {
+    "sub-title": "Giỏ hàng"
+  },
+  "empty_cart": {
+    "empty_shopping_cart": "Giỏ hàng của bạn còn trống",
+    "shopping_now": "MUA NGAY"
+  },
+  "purchases_in_cart": {
+    "product": "Sản phẩm",
+    "unit_price": "Đơn Giá",
+    "quantity": "Số Lượng",
+    "total_price": "Số Tiền",
+    "actions": "Thao Tác",
+    "select_all": "Chọn tất cả",
+    "delete": "Xóa",
+    "total-payment": "Tổng thanh toán",
+    "item": "sản phẩm",
+    "saved": "Tiết kiệm",
+    "check-out": "Mua hàng"
+  }
+}

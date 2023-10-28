@@ -1,6 +1,8 @@
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { yupResolver } from '@hookform/resolvers/yup'
+import { useTranslation } from 'react-i18next'
+
 import { toast } from 'react-toastify'
 import omit from 'lodash/omit'
 
@@ -16,6 +18,8 @@ type FormData = Pick<UserSchema, 'password' | 'new_password' | 'confirm_password
 const passwordSchema = userSchema.pick(['password', 'new_password', 'confirm_password'])
 
 export default function ChangePassword() {
+  const { t } = useTranslation('change_password')
+
   const {
     register,
     handleSubmit,
@@ -62,16 +66,14 @@ export default function ChangePassword() {
   return (
     <div className='rounded-sm bg-white px-4 pb-20 shadow md:px-7'>
       <div className='border-b border-b-[#efefef] py-4'>
-        <h1 className='text-lg font-medium capitalize text-[#333]'>Thêm mật khẩu</h1>
-        <div className='mt-1 text-sm text-[#555]'>
-          Để bảo mật tài khoản, vui lòng không chia sẻ mật khẩu cho người khác
-        </div>
+        <h1 className='text-lg font-medium capitalize text-[#333]'>{t('set_password')}</h1>
+        <div className='mt-1 text-sm text-[#555]'>{t('desc')}</div>
       </div>
       <form className='pt-8 lg:items-start' onSubmit={onSubmit}>
         <div className='mt-4 flex-grow lg:mt-0'>
           <div className='flex flex-col flex-wrap sm:flex-row'>
-            <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[25%] sm:pt-2 md:text-right'>
-              Mật Khẩu Cũ
+            <div className='whitespace-nowrap pt-0 text-sm capitalize text-[#555c] sm:w-[25%] sm:pt-2 md:text-right'>
+              {t('current_password')}
             </div>
             <div className='mt-2 sm:mt-0 sm:w-[70%] sm:pl-5 lg:w-[50%]'>
               <Input
@@ -86,8 +88,8 @@ export default function ChangePassword() {
             </div>
           </div>
           <div className='mt-1 flex flex-col flex-wrap sm:flex-row'>
-            <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[25%] sm:pt-2 md:text-right'>
-              Mật Khẩu Mới
+            <div className='whitespace-nowrap pt-0 text-sm capitalize text-[#555c] sm:w-[25%] sm:pt-2 md:text-right'>
+              {t('new_password')}
             </div>
             <div className='mt-2 sm:mt-0 sm:w-[70%] sm:pl-5 lg:w-[50%]'>
               <Input
@@ -102,8 +104,8 @@ export default function ChangePassword() {
             </div>
           </div>
           <div className='mt-1 flex flex-col flex-wrap sm:flex-row'>
-            <div className='whitespace-nowrap pt-0 text-sm text-[#555c] sm:w-[25%] sm:pt-2 md:text-right'>
-              Xác Nhận Mật Khẩu
+            <div className='whitespace-nowrap pt-0 text-sm capitalize text-[#555c] sm:w-[25%] sm:pt-2 md:text-right'>
+              {t('confirm_password')}
             </div>
             <div className='mt-2 sm:mt-0 sm:w-[70%] sm:pl-5 lg:w-[50%]'>
               <Input
@@ -125,7 +127,7 @@ export default function ChangePassword() {
                 type='submit'
                 className='h-10 min-w-[70px] rounded-sm bg-primary px-5 text-sm text-white hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-25'
               >
-                Xác nhận
+                {t('confirm')}
               </Button>
             </div>
           </div>

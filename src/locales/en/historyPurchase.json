@@ -1,0 +1,10 @@
+{
+  "all": "All",
+  "to_pay": "To Pay",
+  "to_ship": "To Ship",
+  "to_receive": "To Receive",
+  "completed": "Completed",
+  "canceled": "Canceled",
+  "order_total": "Order Total",
+  "buy_again": "Buy Again"
+}
