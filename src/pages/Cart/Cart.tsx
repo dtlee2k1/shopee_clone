@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import { toast } from 'react-toastify'
+import { Helmet } from 'react-helmet-async'
 
 import { buyPurchases, deletePurchases, getPurchases, updatePurchase } from 'src/apis/purchase.api'
 import { formatCurrency, generateNameId } from 'src/utils/helpers'
@@ -150,6 +151,13 @@ export default function Cart() {
 
   return (
     <div className='bg-neutral-100 py-6'>
+      <Helmet>
+        <title>Giỏ Hàng</title>
+        <meta
+          name='description'
+          content='Chào mừng bạn đến với website Shopee Clone. Tận hưởng mua sắm trực tuyến đơn giản và an toàn. Thuận tiện với tất cả các mặt hàng và miễn phí vận chuyển.'
+        />
+      </Helmet>
       <div className='container'>
         {purchasesInCart?.length === 0 && <EmptyCart />}
         {purchasesInCart && purchasesInCart.length > 0 && (

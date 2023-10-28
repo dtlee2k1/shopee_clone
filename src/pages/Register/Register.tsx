@@ -2,8 +2,9 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useMutation } from '@tanstack/react-query'
 import { useForm } from 'react-hook-form'
 import { yupResolver } from '@hookform/resolvers/yup'
-import  omit  from 'lodash/omit'
+import omit from 'lodash/omit'
 import { toast } from 'react-toastify'
+import { Helmet } from 'react-helmet-async'
 
 import { useApp } from 'src/contexts/app.context'
 import { register as registerAccount } from 'src/apis/auth.api'
@@ -63,6 +64,10 @@ export default function Register() {
   }
   return (
     <div className='bg-primary'>
+      <Helmet>
+        <title>Đăng ký | Shopee Clone</title>
+        <meta name='description' content='Đăng ký tài khoản' />
+      </Helmet>
       <div className='container'>
         <div className='grid grid-cols-1 py-12 md:grid-cols-5 md:pr-10'>
           <div className='hidden md:col-span-3 md:block '>

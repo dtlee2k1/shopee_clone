@@ -3,6 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import DOMPurify from 'dompurify'
 import { toast } from 'react-toastify'
+import { Helmet } from 'react-helmet-async'
+import { convert } from 'html-to-text'
 
 import { useProduct } from './useProduct'
 import { getProducts } from 'src/apis/product.api'
@@ -114,6 +116,10 @@ export default function ProductDetail() {
 
   return (
     <div className='bg-neutral-100 py-6'>
+      <Helmet>
+        <title>{product.name} | Shopee Clone</title>
+        <meta name='description' content={convert(product.description).slice(0, 100) + '...'} />
+      </Helmet>
       <div className='container'>
         <div className='mt-5 bg-white p-4 shadow-sm'>
           <section className='grid grid-cols-12 gap-9'>

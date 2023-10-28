@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async'
 import AsideFilter from './components/AsideFilter'
 import Product from './components/Product'
 import SortProductList from './components/SortProductList'
@@ -16,6 +17,13 @@ export default function ProductList() {
 
   return (
     <div className='bg-neutral-100 py-6'>
+      <Helmet>
+        <title>Shopee Clone</title>
+        <meta
+          name='description'
+          content='Chào mừng bạn đến với website Shopee Clone. Tận hưởng mua sắm trực tuyến đơn giản và an toàn. Thuận tiện với tất cả các mặt hàng và miễn phí vận chuyển.'
+        />
+      </Helmet>
       <div className='container'>
         {productsData && productsData.data.data.products.length > 0 ? (
           <div className='grid grid-cols-12 gap-5'>
