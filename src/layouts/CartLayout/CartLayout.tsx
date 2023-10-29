@@ -6,7 +6,9 @@ export default function CartLayout() {
   return (
     <div className='flex flex-col bg-white'>
       <CartHeader />
-      <Outlet />
+      <div className='min-h-[480px] bg-neutral-100'>
+        <Outlet />
+      </div>
       <Footer />
     </div>
   )

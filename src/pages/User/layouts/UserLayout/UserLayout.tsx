@@ -17,7 +17,7 @@ export default function UserLayout() {
           <div className='md:col-span-3 lg:col-span-2'>
             <UserSideNav />
           </div>
-          <div className='md:col-span-9 lg:col-span-10'>
+          <div className='relative md:col-span-9 lg:col-span-10'>
             <Outlet />
           </div>
         </div>

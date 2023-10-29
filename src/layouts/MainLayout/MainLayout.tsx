@@ -4,9 +4,11 @@ import Header from 'src/components/Header'
 
 export default function MainLayout() {
   return (
-    <div className='flex flex-col bg-white '>
+    <div className='flex flex-col bg-white'>
       <Header />
-      <Outlet />
+      <div className='min-h-[480px] bg-neutral-100'>
+        <Outlet />
+      </div>
       <Footer />
     </div>
   )

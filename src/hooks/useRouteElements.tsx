@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react'
 import { Navigate, useRoutes } from 'react-router-dom'
+import Loader from 'src/components/Loader'
 import { useApp } from 'src/contexts/app.context'
 import CartLayout from 'src/layouts/CartLayout'
 import MainLayout from 'src/layouts/MainLayout'
@@ -48,7 +49,7 @@ export function useRouteElements() {
         {
           path: 'login',
           element: (
-            <Suspense>
+            <Suspense fallback={<Loader />}>
               <Login />
             </Suspense>
           )
@@ -56,7 +57,7 @@ export function useRouteElements() {
         {
           path: 'register',
           element: (
-            <Suspense>
+            <Suspense fallback={<Loader />}>
               <Register />
             </Suspense>
           )
@@ -79,7 +80,7 @@ export function useRouteElements() {
           path: ':nameId',
           element: (
             <ProtectedRoute>
-              <Suspense>
+              <Suspense fallback={<Loader />}>
                 <ProductDetail />
               </Suspense>
             </ProtectedRoute>
@@ -107,7 +108,7 @@ export function useRouteElements() {
                 {
                   path: 'profile',
                   element: (
-                    <Suspense>
+                    <Suspense fallback={<Loader />}>
                       <Profile />
                     </Suspense>
                   )
@@ -115,7 +116,7 @@ export function useRouteElements() {
                 {
                   path: 'password',
                   element: (
-                    <Suspense>
+                    <Suspense fallback={<Loader />}>
                       <ChangePassword />
                     </Suspense>
                   )
@@ -141,7 +142,7 @@ export function useRouteElements() {
           path: 'cart',
           element: (
             <ProtectedRoute>
-              <Suspense>
+              <Suspense fallback={<Loader />}>
                 <Cart />
               </Suspense>
             </ProtectedRoute>
