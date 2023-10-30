@@ -1,4 +1,3 @@
-import { useMemo } from 'react'
 import { Link, createSearchParams, useNavigate, useSearchParams } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
@@ -20,17 +19,14 @@ export default function HistoryPurchase() {
   const [searchParams] = useSearchParams()
   const status = searchParams.get('status') ? Number(searchParams.get('status')) : purchasesStatus.all
 
-  const purchaseTabs = useMemo(
-    () => [
-      { status: purchasesStatus.all, name: t('all') },
-      { status: purchasesStatus.waitForConfirmation, name: t('to_pay') },
-      { status: purchasesStatus.waitForGetting, name: t('to_ship') },
-      { status: purchasesStatus.inProgress, name: t('to_receive') },
-      { status: purchasesStatus.delivered, name: t('completed') },
-      { status: purchasesStatus.canceled, name: t('canceled') }
-    ],
-    [t]
-  )
+  const purchaseTabs = [
+    { status: purchasesStatus.all, name: t('all') },
+    { status: purchasesStatus.waitForConfirmation, name: t('to_pay') },
+    { status: purchasesStatus.waitForGetting, name: t('to_ship') },
+    { status: purchasesStatus.inProgress, name: t('to_receive') },
+    { status: purchasesStatus.delivered, name: t('completed') },
+    { status: purchasesStatus.canceled, name: t('canceled') }
+  ]
 
   const addToCartMutation = useAddToCart()
 

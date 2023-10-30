@@ -61,7 +61,7 @@ export default function Profile() {
       name: '',
       phone: '',
       address: '',
-      date_of_birth: new Date('1990,0,1'),
+      date_of_birth: new Date(1990, 0, 1),
       avatar: ''
     }
   })
@@ -76,7 +76,7 @@ export default function Profile() {
       setValue('phone', profile?.phone || '')
       setValue('address', profile?.address || '')
       setValue('avatar', profile?.avatar || '')
-      setValue('date_of_birth', profile?.date_of_birth ? new Date(profile?.date_of_birth) : new Date('2000,1,1'))
+      setValue('date_of_birth', profile?.date_of_birth ? new Date(profile?.date_of_birth) : new Date(1990, 0, 1))
     }
   }, [profile, setValue])
 
