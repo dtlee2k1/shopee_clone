@@ -1,6 +1,7 @@
 import { lazy, Suspense } from 'react'
 import { Navigate, useRoutes } from 'react-router-dom'
 import Loader from 'src/components/Loader'
+import ScrollToTop from 'src/components/ScrollToTop'
 import { useApp } from 'src/contexts/app.context'
 import CartLayout from 'src/layouts/CartLayout'
 import MainLayout from 'src/layouts/MainLayout'
@@ -81,7 +82,9 @@ export function useRouteElements() {
           element: (
             <ProtectedRoute>
               <Suspense fallback={<Loader />}>
-                <ProductDetail />
+                <ScrollToTop>
+                  <ProductDetail />
+                </ScrollToTop>
               </Suspense>
             </ProtectedRoute>
           )
