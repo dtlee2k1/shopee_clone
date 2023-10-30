@@ -34,7 +34,8 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
     control,
     handleSubmit,
     formState: { errors },
-    trigger
+    trigger,
+    reset
   } = useForm<FormData>({
     defaultValues: {
       price_min: '',
@@ -61,6 +62,8 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
       pathname: '/',
       search: createSearchParams(omit(queryConfig, ['category', 'price_max', 'price_min', 'rating_filter'])).toString()
     })
+    // clear(reset) the inputNumber
+    reset()
   }
 
   return (
