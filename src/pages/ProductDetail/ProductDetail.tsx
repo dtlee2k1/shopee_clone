@@ -125,7 +125,7 @@ export default function ProductDetail() {
           <section className='grid grid-cols-12 gap-9'>
             <div className='col-span-5'>
               <div
-                className='relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow-sm'
+                className='pointer-events-none relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow-sm lg:pointer-events-auto'
                 onMouseMove={handleZoomIn}
                 onMouseLeave={handleRemoveZoom}
               >
@@ -155,7 +155,7 @@ export default function ProductDetail() {
                   )
                 })}
                 <button
-                  className='absolute left-0 top-1/2 z-10 h-10 w-5 -translate-y-1/2 bg-black/20 text-white'
+                  className='absolute left-0 top-1/2 z-10 h-4 w-2.5 -translate-y-1/2 bg-black/20 text-white sm:h-10 sm:w-5'
                   onClick={handlePrevImages}
                 >
                   <svg
@@ -163,13 +163,13 @@ export default function ProductDetail() {
                     viewBox='0 0 13 20'
                     x={0}
                     y={0}
-                    className='h-5 w-5 fill-current'
+                    className='h-2 w-2.5 fill-current sm:h-5 sm:w-5'
                   >
                     <polygon points='4.2 10 12.1 2.1 10 -.1 1 8.9 -.1 10 1 11 10 20 12.1 17.9' />
                   </svg>
                 </button>
                 <button
-                  className='absolute right-0 top-1/2 z-10 h-10 w-5 -translate-y-1/2 bg-black/20 text-white'
+                  className='absolute right-0 top-1/2 z-10 h-4 w-2.5 -translate-y-1/2 bg-black/20 text-white sm:h-10 sm:w-5'
                   onClick={handleNextImages}
                 >
                   <svg
@@ -177,7 +177,7 @@ export default function ProductDetail() {
                     viewBox='0 0 13 21'
                     x={0}
                     y={0}
-                    className='h-5 w-5 fill-current'
+                    className='h-2 w-2.5 fill-current sm:h-5 sm:w-5'
                   >
                     <polygon points='11.1 9.9 2.1 .9 -.1 3.1 7.9 11 -.1 18.9 2.1 21 11.1 12 12.1 11' />
                   </svg>
