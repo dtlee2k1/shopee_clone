@@ -44,7 +44,7 @@ export default function DateSelect({
           name='day'
           value={value?.getDate() || date.day}
           onChange={handleChangeDate}
-          className='h-10 w-[32%] cursor-pointer rounded-sm border border-black/10 px-4  text-sm  outline-none hover:border-primary focus:border-primary '
+          className='h-10 w-[32%] cursor-pointer rounded-sm border border-black/10 bg-transparent px-4  text-sm  outline-none hover:border-primary focus:border-primary '
         >
           {range(1, 32).map((day) => (
             <option value={day} key={day}>
@@ -56,7 +56,7 @@ export default function DateSelect({
           name='month'
           value={value?.getMonth() || date.month}
           onChange={handleChangeDate}
-          className='h-10 w-[32%] cursor-pointer rounded-sm border border-black/10 px-4 text-sm  outline-none hover:border-primary focus:border-primary '
+          className='h-10 w-[32%] cursor-pointer rounded-sm border border-black/10 bg-transparent px-4 text-sm  outline-none hover:border-primary focus:border-primary '
         >
           {range(0, 12).map((month) => (
             <option value={month} key={month}>
@@ -68,7 +68,7 @@ export default function DateSelect({
           name='year'
           value={value?.getFullYear() || date.year}
           onChange={handleChangeDate}
-          className='h-10 w-[32%] cursor-pointer rounded-sm border border-black/10 px-4 text-sm  outline-none hover:border-primary focus:border-primary '
+          className='h-10 w-[32%] cursor-pointer rounded-sm border border-black/10 bg-transparent px-4 text-sm  outline-none hover:border-primary focus:border-primary '
         >
           {range(1990, new Date().getFullYear() + 1).map((year) => (
             <option value={year} key={year}>

@@ -21,6 +21,7 @@ interface PopoverContextType {
   middlewareData: MiddlewareData
   showPopover: () => void
   hidePopover: () => void
+  togglePopover: () => void
 }
 const PopoverContext = createContext<PopoverContextType | null>(null)
 
@@ -68,9 +69,13 @@ export function Popover({ children, placement = 'bottom-end', initialOpen = fals
     setIsOpen(false)
   }
 
+  const togglePopover = () => {
+    setIsOpen(!isOpen)
+  }
+
   return (
     <PopoverContext.Provider
-      value={{ isOpen, refs, arrowRef, x, y, strategy, middlewareData, showPopover, hidePopover }}
+      value={{ isOpen, refs, arrowRef, x, y, strategy, middlewareData, showPopover, hidePopover, togglePopover }}
     >
       {children}
     </PopoverContext.Provider>
@@ -78,9 +83,17 @@ export function Popover({ children, placement = 'bottom-end', initialOpen = fals
 }
 
 function Container({ children }: ContainerProps) {
-  const { refs, showPopover, hidePopover } = useContext(PopoverContext) as PopoverContextType
+  const { refs, showPopover, hidePopover, togglePopover } = useContext(PopoverContext) as PopoverContextType
   return (
-    <div ref={refs.setReference} onMouseEnter={showPopover} onMouseLeave={hidePopover}>
+    <div
+      ref={refs.setReference}
+      onMouseEnter={showPopover}
+      onMouseLeave={hidePopover}
+      onClick={togglePopover}
+      onKeyDown={togglePopover}
+      role='button'
+      tabIndex={0}
+    >
       {children}
     </div>
   )

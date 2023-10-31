@@ -72,7 +72,7 @@ export default function Header() {
             <Popover>
               <Popover.Container>
                 <Popover.Heading className='flex cursor-pointer items-center px-2.5 py-1'>
-                  <Link to='/cart' className='relative px-6'>
+                  <Link to='/cart' className='pointer-events-none relative px-6 lg:pointer-events-auto'>
                     <svg
                       xmlns='http://www.w3.org/2000/svg'
                       fill='none'
