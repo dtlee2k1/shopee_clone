@@ -1,8 +1,9 @@
+import { memo } from 'react'
 import { Outlet } from 'react-router-dom'
 import Footer from 'src/components/Footer'
 import RegisterHeader from 'src/components/RegisterHeader'
 
-export default function RegisterLayout() {
+function RegisterLayoutInner() {
   return (
     <div className='flex flex-col bg-white '>
       <RegisterHeader />
@@ -11,3 +12,7 @@ export default function RegisterLayout() {
     </div>
   )
 }
+
+const RegisterLayout = memo(RegisterLayoutInner)
+
+export default RegisterLayout
