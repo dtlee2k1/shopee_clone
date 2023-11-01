@@ -122,8 +122,8 @@ export default function ProductDetail() {
       </Helmet>
       <div className='container'>
         <div className='mt-5 bg-white p-4 shadow-sm'>
-          <section className='grid grid-cols-12 gap-9'>
-            <div className='col-span-5'>
+          <section className='grid grid-cols-1 gap-3 sm:grid-cols-12 sm:gap-9'>
+            <div className='col-span-full sm:col-span-5'>
               <div
                 className='pointer-events-none relative w-full cursor-zoom-in overflow-hidden pt-[100%] shadow-sm lg:pointer-events-auto'
                 onMouseMove={handleZoomIn}
@@ -155,7 +155,7 @@ export default function ProductDetail() {
                   )
                 })}
                 <button
-                  className='absolute left-0 top-1/2 z-10 h-4 w-2.5 -translate-y-1/2 bg-black/20 text-white sm:h-10 sm:w-5'
+                  className='absolute left-0 top-1/2 z-10 h-6 w-3 -translate-y-1/2 bg-black/20 text-white sm:h-10 sm:w-5'
                   onClick={handlePrevImages}
                 >
                   <svg
@@ -163,13 +163,13 @@ export default function ProductDetail() {
                     viewBox='0 0 13 20'
                     x={0}
                     y={0}
-                    className='h-2 w-2.5 fill-current sm:h-5 sm:w-5'
+                    className='h-3 w-3 fill-current sm:h-5 sm:w-5'
                   >
                     <polygon points='4.2 10 12.1 2.1 10 -.1 1 8.9 -.1 10 1 11 10 20 12.1 17.9' />
                   </svg>
                 </button>
                 <button
-                  className='absolute right-0 top-1/2 z-10 h-4 w-2.5 -translate-y-1/2 bg-black/20 text-white sm:h-10 sm:w-5'
+                  className='absolute right-0 top-1/2 z-10 h-6 w-3 -translate-y-1/2 bg-black/20 text-white sm:h-10 sm:w-5'
                   onClick={handleNextImages}
                 >
                   <svg
@@ -177,38 +177,38 @@ export default function ProductDetail() {
                     viewBox='0 0 13 21'
                     x={0}
                     y={0}
-                    className='h-2 w-2.5 fill-current sm:h-5 sm:w-5'
+                    className='h-3 w-3 fill-current sm:h-5 sm:w-5'
                   >
                     <polygon points='11.1 9.9 2.1 .9 -.1 3.1 7.9 11 -.1 18.9 2.1 21 11.1 12 12.1 11' />
                   </svg>
                 </button>
               </div>
             </div>
-            <div className='col-span-7 py-1 pr-5'>
-              <h1 className='break-words text-xl font-medium'>{name}</h1>
+            <div className='col-span-full sm:col-span-7 sm:py-1 sm:pr-5'>
+              <h1 className='break-words text-base font-medium sm:text-xl'>{name}</h1>
               <div className='mt-3 flex items-center'>
                 <div className='flex items-center'>
-                  <span className='mr-1.5 border-b border-b-primary text-base text-primary'>{rating}</span>
+                  <span className='mr-1.5 border-b border-b-primary text-sm text-primary sm:text-base'>{rating}</span>
                   <div className='mb-0.5 flex items-center'>
                     <ProductRating
                       rating={rating}
-                      activeClassName='h-4 w-4 fill-primary text-primary'
-                      nonActiveClassName='h-4 w-4 fill-current text-gray-300'
+                      activeClassName='h-3 w-3 sm:h-4 sm:w-4 fill-primary text-primary'
+                      nonActiveClassName='h-3 w-3 sm:h-4 sm:w-4 fill-current text-gray-300'
                     />
                   </div>
                 </div>
                 <div className='mx-4 h-6 w-[1px] bg-black/[.14]'></div>
                 <div className='flex items-baseline'>
-                  <span className='mr-1.5  text-base text-black'>{formatNumberToSocialStyle(sold)}</span>
-                  <span className='text-sm capitalize text-gray-500'>{t('sold')}</span>
+                  <span className='mr-1.5 text-sm text-black sm:text-base'>{formatNumberToSocialStyle(sold)}</span>
+                  <span className='text-xs capitalize text-gray-500 sm:text-sm'>{t('sold')}</span>
                 </div>
               </div>
-              <div className='mt-3 flex items-center bg-neutral-50 px-4 py-5'>
-                <div className='mr-2.5 text-base text-black/50 line-through'>
+              <div className='mt-3 flex items-center justify-center bg-neutral-50 px-4 py-5 sm:justify-start'>
+                <div className='mr-2.5 text-sm text-black/50 line-through sm:text-base'>
                   <span>₫</span>
                   <span>{formatCurrency(price_before_discount)}</span>
                 </div>
-                <div className='flex items-center text-3xl text-primary'>
+                <div className='flex items-center text-lg text-primary sm:text-3xl'>
                   <span>₫</span>
                   <span>{formatCurrency(price)}</span>
                   <span className='ml-4 whitespace-nowrap rounded-sm bg-primary px-1 py-0.5 text-xs font-semibold uppercase text-white'>
@@ -216,9 +216,11 @@ export default function ProductDetail() {
                   </span>
                 </div>
               </div>
-              <div className='mt-8 flex place-items-center'>
-                <h3 className='mr-10 text-sm font-normal capitalize text-gray-500'>{t('quantity')}</h3>
-                <div className='flex items-baseline'>
+              <div className='mt-4 flex items-center justify-center sm:mt-8 sm:justify-start'>
+                <h3 className='mr-4 whitespace-nowrap text-xs font-normal capitalize text-gray-500 sm:mr-10 sm:text-sm '>
+                  {t('quantity')}
+                </h3>
+                <div className='flex items-center sm:items-baseline'>
                   <QuantityController
                     max={quantity}
                     value={buyCount}
@@ -226,14 +228,14 @@ export default function ProductDetail() {
                     onIncrease={handleBuyCount}
                     onVary={handleBuyCount}
                   />
-                  <div className='text-sm text-gray-500'>
+                  <div className='text-xs text-gray-500  sm:text-sm'>
                     {quantity} {t('pieces_available')}
                   </div>
                 </div>
               </div>
-              <div className='mt-8 flex items-center'>
+              <div className='mt-8 flex items-center justify-center sm:justify-start'>
                 <button
-                  className='flex h-12 max-w-[250px] items-center rounded-sm border border-primary bg-[#ff57221a] px-5 capitalize text-primary shadow-sm outline-none hover:bg-[#ffc5b22e]'
+                  className='flex h-10 max-w-[250px] items-center rounded-sm border border-primary bg-[#ff57221a] px-2.5 capitalize text-primary shadow-sm outline-none hover:bg-[#ffc5b22e] sm:h-12 sm:px-5'
                   onClick={handleAddToCart}
                 >
                   <svg
@@ -241,7 +243,7 @@ export default function ProductDetail() {
                     viewBox='0 0 15 15'
                     x={0}
                     y={0}
-                    className='mr-2.5 h-5 w-5 fill-current stroke-current text-current'
+                    className='mr-2.5 h-5 w-5 flex-shrink-0 fill-current stroke-current text-current'
                   >
                     <g>
                       <g>
@@ -259,10 +261,10 @@ export default function ProductDetail() {
                       <line fill='none' strokeLinecap='round' strokeMiterlimit={10} x1={9} x2={9} y1='8.5' y2='5.5' />
                     </g>
                   </svg>
-                  <span className='text-sm'>{t('add_to_cart')}</span>
+                  <span className='whitespace-nowrap text-xs sm:text-sm'>{t('add_to_cart')}</span>
                 </button>
                 <button
-                  className='ml-4 h-12 w-44 max-w-[250px] rounded-sm border-none bg-primary px-5 text-sm capitalize text-white shadow-sm outline-none hover:opacity-90'
+                  className='ml-4 h-10 w-28 max-w-[250px] whitespace-nowrap rounded-sm border-none bg-primary px-2.5 text-xs capitalize text-white shadow-sm outline-none hover:opacity-90 sm:h-12 sm:w-44 sm:px-5 sm:text-sm'
                   onClick={handleBuyNow}
                 >
                   {t('buy_now')}
@@ -274,8 +276,8 @@ export default function ProductDetail() {
         </div>
         <div className='mt-4 rounded-sm bg-white p-2.5 shadow-sm'>
           <section className='p-3.5'>
-            <h2 className='bg-black/[.02] p-3.5 text-lg uppercase'>{t('product_description')}</h2>
-            <div className='mx-4 mb-4 mt-8 text-sm leading-loose'>
+            <h2 className='bg-black/[.02] p-3.5 text-base uppercase sm:text-lg'>{t('product_description')}</h2>
+            <div className='mx-4 mb-4 mt-2.5 text-xs leading-loose sm:mt-8 sm:text-sm'>
               <div
                 dangerouslySetInnerHTML={{
                   // Using DOMPurify to prevent XSS attacks because if we render as usual then maybe sometimes in this render contains HTML + `JS` => Hacker can steal access token from user. Therefore DomPurify can be fed with string full of dirty HTML and it will return a string (unless configured otherwise) with clean HTML

@@ -57,7 +57,7 @@ export default function QuantityController({
   return (
     <div className={classNameWrapper}>
       <button
-        className='h-8 w-8 rounded-l-sm border border-black/10 bg-transparent text-black/80 outline-none  disabled:opacity-60'
+        className='h-6 w-6 rounded-l-sm border border-black/10 bg-transparent text-black/80 outline-none disabled:opacity-60 sm:h-8  sm:w-8'
         disabled={disabled}
         onClick={decrease}
       >
@@ -67,7 +67,7 @@ export default function QuantityController({
       <InputNumber
         type='text'
         value={value || localValue}
-        classNameInput='h-8 w-14 border border-x-0 border-black/10 bg-transparent text-center disabled:opacity-60'
+        classNameInput='h-6 w-12 border border-x-0 border-black/10 bg-transparent text-center disabled:opacity-60 sm:h-8 sm:w-14'
         classNameError='hidden'
         onChange={handleChange}
         onBlur={handleBlur}
@@ -76,7 +76,7 @@ export default function QuantityController({
       />
 
       <button
-        className='h-8 w-8 rounded-r-sm border border-black/10 bg-transparent text-black/80 outline-none disabled:opacity-60'
+        className='h-6 w-6 rounded-r-sm border border-black/10 bg-transparent text-black/80 outline-none disabled:opacity-60 sm:h-8 sm:w-8'
         disabled={disabled}
         onClick={increase}
       >

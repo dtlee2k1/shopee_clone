@@ -73,7 +73,9 @@ export function useRouteElements() {
           index: true,
           element: (
             <Suspense>
-              <ProductList />
+              <ScrollToTop>
+                <ProductList />
+              </ScrollToTop>
             </Suspense>
           )
         },

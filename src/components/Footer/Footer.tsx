@@ -7,12 +7,12 @@ export default function Footer() {
       <div className='m-auto max-w-7xl px-4'>
         <div className='grid grid-cols-1 gap-4 border-t border-t-black/10 py-10 text-sm text-black/50 lg:grid-cols-3 '>
           <div className='lg:col-span-1'>
-            <div className=''>
+            <div className='text-xs sm:text-sm'>
               &copy; {new Date().getFullYear()} {t('rights_reserved')}.
             </div>
           </div>
           <div className='lg:col-span-2'>
-            <div className='flex flex-wrap'>
+            <div className='flex flex-wrap gap-y-1 text-xs sm:text-sm'>
               <span className='px-1'>{t('countries')}</span>
               <div className='border-r border-r-black/20 px-1'>Singapore</div>
               <div className='border-r border-r-black/20 px-1'>Indonesia</div>
@@ -29,12 +29,12 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className='m-auto max-w-7xl px-4 py-9 text-xs text-black/50'>
+      <div className='m-auto max-w-7xl px-4 py-7 text-xs text-black/50 sm:py-9'>
         <div className='mb-10 flex justify-center uppercase'>
-          <div className='border-r border-r-black/10 px-6'>{t('privacy_policy')}</div>
-          <div className='border-r border-r-black/10 px-6'>{t('term_of_service')}</div>
-          <div className='border-r border-r-black/10 px-6'>{t('shipping_policy')}</div>
-          <div className='px-6'>{t('violation')}</div>
+          <div className='border-r border-r-black/10 px-3 sm:px-6'>{t('privacy_policy')}</div>
+          <div className='border-r border-r-black/10 px-3 sm:px-6'>{t('term_of_service')}</div>
+          <div className='border-r border-r-black/10 px-3 sm:px-6'>{t('shipping_policy')}</div>
+          <div className='px-3 sm:px-6'>{t('violation')}</div>
         </div>
         <div className='m-auto mb-2 flex justify-center gap-10'>
           <div className="h-11 w-28 bg-[url('./assets/images/footer-registered.png')] bg-[length:551.6666666666666%_477.77777777777777%] bg-[14.391143911439114%_99.41176470588235%]"></div>
