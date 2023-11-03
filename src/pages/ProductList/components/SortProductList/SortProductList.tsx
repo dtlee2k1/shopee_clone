@@ -51,11 +51,11 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
 
   return (
     <div className='bg-black/[0.03] px-5 py-4'>
-      <div className='flex flex-wrap items-center justify-between gap-2 text-sm'>
+      <div className='flex flex-wrap items-center justify-between gap-2 text-xs sm:text-sm'>
         <div className='flex flex-wrap items-center gap-2'>
-          <div>{t('sort_products.sort_by')}</div>
+          <div className='w-full sm:w-auto'>{t('sort_products.sort_by')}</div>
           <button
-            className={classNames('h-[34px] rounded-sm px-4 capitalize leading-[34px]', {
+            className={classNames('h-7 rounded-sm px-4 capitalize leading-7 sm:h-[34px] sm:leading-[34px]', {
               'bg-white text-black transition-all hover:bg-primary hover:text-white': !isActiveSortBy(sortBy.view),
               'bg-primary text-white': isActiveSortBy(sortBy.view)
             })}
@@ -64,7 +64,7 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
             {t('sort_products.relevance')}
           </button>
           <button
-            className={classNames('h-[34px] rounded-sm px-4 capitalize leading-[34px]  ', {
+            className={classNames('h-7 rounded-sm px-4 capitalize leading-7 sm:h-[34px] sm:leading-[34px]', {
               'bg-white text-black transition-all hover:bg-primary hover:text-white': !isActiveSortBy(sortBy.createdAt),
               'bg-primary text-white': isActiveSortBy(sortBy.createdAt)
             })}
@@ -73,7 +73,7 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
             {t('sort_products.latest')}
           </button>
           <button
-            className={classNames('h-[34px] rounded-sm px-4 capitalize leading-[34px]', {
+            className={classNames('h-7 rounded-sm px-4 capitalize leading-7 sm:h-[34px] sm:leading-[34px]', {
               'bg-white text-black transition-all hover:bg-primary hover:text-white': !isActiveSortBy(sortBy.sold),
               'bg-primary text-white': isActiveSortBy(sortBy.sold)
             })}
@@ -81,11 +81,11 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
           >
             {t('sort_products.top_sales')}
           </button>
-          <div className='min-w-[12.5rem]'>
+          <div className='min-w-[10rem] sm:min-w-[12.5rem]'>
             <select
               value={order || ''}
               className={classNames(
-                'h-[34px] w-full rounded-sm border-none bg-white px-4 leading-[34px] outline-none',
+                'h-7 w-full rounded-sm border-none bg-white px-4 leading-7 outline-none sm:h-[34px] sm:leading-[34px]',
                 {
                   'text-primary': order,
                   'text-black': !order
@@ -117,14 +117,14 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
             </select>
           </div>
         </div>
-        <div className='flex items-center'>
+        <div className='ml-auto flex items-center'>
           <div>
             <span className='text-primary'>{currPage}</span>/<span>{pageSize}</span>
           </div>
           <div className='ml-5'>
             <button
               className={classNames(
-                'h-[34px] w-9 rounded-bl-sm rounded-tl-sm border border-black/10 bg-transparent  px-3 shadow-sm transition-all hover:bg-[#fdfdfd]',
+                'h-7 w-8 rounded-bl-sm rounded-tl-sm border border-black/10 bg-transparent px-2 shadow-sm transition-all  hover:bg-[#fdfdfd] sm:h-[34px] sm:w-9 sm:px-3',
                 {
                   'cursor-not-allowed bg-white opacity-40': currPage === 1
                 }
@@ -146,7 +146,7 @@ export default function SortProductList({ queryConfig, pageSize }: SortProductLi
 
             <button
               className={classNames(
-                'h-[34px] w-9 rounded-br-sm rounded-tr-sm border border-black/10 bg-transparent  px-3 shadow-sm transition-all hover:bg-[#fdfdfd]',
+                'h-7 w-8 rounded-br-sm rounded-tr-sm border border-black/10 bg-transparent px-2 shadow-sm transition-all hover:bg-[#fdfdfd] sm:h-[34px] sm:w-9 sm:px-3',
                 {
                   'cursor-not-allowed bg-white opacity-40': currPage === pageSize
                 }
