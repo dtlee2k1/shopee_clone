@@ -20,7 +20,7 @@ export default function ProductRating({
   return Array(5)
     .fill(0)
     .map((_, index) => (
-      <div key={index} className='relative'>
+      <div key={index} className='relative shrink-0'>
         <div className='absolute left-0 top-0 h-full overflow-hidden' style={{ width: handleWidth(index + 1) }}>
           <svg enableBackground='new 0 0 15 15' viewBox='0 0 15 15' x={0} y={0} className={activeClassName}>
             <polygon

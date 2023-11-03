@@ -26,13 +26,13 @@ export default function Product({ product }: ProductProps) {
           <div className='line-clamp-2 min-h-[2rem] break-words text-xs'>{name}</div>
 
           <div className='mt-2 flex items-baseline'>
-            <div className='mr-[5px] max-w-[50%] truncate text-sm text-black/50 line-through'>
+            <div className='mr-[5px] max-w-[50%] truncate text-xs text-black/50 line-through sm:text-sm'>
               <span>₫</span>
               <span>{formatCurrency(price_before_discount)}</span>
             </div>
             <div className='max-w-[50%] truncate text-primary'>
               <span className='text-xs'>₫</span>
-              <span className='text-base'>{formatCurrency(price)}</span>
+              <span className='text-sm sm:text-base'>{formatCurrency(price)}</span>
             </div>
           </div>
 
@@ -40,7 +40,7 @@ export default function Product({ product }: ProductProps) {
             <div className='flex items-center'>
               <ProductRating rating={rating} />
             </div>
-            <div className='ml-1 text-xs'>Đã bán {formatNumberToSocialStyle(sold)}</div>
+            <div className='ml-1 whitespace-nowrap text-xs'>Đã bán {formatNumberToSocialStyle(sold)}</div>
           </div>
         </div>
       </Link>
