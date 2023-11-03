@@ -108,7 +108,7 @@ export default function Header() {
                     )}
                     {purchasesInCart && purchasesInCart.length > 0 && (
                       <div className='flex flex-col'>
-                        <h3 className='select-none p-2.5 text-sm capitalize text-black/30'>
+                        <h3 className='select-none p-2.5 text-xs capitalize text-black/30 sm:text-sm'>
                           {t('cart_header.recently-added-products')}
                         </h3>
                         {purchasesInCart.slice(0, MAX_PURCHASES_IN_CART).map((purchase) => (
@@ -118,12 +118,12 @@ export default function Header() {
                               className='flex items-start p-2.5 hover:bg-stone-100'
                             >
                               <img
-                                className='h-10 w-10 flex-shrink-0 border border-black/10 object-cover'
+                                className='h-8 w-8 flex-shrink-0 border border-black/10 object-cover sm:h-10 sm:w-10'
                                 src={purchase.product.image}
                                 alt={purchase.product.name}
                               />
                               <div className='ml-2.5 flex-1 overflow-hidden'>
-                                <div className='flex items-center text-sm'>
+                                <div className='flex items-center text-xs sm:text-sm'>
                                   <div className='truncate font-medium'>{purchase.product.name}</div>
                                   <div className='ml-10 flex flex-shrink-0 items-center'>
                                     <div className='text-primary'>₫{formatCurrency(purchase.price)}</div>
@@ -143,7 +143,7 @@ export default function Header() {
                           )}
                           <Link
                             to='/cart'
-                            className='ml-auto min-w-max flex-shrink-0 rounded-sm bg-primary px-4 py-2 text-sm capitalize text-white hover:bg-primary/90'
+                            className='ml-auto min-w-max flex-shrink-0 rounded-sm bg-primary px-4 py-2 text-xs capitalize text-white hover:bg-primary/90 sm:text-sm'
                           >
                             {t('cart_header.view_cart')}
                           </Link>

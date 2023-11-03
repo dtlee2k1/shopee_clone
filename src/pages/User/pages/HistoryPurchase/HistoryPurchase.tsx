@@ -66,7 +66,7 @@ export default function HistoryPurchase() {
                   }).toString()
                 }}
                 className={classNames(
-                  'grow select-none truncate whitespace-nowrap border-b-2 bg-white py-3 text-center text-base',
+                  'grow select-none truncate whitespace-nowrap border-b-2 bg-white py-3 text-center text-sm sm:text-base',
                   {
                     'border-b-primary text-primary': status === tab.status,
                     'border-b-black/10 text-black/80': status !== tab.status
@@ -109,14 +109,16 @@ export default function HistoryPurchase() {
                           />
                         </div>
                         <div className='flex flex-1 flex-col break-words pl-3'>
-                          <div className='mb-2 line-clamp-2 max-h-[48px] text-base'>{purchase.product.name}</div>
+                          <div className='mb-2 line-clamp-2 max-h-[48px] text-sm sm:text-base'>
+                            {purchase.product.name}
+                          </div>
                           <div className='mb-2 flex justify-between'>
-                            <div className='text-sm'>x{purchase.buy_count}</div>
+                            <div className='text-xs sm:text-sm'>x{purchase.buy_count}</div>
                             <div className='flex items-center sm:hidden'>
-                              <span className='mr-[5px] max-w-[80px] truncate text-sm text-black/50 line-through'>
+                              <span className='mr-[5px] max-w-[80px] truncate text-xs text-black/50 line-through sm:text-sm'>
                                 ₫{formatCurrency(purchase.price_before_discount)}
                               </span>
-                              <span className='max-w-[80px] truncate text-sm text-primary'>
+                              <span className='max-w-[80px] truncate text-xs text-primary sm:text-sm'>
                                 ₫{formatCurrency(purchase.price)}
                               </span>
                             </div>
@@ -124,10 +126,10 @@ export default function HistoryPurchase() {
                         </div>
                       </div>
                       <div className='ml-3 hidden text-right sm:block'>
-                        <span className='mr-[5px] text-sm text-black/50 line-through'>
+                        <span className='mr-[5px] text-xs text-black/50 line-through sm:text-sm'>
                           ₫{formatCurrency(purchase.price_before_discount)}
                         </span>
-                        <span className='text-sm text-primary'>₫{formatCurrency(purchase.price)}</span>
+                        <span className='text-xs text-primary sm:text-sm'>₫{formatCurrency(purchase.price)}</span>
                       </div>
                     </Link>
                   </div>
@@ -157,7 +159,7 @@ export default function HistoryPurchase() {
                         </svg>
                       </span>
                       <span className='mr-2.5 text-sm text-black/80'>{t('order_total')}:</span>
-                      <span className='text-2xl text-primary'>
+                      <span className='text-xl text-primary sm:text-2xl'>
                         {formatCurrency(purchase.price * purchase.buy_count)}
                       </span>
                     </div>

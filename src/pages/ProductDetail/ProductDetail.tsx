@@ -1,10 +1,11 @@
-import { useMemo, useRef, useState } from 'react'
+import { useMemo, useRef, useState, useEffect } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import { useTranslation } from 'react-i18next'
 import DOMPurify from 'dompurify'
 import { toast } from 'react-toastify'
 import { Helmet } from 'react-helmet-async'
 import { convert } from 'html-to-text'
+import { motion } from 'framer-motion'
 
 import { useProduct } from './useProduct'
 import { getProducts } from 'src/apis/product.api'
@@ -39,6 +40,13 @@ export default function ProductDetail() {
 
   // Quantity of Product Controller
   const [buyCount, setBuyCount] = useState<number>(1)
+
+  // Height of product description
+  const [isShow, setIsShow] = useState<boolean>(false)
+
+  useEffect(() => {
+    setIsShow(false)
+  }, [product?._id])
 
   // Get relevant products by category equivalents
   const queryConfig: ProductListConfig = { limit: 20, page: 1, category: product?.category._id }
@@ -114,6 +122,9 @@ export default function ProductDetail() {
     )
   }
 
+  const handleShowDesc = () => {
+    setIsShow(!isShow)
+  }
   return (
     <div className='bg-neutral-100 py-6'>
       <Helmet>
@@ -277,13 +288,56 @@ export default function ProductDetail() {
         <div className='mt-4 rounded-sm bg-white p-2.5 shadow-sm'>
           <section className='p-3.5'>
             <h2 className='bg-black/[.02] p-3.5 text-base uppercase sm:text-lg'>{t('product_description')}</h2>
-            <div className='mx-4 mb-4 mt-2.5 text-xs leading-loose sm:mt-8 sm:text-sm'>
-              <div
+            <div className='mx-4 my-2.5 overflow-hidden text-xs leading-loose sm:mt-8 sm:text-sm'>
+              <motion.div
+                animate={isShow ? 'open' : 'closed'}
+                variants={{
+                  open: { height: '100%', overflow: 'hidden' },
+                  closed: { height: 217 + 'px', overflow: 'hidden' }
+                }}
+                transition={{ duration: 0.3 }}
                 dangerouslySetInnerHTML={{
                   // Using DOMPurify to prevent XSS attacks because if we render as usual then maybe sometimes in this render contains HTML + `JS` => Hacker can steal access token from user. Therefore DomPurify can be fed with string full of dirty HTML and it will return a string (unless configured otherwise) with clean HTML
                   __html: DOMPurify.sanitize(description)
                 }}
-              ></div>
+              ></motion.div>
+              <div className='m-auto mt-4 flex w-full justify-center border-t border-t-gray-300 pt-4'>
+                {isShow ? (
+                  <button
+                    className='flex items-center justify-center gap-1 text-primary hover:opacity-90'
+                    onClick={handleShowDesc}
+                  >
+                    {t('show_less')}
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth={1.5}
+                      stroke='currentColor'
+                      className='h-4 w-4'
+                    >
+                      <path strokeLinecap='round' strokeLinejoin='round' d='M4.5 15.75l7.5-7.5 7.5 7.5' />
+                    </svg>
+                  </button>
+                ) : (
+                  <button
+                    className='flex items-center justify-center gap-1 text-primary hover:opacity-90'
+                    onClick={handleShowDesc}
+                  >
+                    {t('show_more')}
+                    <svg
+                      xmlns='http://www.w3.org/2000/svg'
+                      fill='none'
+                      viewBox='0 0 24 24'
+                      strokeWidth={1.5}
+                      stroke='currentColor'
+                      className='h-4 w-4'
+                    >
+                      <path strokeLinecap='round' strokeLinejoin='round' d='M19.5 8.25l-7.5 7.5-7.5-7.5' />
+                    </svg>
+                  </button>
+                )}
+              </div>
             </div>
           </section>
         </div>
