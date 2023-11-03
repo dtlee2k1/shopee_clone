@@ -68,8 +68,8 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
 
   return (
     <div className='py-4'>
-      <Link to='/' className='flex items-center pb-1 text-base font-bold capitalize'>
-        <svg viewBox='0 0 12 10' className='mr-2.5 h-4 w-3 fill-current'>
+      <Link to='/' className='flex items-center whitespace-nowrap pb-1 text-base font-bold capitalize'>
+        <svg viewBox='0 0 12 10' className='mr-2.5 h-4 w-3 shrink-0 fill-current'>
           <g fillRule='evenodd' stroke='none' strokeWidth={1}>
             <g transform='translate(-373 -208)'>
               <g transform='translate(155 191)'>
@@ -117,13 +117,13 @@ export default function AsideFilter({ queryConfig, categories }: AsideFilterProp
           )
         })}
       </ul>
-      <div className='mt-7 flex items-center pb-1 font-bold uppercase'>
+      <div className='mt-7 flex items-center whitespace-nowrap pb-1 font-bold uppercase'>
         <svg
           enableBackground='new 0 0 15 15'
           viewBox='0 0 15 15'
           x={0}
           y={0}
-          className='mr-2.5 h-4 w-3 fill-current stroke-current'
+          className='mr-1 h-4 w-3 shrink-0 fill-current stroke-current xl:mr-2.5'
         >
           <g>
             <polyline

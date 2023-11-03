@@ -25,7 +25,7 @@ export default function Pagination({ pageSize }: PaginationProps) {
         return (
           <button
             key={index}
-            className='h-[30px] min-w-[40px] cursor-default rounded-sm text-xl text-black/40 hover:text-primary'
+            className='h-6 min-w-[24px] cursor-default rounded-sm text-base text-black/40 hover:text-primary sm:h-[30px] sm:min-w-[40px] sm:text-xl'
           >
             ...
           </button>
@@ -40,7 +40,7 @@ export default function Pagination({ pageSize }: PaginationProps) {
         return (
           <button
             key={index}
-            className='h-[30px] min-w-[40px] cursor-default rounded-sm text-xl text-black/40 hover:text-primary'
+            className='h-6 min-w-[24px] cursor-default rounded-sm text-base text-black/40 hover:text-primary sm:h-[30px] sm:min-w-[40px] sm:text-xl'
           >
             ...
           </button>
@@ -70,7 +70,7 @@ export default function Pagination({ pageSize }: PaginationProps) {
         return (
           <button
             key={index}
-            className={classNames('h-[30px] min-w-[40px] rounded-sm text-xl ', {
+            className={classNames('h-6 min-w-[24px] rounded-sm text-base sm:h-[30px] sm:min-w-[40px] sm:text-xl ', {
               'bg-primary text-white': isActive,
               'text-black/40 hover:text-primary': !isActive
             })}
@@ -83,7 +83,7 @@ export default function Pagination({ pageSize }: PaginationProps) {
   }
 
   return (
-    <div className='m-10 flex flex-wrap justify-center gap-[30px] '>
+    <div className=' mt-10 flex flex-wrap items-center justify-center gap-x-3 gap-y-2 sm:m-10 sm:gap-[30px]'>
       <button
         className={classNames('text-black/40', {
           'cursor-not-allowed': currPage === 1
@@ -91,7 +91,13 @@ export default function Pagination({ pageSize }: PaginationProps) {
         onClick={prevPage}
         disabled={currPage === 1}
       >
-        <svg enableBackground='new 0 0 11 11' viewBox='0 0 11 11' x={0} y={0} className='h-3.5 w-3.5 fill-current'>
+        <svg
+          enableBackground='new 0 0 11 11'
+          viewBox='0 0 11 11'
+          x={0}
+          y={0}
+          className='h-2.5 w-2.5 fill-current sm:h-3.5 sm:w-3.5'
+        >
           <g>
             <path d='m8.5 11c-.1 0-.2 0-.3-.1l-6-5c-.1-.1-.2-.3-.2-.4s.1-.3.2-.4l6-5c .2-.2.5-.1.7.1s.1.5-.1.7l-5.5 4.6 5.5 4.6c.2.2.2.5.1.7-.1.1-.3.2-.4.2z' />
           </g>
@@ -105,7 +111,13 @@ export default function Pagination({ pageSize }: PaginationProps) {
         onClick={nextPage}
         disabled={currPage === pageSize}
       >
-        <svg enableBackground='new 0 0 11 11' viewBox='0 0 11 11' x={0} y={0} className='h-3.5 w-3.5 fill-current'>
+        <svg
+          enableBackground='new 0 0 11 11'
+          viewBox='0 0 11 11'
+          x={0}
+          y={0}
+          className='h-2.5 w-2.5 fill-current sm:h-3.5 sm:w-3.5'
+        >
           <path d='m2.5 11c .1 0 .2 0 .3-.1l6-5c .1-.1.2-.3.2-.4s-.1-.3-.2-.4l-6-5c-.2-.2-.5-.1-.7.1s-.1.5.1.7l5.5 4.6-5.5 4.6c-.2.2-.2.5-.1.7.1.1.3.2.4.2z' />
         </svg>
       </button>

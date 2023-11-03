@@ -42,7 +42,7 @@ export default function RatingStars({ queryConfig }: RatingStarsProps) {
                 .map((_, indexStar) => {
                   if (indexStar < 5 - index) {
                     return (
-                      <svg key={indexStar} viewBox='0 0 9.5 8' className='mr-1 h-3.5 w-3.5'>
+                      <svg key={indexStar} viewBox='0 0 9.5 8' className='mr-1 h-3.5 w-3.5 shrink-0'>
                         <defs>
                           <linearGradient id='ratingStarGradient' x1='50%' x2='50%' y1='0%' y2='100%'>
                             <stop offset={0} stopColor='#ffca11' />
@@ -70,7 +70,7 @@ export default function RatingStars({ queryConfig }: RatingStarsProps) {
                     )
                   } else
                     return (
-                      <svg key={indexStar} viewBox='0 0 30 30' className='mr-1 h-3.5 w-3.5'>
+                      <svg key={indexStar} viewBox='0 0 30 30' className='mr-1 h-3.5 w-3.5 shrink-0'>
                         <defs>
                           <linearGradient id='star__hollow' x1='50%' x2='50%' y1='0%' y2='99.0177926%'>
                             <stop offset='0%' stopColor='#FFD211' />
@@ -87,7 +87,7 @@ export default function RatingStars({ queryConfig }: RatingStarsProps) {
                       </svg>
                     )
                 })}
-              <span>{index !== 0 && t('aside_filter.up')}</span>
+              <span className='whitespace-nowrap'>{index !== 0 && t('aside_filter.up')}</span>
             </div>
           </li>
         ))}

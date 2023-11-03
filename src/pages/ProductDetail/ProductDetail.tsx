@@ -292,11 +292,13 @@ export default function ProductDetail() {
             <section>
               <h2 className='text-base font-medium uppercase text-black/[.54]'>{t('relevant-items')}</h2>
               <div className='mt-5 grid grid-cols-2 gap-2.5 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6'>
-                {productsData.data.data.products.map((product) => (
-                  <div key={product._id} className='col-span-1'>
-                    <Product product={product} />
-                  </div>
-                ))}
+                {productsData.data.data.products
+                  .filter((product) => product._id !== _id)
+                  .map((product) => (
+                    <div key={product._id} className='col-span-1'>
+                      <Product product={product} />
+                    </div>
+                  ))}
               </div>
             </section>
           </div>

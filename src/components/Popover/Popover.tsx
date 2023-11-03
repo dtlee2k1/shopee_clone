@@ -53,8 +53,8 @@ export function Popover({ children, placement = 'bottom-end', initialOpen = fals
     onOpenChange: setIsOpen,
     middleware: [
       offset({
-        crossAxis: -24,
-        mainAxis: 2
+        crossAxis: -20,
+        mainAxis: 3
       }),
       shift(),
       arrow({ element: arrowRef })
@@ -101,7 +101,7 @@ function Container({ children }: ContainerProps) {
 
 function Heading({
   children,
-  className = 'flex cursor-pointer items-center px-2.5 py-1 hover:text-white/70'
+  className = 'flex cursor-pointer items-center sm:px-2.5 py-1 hover:text-white/70'
 }: HeadingProps) {
   return <div className={className}>{children}</div>
 }
@@ -129,7 +129,7 @@ function Content({ children }: ContentProps) {
           >
             <span
               ref={arrowRef}
-              className='absolute z-10 translate-y-[-70%] border-x-[14px] border-b-[10px] border-x-transparent border-b-white border-t-transparent'
+              className='absolute z-10 translate-x-4 translate-y-[-70%] border-x-[14px] border-b-[10px] border-x-transparent border-b-white border-t-transparent sm:translate-x-0'
               style={{ left: middlewareData.arrow?.x, top: middlewareData.arrow?.y }}
             ></span>
             {children}
