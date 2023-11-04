@@ -29,7 +29,7 @@ export default function RatingStars({ queryConfig }: RatingStarsProps) {
         .map((_, index) => (
           <li key={index}>
             <div
-              className={classNames('mt-2.5 flex h-[25px] max-w-fit items-center px-3 text-sm', {
+              className={classNames('mt-1.5  flex h-[25px] max-w-fit items-center px-3 text-sm sm:mt-2.5', {
                 'rounded-xl bg-[#ebebeb] font-medium': Number(queryConfig.rating_filter) === 5 - index
               })}
               onClick={() => handleFilterStars(5 - index)}
@@ -42,7 +42,7 @@ export default function RatingStars({ queryConfig }: RatingStarsProps) {
                 .map((_, indexStar) => {
                   if (indexStar < 5 - index) {
                     return (
-                      <svg key={indexStar} viewBox='0 0 9.5 8' className='mr-1 h-3.5 w-3.5 shrink-0'>
+                      <svg key={indexStar} viewBox='0 0 9.5 8' className='mr-1 h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5'>
                         <defs>
                           <linearGradient id='ratingStarGradient' x1='50%' x2='50%' y1='0%' y2='100%'>
                             <stop offset={0} stopColor='#ffca11' />
@@ -53,7 +53,7 @@ export default function RatingStars({ queryConfig }: RatingStarsProps) {
                             points='14.910357 6.35294118 12.4209136 7.66171903 12.896355 4.88968305 10.8823529 2.92651626 13.6656353 2.52208166 14.910357 0 16.1550787 2.52208166 18.9383611 2.92651626 16.924359 4.88968305 17.3998004 7.66171903'
                           />
                         </defs>
-                        <g fill='url(#ratingStarGradient)' fillRule='evenodd' stroke='none' strokeWidth='{1}'>
+                        <g fill='#ffca11' fillRule='evenodd' stroke='none' strokeWidth='{1}'>
                           <g transform='translate(-876 -1270)'>
                             <g transform='translate(155 992)'>
                               <g transform='translate(600 29)'>
@@ -70,7 +70,7 @@ export default function RatingStars({ queryConfig }: RatingStarsProps) {
                     )
                   } else
                     return (
-                      <svg key={indexStar} viewBox='0 0 30 30' className='mr-1 h-3.5 w-3.5 shrink-0'>
+                      <svg key={indexStar} viewBox='0 0 30 30' className='mr-1 h-3 w-3 shrink-0 sm:h-3.5 sm:w-3.5'>
                         <defs>
                           <linearGradient id='star__hollow' x1='50%' x2='50%' y1='0%' y2='99.0177926%'>
                             <stop offset='0%' stopColor='#FFD211' />
@@ -80,14 +80,14 @@ export default function RatingStars({ queryConfig }: RatingStarsProps) {
                         <path
                           fill='none'
                           fillRule='evenodd'
-                          stroke='url(#star__hollow)'
+                          stroke='#FFAD27'
                           strokeWidth={2}
                           d='M23.226809 28.390899l-1.543364-9.5505903 6.600997-6.8291523-9.116272-1.4059447-4.01304-8.63019038-4.013041 8.63019038-9.116271 1.4059447 6.600997 6.8291523-1.543364 9.5505903 8.071679-4.5038874 8.071679 4.5038874z'
                         />
                       </svg>
                     )
                 })}
-              <span className='whitespace-nowrap'>{index !== 0 && t('aside_filter.up')}</span>
+              <span className='whitespace-nowrap text-xs sm:text-sm'>{index !== 0 && t('aside_filter.up')}</span>
             </div>
           </li>
         ))}
