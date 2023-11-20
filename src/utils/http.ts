@@ -15,8 +15,6 @@ import {
 
 class Http {
   private instance: AxiosInstance
-  // Why have to set an accessToken variable instead of get right away from local storage?
-  //Set accessToken here in class since the speed of read data in hardware(localStorage) is not as fast as the speed of RAM memory (in class)
   private accessToken: string
   private refreshToken: string
   private refreshTokenRequest: Promise<string> | null
@@ -78,13 +76,13 @@ class Http {
         // Unauthorized Error (401)
         // - Sending wrong token
         // - Not sending token
-        // - token was expired*
+        // - token was expired
         if (isAxiosUnauthorizedError<ErrorResponse<{ message: string; name: string }>>(error)) {
           const config = error.response?.config || ({ headers: {} } as InternalAxiosRequestConfig)
           const { url } = config
           // Error Case: Token expired & this error request does not belong to request refresh token => invoke refresh token
           if (isAxiosExpiredTokenError(error) && url !== '/refresh-access-token') {
-            // Help to prevent to invoke request refresh token twice
+            // Prevent to invoke request refresh token twice
             this.refreshTokenRequest = this.refreshTokenRequest
               ? this.refreshTokenRequest
               : this.handleRefreshToken().finally(() => {

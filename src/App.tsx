@@ -7,7 +7,6 @@ import { useApp } from './contexts/app.context'
 
 function App() {
   const { reset } = useApp()
-  // All route of this application
   const routeElements = useRouteElements()
 
   // When the `access token` is invalid, the LocalStorage is cleared (all storage object items stored in LS are removed) then a new event `clearLS` is dispatched from `localStorageEvent` for the purpose of resetting all the state in the `App Context`

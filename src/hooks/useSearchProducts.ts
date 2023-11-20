@@ -24,13 +24,15 @@ export function useSearchProducts() {
       ? omit(
           {
             ...queryConfig,
-            name: data.search
+            name: data.search,
+            page: '1'
           },
           ['order', 'sort_by']
         )
       : {
           ...queryConfig,
-          name: data.search
+          name: data.search,
+          page: '1'
         }
 
     navigate({

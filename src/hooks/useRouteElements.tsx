@@ -8,7 +8,6 @@ import MainLayout from 'src/layouts/MainLayout'
 import RegisterLayout from 'src/layouts/RegisterLayout'
 import UserLayout from 'src/pages/User/layouts/UserLayout'
 
-// Using `lazy load` to optimize and improve page load speed + performance
 const Login = lazy(() => import('src/pages/Login'))
 const Register = lazy(() => import('src/pages/Register'))
 const ProductList = lazy(() => import('src/pages/ProductList'))
@@ -35,8 +34,6 @@ const RejectedRoute = ({ children }: RejectedRouteProps) => {
 
   return !isAuthenticated ? children : <Navigate replace to='/' />
 }
-
-// `Suspense` to wrap the Components that you want to load slowly. These Components will be displayed while slow loading data is still being fetched
 
 export function useRouteElements() {
   const routeElements = useRoutes([

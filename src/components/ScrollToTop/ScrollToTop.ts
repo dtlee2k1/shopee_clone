@@ -7,7 +7,6 @@ interface Props {
 }
 
 const ScrollToTop = ({ children }: Props) => {
-  // Extracts pathname property(key) from an object
   const { pathname } = useLocation()
   const queryConfig = useQueryConfig()
 

@@ -18,8 +18,6 @@ const refresh_token =
 const profile =
   '{"_id":"65131af197e95903372f2e8b","roles":["User"],"email":"ldthang20002001@gmail.com","createdAt":"2023-09-26T17:54:57.806Z","updatedAt":"2023-10-24T17:55:22.049Z","__v":0,"name":"Lê Đức Thái ","address":"Hanoi ","date_of_birth":"2001-09-09T17:00:00.000Z","phone":"123456","avatar":"22d6e9b8-7139-4c40-8252-fa2252c6d9b2.jpg"}'
 
-//`beforeEach` cho phép thực hiện các tác vụ chuẩn bị trước khi chạy mỗi test case (describe),
-// giúp đảm bảo rằng môi trường thử nghiệm là cố định và sạch sẽ trước khi mỗi test case được chạy.
 beforeEach(() => {
   localStorage.clear()
 })

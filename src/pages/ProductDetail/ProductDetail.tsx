@@ -58,7 +58,6 @@ export default function ProductDetail() {
 
   if (isLoading1 && isLoading2) return <Loader />
 
-  // Destructuring product data
   const { _id, name, description, images, rating, sold, price, price_before_discount, quantity } = product
 
   const handleActiveImage = (index: number) => {
@@ -297,7 +296,6 @@ export default function ProductDetail() {
                 }}
                 transition={{ duration: 0.3 }}
                 dangerouslySetInnerHTML={{
-                  // Using DOMPurify to prevent XSS attacks because if we render as usual then maybe sometimes in this render contains HTML + `JS` => Hacker can steal access token from user. Therefore DomPurify can be fed with string full of dirty HTML and it will return a string (unless configured otherwise) with clean HTML
                   __html: DOMPurify.sanitize(description)
                 }}
               ></motion.div>
