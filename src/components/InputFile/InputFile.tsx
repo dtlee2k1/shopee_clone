@@ -12,16 +12,7 @@ export default function InputFile({ onSetFile }: InputFileProps) {
   const { t } = useTranslation('profile')
 
   const fileInputRef = useRef<HTMLInputElement>(null)
-
-  // IMAGE UPLOAD
-  // Flow 1:
-  //  Click `Upload` Button: upload image directly to server => Server return image URL
-  //  Click `Submit` Button: Send image URL + data to server
-  // Flow 2:
-  //  Click `Upload` Button: image is not uploaded to server
-  //  Click `Submit` Button: proceed to upload to server. If upload successfully then call api `updateProfile`
   const handleUploadImage = () => {
-    // use `fileInputRef` as a reference to an `input type file` to upload an image with a `button`
     fileInputRef.current?.click()
   }
 

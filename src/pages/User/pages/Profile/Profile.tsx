@@ -69,7 +69,6 @@ export default function Profile() {
   // get avatarName after rendering
   const avatar = watch('avatar')
 
-  // Filled fields of form data if `profile` data is available
   useEffect(() => {
     if (profile) {
       setValue('name', profile?.name || '')

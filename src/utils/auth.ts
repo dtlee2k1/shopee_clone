@@ -25,7 +25,6 @@ export const localStorageEvent = new EventTarget()
 
 export const clearLS = () => {
   localStorage.clear()
-  // when clearLS func is invoked localStorageEvent will send a new event called `clearLS`
   const clearLSEvent = new Event('clearLS')
   localStorageEvent.dispatchEvent(clearLSEvent)
 }

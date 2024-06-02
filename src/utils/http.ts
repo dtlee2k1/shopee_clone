@@ -20,7 +20,6 @@ class Http {
   private refreshTokenRequest: Promise<string> | null
 
   constructor() {
-    // Set accessToken by localStorage only the first time website initialization
     this.accessToken = getAccessTokenFromLS()
     this.refreshToken = getRefreshTokenFromLS()
     this.refreshTokenRequest = null
@@ -34,7 +33,6 @@ class Http {
       }
     })
 
-    // Add a request interceptor
     this.instance.interceptors.request.use(
       (config) => {
         if (this.accessToken) config.headers.Authorization = this.accessToken
@@ -45,7 +43,6 @@ class Http {
       }
     )
 
-    // Add a response interceptor
     this.instance.interceptors.response.use(
       (response) => {
         const { url } = response.config
@@ -73,14 +70,9 @@ class Http {
           toast.error(errorMessage)
         }
 
-        // Unauthorized Error (401)
-        // - Sending wrong token
-        // - Not sending token
-        // - token was expired
         if (isAxiosUnauthorizedError<ErrorResponse<{ message: string; name: string }>>(error)) {
           const config = error.response?.config || ({ headers: {} } as InternalAxiosRequestConfig)
           const { url } = config
-          // Error Case: Token expired & this error request does not belong to request refresh token => invoke refresh token
           if (isAxiosExpiredTokenError(error) && url !== '/refresh-access-token') {
             // Prevent to invoke request refresh token twice
             this.refreshTokenRequest = this.refreshTokenRequest
@@ -91,12 +83,11 @@ class Http {
                   }, 10000)
                 })
             return this.refreshTokenRequest.then((access_token) => {
-              // Passing to instance axios a `config` params means that Recall this error request again
               return this.instance({ ...config, headers: { ...config.headers, Authorization: access_token } })
             })
           }
 
-          // Other cases: `Sending wrong token`, `Not sending token` & `token was expired but invoked refresh token FAILED` => Clear local storage & toast error message
+          // Other cases: `Sending wrong token`, `Not sending token` & `token was expired but invoked refresh token FAILED`
           clearLS()
           this.accessToken = this.refreshToken = ''
           toast.error(error.response?.data.data?.message)

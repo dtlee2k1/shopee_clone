@@ -22,12 +22,10 @@ export default function ProductDetail() {
   const navigate = useNavigate()
   const { t } = useTranslation('product')
 
-  // get product details
   const { product, isLoading: isLoading1 } = useProduct()
 
   const addToCartMutation = useAddToCart()
 
-  // state for handle images slider
   const [currentIndexImages, setCurrentIndexImages] = useState<number[]>([0, 5])
   const [activeImage, setActiveImage] = useState<number>(0)
 
@@ -41,7 +39,6 @@ export default function ProductDetail() {
   // Quantity of Product Controller
   const [buyCount, setBuyCount] = useState<number>(1)
 
-  // Height of product description
   const [isShow, setIsShow] = useState<boolean>(false)
 
   useEffect(() => {
@@ -53,7 +50,7 @@ export default function ProductDetail() {
   const { data: productsData, isLoading: isLoading2 } = useQuery({
     queryKey: ['products', queryConfig],
     queryFn: () => getProducts(queryConfig),
-    enabled: Boolean(product) // only fetch when `product` exists
+    enabled: Boolean(product)
   })
 
   if (isLoading1 && isLoading2) return <Loader />
